@@ -8,7 +8,7 @@ Public Class HPPowerSupply
     Private address As Int32 = 7
     Public SolenoidVoltage As Double
     Public SolenoidOnTime As Int32
-    Public SolenoidDelay As Int32
+    Public MilliSecondsFromEndOfImageToSolenoid As Int32
 
     Public Sub New()
         ioMgr = New Ivi.Visa.Interop.ResourceManager
@@ -27,15 +27,17 @@ Public Class HPPowerSupply
 
     End Sub
 
-    Public Sub ToggleSolenoid(fromTime As DateTime)
+    Public Sub ToggleSolenoid(fromTime As DateTime, horizontalCenter As Int32)
         Dim span As TimeSpan = Now() - fromTime
-        Dim msDiff As Double = span.TotalMilliseconds
-        Dim delay As Int32 = SolenoidDelay - msDiff
+        Dim msProcessingDelay As Double = span.TotalMilliseconds
+        Dim milliSecondsToEndOfImage As Int32 = (ImageWidth - horizontalCenter) * CoinSpeedPixelsPerMs
+        Dim delay As Int32 = MilliSecondsFromEndOfImageToSolenoid + milliSecondsToEndOfImage - msProcessingDelay
         If delay <= 0 Then
             delay = 1
         End If
 
-        delay = 1
+        Console.WriteLine("MilliSecondsFromEndOfImageToSolenoid: " & MilliSecondsFromEndOfImageToSolenoid & " msDiff: " & msProcessingDelay & "  milliSecondsToEndOfImage: " & milliSecondsToEndOfImage)
+        Console.WriteLine("delay: " & delay)
 
         Dim SolenoidTimerOn As New System.Timers.Timer(delay)
         AddHandler SolenoidTimerOn.Elapsed, AddressOf ToggleSolenoidOn

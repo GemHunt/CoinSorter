@@ -5,7 +5,7 @@
         lblSolenoidVoltage.Text = "SolenoidVoltage: " & TrackBarVoltage.Value
         PowerSupply.SolenoidVoltage = TrackBarVoltage.Value
         PowerSupply.SolenoidOnTime = TrackBarmSeconds.Value
-        PowerSupply.SolenoidDelay = TrackBarSolenoidDelay.Value
+        PowerSupply.MilliSecondsFromEndOfImageToSolenoid = TrackBarSolenoidDelay.Value
     End Sub
 
     Private Sub cmdBreak_Click(sender As Object, e As EventArgs) Handles cmdBreak.Click
@@ -20,14 +20,10 @@
         PowerSupply.SolenoidOnTime = TrackBarmSeconds.Value
     End Sub
     Private Sub TrackBarSolenoidDelay_Scroll(sender As Object, e As EventArgs) Handles TrackBarSolenoidDelay.Scroll
-        PowerSupply.SolenoidDelay = TrackBarSolenoidDelay.Value
+        PowerSupply.MilliSecondsFromEndOfImageToSolenoid = TrackBarSolenoidDelay.Value
     End Sub
 
     Private Sub cmdToggleSolenoid_Click(sender As Object, e As EventArgs) Handles cmdToggleSolenoid.Click
-        PowerSupply.ToggleSolenoid(Now)
-    End Sub
-
-    Private Sub RichTextBox1_TextChanged(sender As Object, e As EventArgs) Handles RichTextBox1.TextChanged
-
+        PowerSupply.ToggleSolenoid(Now, 0)
     End Sub
 End Class

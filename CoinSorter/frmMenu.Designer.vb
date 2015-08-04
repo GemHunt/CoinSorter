@@ -22,7 +22,6 @@ Partial Class frmMenu
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMenu))
         Me.cmdBreak = New System.Windows.Forms.Button()
         Me.lblSolenoidVoltage = New System.Windows.Forms.Label()
@@ -32,7 +31,6 @@ Partial Class frmMenu
         Me.TrackBarmSeconds = New System.Windows.Forms.TrackBar()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.TrackBarSolenoidDelay = New System.Windows.Forms.TrackBar()
-        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
         CType(Me.TrackBarVoltage, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TrackBarmSeconds, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -64,7 +62,7 @@ Partial Class frmMenu
         Me.TrackBarVoltage.Name = "TrackBarVoltage"
         Me.TrackBarVoltage.Size = New System.Drawing.Size(418, 45)
         Me.TrackBarVoltage.TabIndex = 5
-        Me.TrackBarVoltage.Value = 10
+        Me.TrackBarVoltage.Value = 12
         '
         'cmdToggleSolenoid
         '
@@ -92,7 +90,7 @@ Partial Class frmMenu
         Me.TrackBarmSeconds.Size = New System.Drawing.Size(418, 45)
         Me.TrackBarmSeconds.TabIndex = 8
         Me.TrackBarmSeconds.TickFrequency = 10
-        Me.TrackBarmSeconds.Value = 40
+        Me.TrackBarmSeconds.Value = 120
         '
         'Label2
         '
@@ -106,12 +104,12 @@ Partial Class frmMenu
         'TrackBarSolenoidDelay
         '
         Me.TrackBarSolenoidDelay.Location = New System.Drawing.Point(28, 350)
-        Me.TrackBarSolenoidDelay.Maximum = 8000
+        Me.TrackBarSolenoidDelay.Maximum = 500
         Me.TrackBarSolenoidDelay.Name = "TrackBarSolenoidDelay"
         Me.TrackBarSolenoidDelay.Size = New System.Drawing.Size(418, 45)
         Me.TrackBarSolenoidDelay.TabIndex = 10
-        Me.TrackBarSolenoidDelay.TickFrequency = 50
-        Me.TrackBarSolenoidDelay.Value = 2000
+        Me.TrackBarSolenoidDelay.TickFrequency = 5
+        Me.TrackBarSolenoidDelay.Value = 286
         '
         'RichTextBox1
         '
@@ -125,7 +123,7 @@ Partial Class frmMenu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(633, 430)
+        Me.ClientSize = New System.Drawing.Size(697, 430)
         Me.Controls.Add(Me.RichTextBox1)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.TrackBarSolenoidDelay)
@@ -152,7 +150,6 @@ Partial Class frmMenu
     Friend WithEvents TrackBarmSeconds As System.Windows.Forms.TrackBar
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents TrackBarSolenoidDelay As System.Windows.Forms.TrackBar
-    Friend WithEvents Timer1 As System.Windows.Forms.Timer
     Friend WithEvents RichTextBox1 As System.Windows.Forms.RichTextBox
 
 End Class

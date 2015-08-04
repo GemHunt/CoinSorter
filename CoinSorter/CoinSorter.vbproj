@@ -75,6 +75,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classifier.vb" />
     <Compile Include="Coin.vb" />
     <Compile Include="Coins.vb" />
     <Compile Include="CoinTracker.vb" />

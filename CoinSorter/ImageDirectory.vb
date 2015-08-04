@@ -4,6 +4,7 @@ Public Class ImageHandler
     Private currentDirectoryName As String
     Private archivedDirectoryName As String
     Private currentDirectoryWatcher As FileSystemWatcher
+
     Public Sub New(currentDir As String, archiveddir As String)
         currentDirectoryName = currentDir
         archivedDirectoryName = archiveddir

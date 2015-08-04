@@ -75,9 +75,9 @@ namespace WinFormsUI
             matlabCommand.AppendLine("run('" + fi.FullName + "');");
 
             //Call in the same Thread:
-            //CallMatlabScript(matlabCommand);
-            Action cm = () => CallMatlabScript(matlabCommand);
-            Task.Run(cm);
+            CallMatlabScript(matlabCommand);
+            //Action cm = () => CallMatlabScript(matlabCommand);
+            //Task.Run(cm);
 
         }
 

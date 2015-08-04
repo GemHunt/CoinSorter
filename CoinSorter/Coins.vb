@@ -1,9 +1,7 @@
 ﻿Public Class CoinDirectory
     Inherits Dictionary(Of Int32, Coin)
     Private CoinsInView As New HashSet(Of Coin)
-    Private CoinSpeedPixelsPerMs As Double = 1.81
-    Private CoinRadiusOnFullImage As Double = 165
-    Private MsCoinsAreInView As Double = 10000
+
 
 
     Public Sub AddorUpdate(croppedImage As CroppedImage, ByRef coinIsDup As Boolean, ByRef coinID As Int32)
