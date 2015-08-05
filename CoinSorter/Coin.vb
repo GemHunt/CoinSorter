@@ -16,8 +16,13 @@ Public Class Coin
     End Sub
 
     Public Sub Classify()
-        Dim rnd As New Random
-        CoinTypeID = rnd.Next(0, 1)
+        Static coinType As Int32 = 0
+        If coinType = 0 Then
+            coinType = 1
+        Else
+            coinType = 0
+        End If
+        CoinTypeID = coinType
         Exit Sub
 
         'This works, but clunky!

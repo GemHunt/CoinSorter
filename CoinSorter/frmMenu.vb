@@ -18,12 +18,15 @@
     End Sub
     Private Sub TrackBarmSeconds_Scroll(sender As Object, e As EventArgs) Handles TrackBarmSeconds.Scroll
         PowerSupply.SolenoidOnTime = TrackBarmSeconds.Value
+        lblSolenoidMillisecondsOn.Text = "Solenoid Milliseconds On: " & TrackBarmSeconds.Value
     End Sub
     Private Sub TrackBarSolenoidDelay_Scroll(sender As Object, e As EventArgs) Handles TrackBarSolenoidDelay.Scroll
         PowerSupply.MilliSecondsFromEndOfImageToSolenoid = TrackBarSolenoidDelay.Value
+        lblSolenoidDelay.Text = "Solenoid Delay: " & TrackBarSolenoidDelay.Value
     End Sub
 
     Private Sub cmdToggleSolenoid_Click(sender As Object, e As EventArgs) Handles cmdToggleSolenoid.Click
         PowerSupply.ToggleSolenoid(Now, 0)
+        lblSolenoidDelay.Text = "Solenoid Delay: " & TrackBarSolenoidDelay.Value
     End Sub
 End Class

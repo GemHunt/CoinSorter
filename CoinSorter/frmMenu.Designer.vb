@@ -27,9 +27,9 @@ Partial Class frmMenu
         Me.lblSolenoidVoltage = New System.Windows.Forms.Label()
         Me.TrackBarVoltage = New System.Windows.Forms.TrackBar()
         Me.cmdToggleSolenoid = New System.Windows.Forms.Button()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.lblSolenoidMillisecondsOn = New System.Windows.Forms.Label()
         Me.TrackBarmSeconds = New System.Windows.Forms.TrackBar()
-        Me.Label2 = New System.Windows.Forms.Label()
+        Me.lblSolenoidDelay = New System.Windows.Forms.Label()
         Me.TrackBarSolenoidDelay = New System.Windows.Forms.TrackBar()
         Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
         CType(Me.TrackBarVoltage, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -73,14 +73,14 @@ Partial Class frmMenu
         Me.cmdToggleSolenoid.Text = "Toggle Solenoid"
         Me.cmdToggleSolenoid.UseVisualStyleBackColor = True
         '
-        'Label1
+        'lblSolenoidMillisecondsOn
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(25, 189)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(125, 13)
-        Me.Label1.TabIndex = 9
-        Me.Label1.Text = "Solenoid Milliseconds On"
+        Me.lblSolenoidMillisecondsOn.AutoSize = True
+        Me.lblSolenoidMillisecondsOn.Location = New System.Drawing.Point(25, 189)
+        Me.lblSolenoidMillisecondsOn.Name = "lblSolenoidMillisecondsOn"
+        Me.lblSolenoidMillisecondsOn.Size = New System.Drawing.Size(125, 13)
+        Me.lblSolenoidMillisecondsOn.TabIndex = 9
+        Me.lblSolenoidMillisecondsOn.Text = "Solenoid Milliseconds On"
         '
         'TrackBarmSeconds
         '
@@ -90,26 +90,27 @@ Partial Class frmMenu
         Me.TrackBarmSeconds.Size = New System.Drawing.Size(418, 45)
         Me.TrackBarmSeconds.TabIndex = 8
         Me.TrackBarmSeconds.TickFrequency = 10
-        Me.TrackBarmSeconds.Value = 120
+        Me.TrackBarmSeconds.Value = 95
         '
-        'Label2
+        'lblSolenoidDelay
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(28, 331)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(78, 13)
-        Me.Label2.TabIndex = 11
-        Me.Label2.Text = "Solenoid Delay"
+        Me.lblSolenoidDelay.AutoSize = True
+        Me.lblSolenoidDelay.Location = New System.Drawing.Point(28, 331)
+        Me.lblSolenoidDelay.Name = "lblSolenoidDelay"
+        Me.lblSolenoidDelay.Size = New System.Drawing.Size(78, 13)
+        Me.lblSolenoidDelay.TabIndex = 11
+        Me.lblSolenoidDelay.Text = "Solenoid Delay"
         '
         'TrackBarSolenoidDelay
         '
         Me.TrackBarSolenoidDelay.Location = New System.Drawing.Point(28, 350)
-        Me.TrackBarSolenoidDelay.Maximum = 500
+        Me.TrackBarSolenoidDelay.Maximum = 0
+        Me.TrackBarSolenoidDelay.Minimum = -250
         Me.TrackBarSolenoidDelay.Name = "TrackBarSolenoidDelay"
         Me.TrackBarSolenoidDelay.Size = New System.Drawing.Size(418, 45)
         Me.TrackBarSolenoidDelay.TabIndex = 10
         Me.TrackBarSolenoidDelay.TickFrequency = 5
-        Me.TrackBarSolenoidDelay.Value = 286
+        Me.TrackBarSolenoidDelay.Value = -50
         '
         'RichTextBox1
         '
@@ -125,9 +126,9 @@ Partial Class frmMenu
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(697, 430)
         Me.Controls.Add(Me.RichTextBox1)
-        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.lblSolenoidDelay)
         Me.Controls.Add(Me.TrackBarSolenoidDelay)
-        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.lblSolenoidMillisecondsOn)
         Me.Controls.Add(Me.TrackBarmSeconds)
         Me.Controls.Add(Me.cmdToggleSolenoid)
         Me.Controls.Add(Me.lblSolenoidVoltage)
@@ -146,9 +147,9 @@ Partial Class frmMenu
     Friend WithEvents lblSolenoidVoltage As System.Windows.Forms.Label
     Friend WithEvents TrackBarVoltage As System.Windows.Forms.TrackBar
     Friend WithEvents cmdToggleSolenoid As System.Windows.Forms.Button
-    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents lblSolenoidMillisecondsOn As System.Windows.Forms.Label
     Friend WithEvents TrackBarmSeconds As System.Windows.Forms.TrackBar
-    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents lblSolenoidDelay As System.Windows.Forms.Label
     Friend WithEvents TrackBarSolenoidDelay As System.Windows.Forms.TrackBar
     Friend WithEvents RichTextBox1 As System.Windows.Forms.RichTextBox
 

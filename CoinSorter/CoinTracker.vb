@@ -10,8 +10,6 @@ Module CoinTracker
     Public MsCoinsAreInView As Double = 10000
     Public ImageWidth As Int32 = 960
 
-
-
     Public Sub HandleNewImages(sender As Object, e As IO.FileSystemEventArgs)
         Dim fi As New FileInfo(e.FullPath)
         If fi.Name.Length = 10 Then
@@ -24,8 +22,10 @@ Module CoinTracker
             Dim coinIsDup As Boolean
             Dim coinID As Int32
             Coins.AddorUpdate(croppedImage, coinIsDup, coinID)
-            If Not coinIsDup AndAlso Coins(coinID).CoinTypeID = 0 Then
+            If Not coinIsDup Then
+
                 PowerSupply.ToggleSolenoid(Coins(coinID).CaptureTime, Coins(coinID).HorizontalCenter)
+
             End If
         End If
     End Sub

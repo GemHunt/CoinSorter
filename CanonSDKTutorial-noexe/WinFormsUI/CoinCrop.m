@@ -2,9 +2,7 @@
 %tic
 %load 'C:\Users\pkrush\Documents\Computer Vision\coins\CameraParmesEOS3.mat'
 %toc; disp('1');
-%imageName = 'C:\Temp\TempCoinImages\100013.jpg';
-
-imageName
+imageName = 'C:\Temp\TempCoinImages\101778.jpg';
 
 %totalImages = 154;
 dirName =  imageName(1:length(imageName)-10);
@@ -32,6 +30,18 @@ CoinsImage = imread(strcat(fileName,'.jpg'));
 row = 1; %Code was taken out that does more then one row.
 beltTop = 50;
 CoinsImage = CoinsImage(beltTop:beltTop+450,:,:);
+
+
+%This is deshearing the image from shear/skew caused
+%   from it moving on the conveyor
+%   and the camera not instantaneous sampling all the pixels at once:
+%   The only non 1 or is the "angle".
+%   This changes on belt speed changes. 
+ShearAngle = [1 0 0; -.02 1 0; 0 0 1];
+tform = maketform('affine',ShearAngle);
+CoinsImage = imtransform(CoinsImage,tform);
+
+
 %toc; disp('5');
 hsv = rgb2hsv(CoinsImage);
 
@@ -56,8 +66,6 @@ squareSize = 140;
 %idisp(clean);
 %figure;
 %idisp(CoinsImage);
-
-
 
 for blobID = 1:size(b,2)
     if (b(blobID).area < 50000 || b(blobID).area > 65000);
