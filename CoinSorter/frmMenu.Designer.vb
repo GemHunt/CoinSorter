@@ -32,6 +32,7 @@ Partial Class frmMenu
         Me.lblSolenoidDelay = New System.Windows.Forms.Label()
         Me.TrackBarSolenoidDelay = New System.Windows.Forms.TrackBar()
         Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
+        Me.Button1 = New System.Windows.Forms.Button()
         CType(Me.TrackBarVoltage, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TrackBarmSeconds, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TrackBarSolenoidDelay, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -90,7 +91,7 @@ Partial Class frmMenu
         Me.TrackBarmSeconds.Size = New System.Drawing.Size(418, 45)
         Me.TrackBarmSeconds.TabIndex = 8
         Me.TrackBarmSeconds.TickFrequency = 10
-        Me.TrackBarmSeconds.Value = 95
+        Me.TrackBarmSeconds.Value = 127
         '
         'lblSolenoidDelay
         '
@@ -120,11 +121,21 @@ Partial Class frmMenu
         Me.RichTextBox1.TabIndex = 12
         Me.RichTextBox1.Text = resources.GetString("RichTextBox1.Text")
         '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(569, 118)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(64, 71)
+        Me.Button1.TabIndex = 13
+        Me.Button1.Text = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'frmMenu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(697, 430)
+        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.RichTextBox1)
         Me.Controls.Add(Me.lblSolenoidDelay)
         Me.Controls.Add(Me.TrackBarSolenoidDelay)
@@ -152,5 +163,6 @@ Partial Class frmMenu
     Friend WithEvents lblSolenoidDelay As System.Windows.Forms.Label
     Friend WithEvents TrackBarSolenoidDelay As System.Windows.Forms.TrackBar
     Friend WithEvents RichTextBox1 As System.Windows.Forms.RichTextBox
+    Friend WithEvents Button1 As System.Windows.Forms.Button
 
 End Class

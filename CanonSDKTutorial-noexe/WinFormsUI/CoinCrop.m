@@ -1,8 +1,12 @@
+%imageName needs to be set when this script is called:
+%imageName = 'C:\Temp\TempCoinImages\101778.jpg';
+
 %close all;
 %tic
+%I did not find calibrating the camera and undistortImage the image was worth it, 
+%    at least for the large 18MB images. 
 %load 'C:\Users\pkrush\Documents\Computer Vision\coins\CameraParmesEOS3.mat'
 %toc; disp('1');
-imageName = 'C:\Temp\TempCoinImages\101778.jpg';
 
 %totalImages = 154;
 dirName =  imageName(1:length(imageName)-10);

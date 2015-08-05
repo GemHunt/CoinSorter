@@ -5,12 +5,14 @@ Public Class CroppedImage
     Public CropID As Int32
     Public HorizontalCenter As Int32
     Public CaptureTime As DateTime
+    Public FileName As String
 
-    Public Sub New(fileName As String)
-        ImageID = CInt(fileName.Substring(0, 6))
-        CropID = CInt(fileName.Substring(7, 3))
+    Public Sub New(NewFileName As String)
+        FileName = NewFileName
+        ImageID = CInt(NewFileName.Substring(0, 6))
+        CropID = CInt(NewFileName.Substring(7, 3))
         CroppedImageID = ImageID * 1000 + CropID
-        HorizontalCenter = CInt(fileName.Substring(12, 4))
+        HorizontalCenter = CInt(NewFileName.Substring(12, 4))
         While Not FullImages.ContainsKey(ImageID)
             Thread.Sleep(5)
         End While

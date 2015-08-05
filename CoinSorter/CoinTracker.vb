@@ -9,6 +9,10 @@ Module CoinTracker
     Public CoinRadiusOnFullImage As Double = 140
     Public MsCoinsAreInView As Double = 10000
     Public ImageWidth As Int32 = 960
+    Public DigitsIPAddress As String = "54.197.123.55"
+    Public DigitsJobID As String = "20150720-190912-2cfe"
+    Public CurrentDirectory As String = "C:/Temp/TempCoinImages/"
+    Public ArchivedDirectory As String = "F:/archivedCoinImages/"
 
     Public Sub HandleNewImages(sender As Object, e As IO.FileSystemEventArgs)
         Dim fi As New FileInfo(e.FullPath)
@@ -22,10 +26,8 @@ Module CoinTracker
             Dim coinIsDup As Boolean
             Dim coinID As Int32
             Coins.AddorUpdate(croppedImage, coinIsDup, coinID)
-            If Not coinIsDup Then
-
+            If Not coinIsDup And Coins(coinID).CoinTypeID = 1 Then
                 PowerSupply.ToggleSolenoid(Coins(coinID).CaptureTime, Coins(coinID).HorizontalCenter)
-
             End If
         End If
     End Sub

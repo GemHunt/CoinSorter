@@ -1,5 +1,5 @@
 ﻿Public Class frmMenu
-    Private imageDirectory As New ImageHandler("C:/Temp/TempCoinImages", "F:/archivedCoinImages")
+    Private imageDirectory As New ImageHandler()
 
     Private Sub frmMenu_Load(sender As Object, e As EventArgs) Handles Me.Load
         lblSolenoidVoltage.Text = "SolenoidVoltage: " & TrackBarVoltage.Value
@@ -28,5 +28,9 @@
     Private Sub cmdToggleSolenoid_Click(sender As Object, e As EventArgs) Handles cmdToggleSolenoid.Click
         PowerSupply.ToggleSolenoid(Now, 0)
         lblSolenoidDelay.Text = "Solenoid Delay: " & TrackBarSolenoidDelay.Value
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        imageDirectory = New ImageHandler()
     End Sub
 End Class

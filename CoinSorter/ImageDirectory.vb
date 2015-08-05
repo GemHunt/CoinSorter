@@ -1,20 +1,16 @@
 ﻿Imports System.IO
 Imports CoinTracker
 Public Class ImageHandler
-    Private currentDirectoryName As String
-    Private archivedDirectoryName As String
     Private currentDirectoryWatcher As FileSystemWatcher
 
-    Public Sub New(currentDir As String, archiveddir As String)
-        currentDirectoryName = currentDir
-        archivedDirectoryName = archiveddir
-        If Not Directory.Exists(currentDirectoryName) Then
-            Directory.CreateDirectory(currentDirectoryName)
+    Public Sub New()
+        If Not Directory.Exists(CurrentDirectory) Then
+            Directory.CreateDirectory(CurrentDirectory)
         End If
-        If Not Directory.Exists(archivedDirectoryName) Then
-            Directory.CreateDirectory(archivedDirectoryName)
+        If Not Directory.Exists(ArchivedDirectory) Then
+            Directory.CreateDirectory(ArchivedDirectory)
         End If
-        currentDirectoryWatcher = New FileSystemWatcher(currentDirectoryName)
+        currentDirectoryWatcher = New FileSystemWatcher(CurrentDirectory)
         currentDirectoryWatcher.EnableRaisingEvents = True
         AddHandler currentDirectoryWatcher.Created, AddressOf HandleNewImages
     End Sub
