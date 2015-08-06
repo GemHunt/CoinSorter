@@ -14,12 +14,12 @@ Public Class Coin
         CoinCroppedImages.Add(croppedImage)
         HorizontalCenter = croppedImage.HorizontalCenter
         CaptureTime = croppedImage.CaptureTime
+        Dim st As Stopwatch = Stopwatch.StartNew
         CoinTypeID = Classify()
-
+        Console.WriteLine("Classify took: " & st.ElapsedMilliseconds)
     End Sub
 
     Public Function Classify() As Int32
-
         'This works, but is very clunky as it flashes the command shell 
         'This needs to be replaced with a .Net POST!
         Dim oProcess As New Process()
