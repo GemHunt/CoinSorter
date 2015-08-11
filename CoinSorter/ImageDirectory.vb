@@ -9,6 +9,9 @@ Public Class ImageHandler
         End If
         If Not Directory.Exists(ArchivedDirectory) Then
             Directory.CreateDirectory(ArchivedDirectory)
+            Directory.CreateDirectory(ArchivedDirectory & "heads\")
+            Directory.CreateDirectory(ArchivedDirectory & "tails\")
+
         End If
         currentDirectoryWatcher = New FileSystemWatcher(CurrentDirectory)
         currentDirectoryWatcher.EnableRaisingEvents = True

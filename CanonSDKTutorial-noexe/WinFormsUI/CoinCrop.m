@@ -1,5 +1,5 @@
 %imageName needs to be set when this script is called:
-%imageName = 'C:\Temp\TempCoinImages\101778.jpg';
+%imageName = 'C:\Temp\TempCoinImages\100559.jpg';
 
 %close all;
 %tic
@@ -146,6 +146,12 @@ for blobID = 1:size(b,2)
     %
     
     cropID = blobID + 100*row;
+    
+    %resize from 256x256 to 128x128
+    %pennyCropped = impyramid(pennyCropped,'reduce');
+    %resize from 128x128 to 64x64
+    %pennyCropped = impyramid(pennyCropped,'reduce');
+           
     imwrite(pennyCropped,strcat(dirName,num2str(imageID), '_', num2str(cropID) , '_',  num2str(int16(b(blobID).uc) + 10000)   , '.jpg'));
     RegionFeatures(cropIter) = b(blobID);
     BlobIndex(cropIter) = cropID;

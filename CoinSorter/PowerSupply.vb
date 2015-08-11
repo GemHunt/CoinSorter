@@ -32,12 +32,15 @@ Public Class HPPowerSupply
         Dim msProcessingDelay As Double = span.TotalMilliseconds
         Dim milliSecondsToEndOfImage As Int32 = (ImageWidth - horizontalCenter) * CoinSpeedPixelsPerMs
         Dim delay As Int32 = MilliSecondsFromEndOfImageToSolenoid + milliSecondsToEndOfImage - msProcessingDelay
-        If delay <= 0 Then
-            delay = 1
-        End If
-
+        
         Console.WriteLine("MilliSecondsFromEndOfImageToSolenoid: " & MilliSecondsFromEndOfImageToSolenoid & " msDiff: " & msProcessingDelay & "  milliSecondsToEndOfImage: " & milliSecondsToEndOfImage)
         Console.WriteLine("delay: " & delay)
+
+        If delay <= 0 Then
+            Console.WriteLine("Toggle Solenoid Aborted because the delay is negative")
+            Exit Sub
+        End If
+
 
         Dim SolenoidTimerOn As New System.Timers.Timer(delay)
         AddHandler SolenoidTimerOn.Elapsed, AddressOf ToggleSolenoidOn

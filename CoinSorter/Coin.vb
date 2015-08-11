@@ -17,6 +17,13 @@ Public Class Coin
         Dim st As Stopwatch = Stopwatch.StartNew
         CoinTypeID = Classify()
         Console.WriteLine("Classify took: " & st.ElapsedMilliseconds)
+        If CoinTypeID = 0 Then
+            File.Copy(CurrentDirectory & croppedImage.FileName, ArchivedDirectory & "heads\" & croppedImage.FileName)
+        Else
+            File.Copy(CurrentDirectory & croppedImage.FileName, ArchivedDirectory & "tails\" & croppedImage.FileName)
+        End If
+
+
     End Sub
 
     Public Function Classify() As Int32
@@ -44,12 +51,15 @@ Public Class Coin
         Console.WriteLine(sOutput)
         Dim j As Object = New JavaScriptSerializer().Deserialize(Of Object)(sOutput)
         Dim tails As Double
-        If j("predictions")(0)(0) = "trails" Then
+        Dim heads As Double
+        If j("predictions")(0)(0) = "tails" Then
             tails = j("predictions")(0)(1)
-        Else
-            tails = j("predictions")(1)(1)
         End If
-        If tails > 90 Then
+        If j("predictions")(0)(0) = "heads" Then
+            tails = j("predictions")(0)(1)
+        End If
+
+        If tails > 90 Or heads > 90 Then
             Return 1
         Else
             Return 0

@@ -9,10 +9,13 @@ Module CoinTracker
     Public CoinRadiusOnFullImage As Double = 140
     Public MsCoinsAreInView As Double = 10000
     Public ImageWidth As Int32 = 960
-    Public DigitsIPAddress As String = "54.144.255.194"
-    Public DigitsJobID As String = "20150720-190912-2cfe"
+    Public DigitsIPAddress As String = "50.16.43.125"
+    'Public DigitsJobID As String = "20150720-190912-2cfe"  ' Very simple AlexNet 256x256 Heads Tails
+    Public DigitsJobID As String = "20150810-213455-64df"
+
+
     Public CurrentDirectory As String = "C:/Temp/TempCoinImages/"
-    Public ArchivedDirectory As String = "F:/archivedCoinImages/"
+    Public ArchivedDirectory As String = "F:/liveview/"
 
     Public Sub HandleNewImages(sender As Object, e As IO.FileSystemEventArgs)
         Dim fi As New FileInfo(e.FullPath)

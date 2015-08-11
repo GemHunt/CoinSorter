@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using EDSDKLib;
 using System.Threading;
+using Microsoft.VisualBasic;
 namespace WinFormsUI
 {
     public partial class MainForm : Form
@@ -18,6 +19,7 @@ namespace WinFormsUI
         List<Camera> CamList;
         Bitmap Evf_Bmp;
         int LVBw, LVBh, w, h, imageID = 100000;
+        DateTime lastImageTime = DateTime.Now;
         float LVBratio, LVration;
         Images images = new Images();
 
@@ -75,10 +77,17 @@ namespace WinFormsUI
             }
             else
             {
-                imageID++;
-                string fullImageName = images.ImageDir + imageID + ".jpg";
-                Evf_Bmp.Save(fullImageName, System.Drawing.Imaging.ImageFormat.Jpeg);
-                images.CallMatlab(fullImageName);
+                long lastImageMilliSeconds = (DateTime.Now - lastImageTime).Milliseconds;
+                lastImageMilliSeconds += (DateTime.Now - lastImageTime).Seconds * 1000;
+
+                if (lastImageMilliSeconds > 650)
+                {
+                    lastImageTime = DateTime.Now;
+                    imageID++;
+                    string fullImageName = images.ImageDir + imageID + ".jpg";
+                    Evf_Bmp.Save(fullImageName, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    images.CallMatlab(fullImageName);
+                }
             }
             Evf_Bmp.Dispose();
         }
@@ -275,6 +284,11 @@ namespace WinFormsUI
         #endregion
 
         private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MainForm_Load_1(object sender, EventArgs e)
         {
 
         }

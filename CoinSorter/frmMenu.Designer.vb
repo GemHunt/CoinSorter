@@ -105,13 +105,13 @@ Partial Class frmMenu
         'TrackBarSolenoidDelay
         '
         Me.TrackBarSolenoidDelay.Location = New System.Drawing.Point(28, 350)
-        Me.TrackBarSolenoidDelay.Maximum = 0
-        Me.TrackBarSolenoidDelay.Minimum = -250
+        Me.TrackBarSolenoidDelay.Maximum = 1200
+        Me.TrackBarSolenoidDelay.Minimum = 200
         Me.TrackBarSolenoidDelay.Name = "TrackBarSolenoidDelay"
         Me.TrackBarSolenoidDelay.Size = New System.Drawing.Size(418, 45)
         Me.TrackBarSolenoidDelay.TabIndex = 10
         Me.TrackBarSolenoidDelay.TickFrequency = 5
-        Me.TrackBarSolenoidDelay.Value = -50
+        Me.TrackBarSolenoidDelay.Value = 770
         '
         'RichTextBox1
         '

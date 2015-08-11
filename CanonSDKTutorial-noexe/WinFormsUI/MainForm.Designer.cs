@@ -71,7 +71,7 @@
             this.LiveViewPicBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LiveViewPicBox.Location = new System.Drawing.Point(10, 51);
             this.LiveViewPicBox.Name = "LiveViewPicBox";
-            this.LiveViewPicBox.Size = new System.Drawing.Size(1536, 1066);
+            this.LiveViewPicBox.Size = new System.Drawing.Size(1136, 1058);
             this.LiveViewPicBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.LiveViewPicBox.TabIndex = 1;
             this.LiveViewPicBox.TabStop = false;
@@ -158,7 +158,7 @@
             this.LiveViewGroupBox.Enabled = false;
             this.LiveViewGroupBox.Location = new System.Drawing.Point(12, 112);
             this.LiveViewGroupBox.Name = "LiveViewGroupBox";
-            this.LiveViewGroupBox.Size = new System.Drawing.Size(1560, 1128);
+            this.LiveViewGroupBox.Size = new System.Drawing.Size(1160, 1120);
             this.LiveViewGroupBox.TabIndex = 10;
             this.LiveViewGroupBox.TabStop = false;
             this.LiveViewGroupBox.Text = "LiveView";
@@ -404,7 +404,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1584, 1253);
+            this.ClientSize = new System.Drawing.Size(1184, 1245);
             this.Controls.Add(this.SettingsGroupBox);
             this.Controls.Add(this.LiveViewGroupBox);
             this.Controls.Add(this.InitGroupBox);
@@ -414,6 +414,7 @@
             this.Name = "MainForm";
             this.Text = "Canon SDK Tutorial";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.Load += new System.EventHandler(this.MainForm_Load_1);
             ((System.ComponentModel.ISupportInitialize)(this.LiveViewPicBox)).EndInit();
             this.InitGroupBox.ResumeLayout(false);
             this.InitGroupBox.PerformLayout();
