@@ -6,7 +6,8 @@ Imports System.Web.Script.Serialization
 Public Class Coin
     Public coinID As Int32  'The first CroppedImageID
     Public CoinCroppedImages As New HashSet(Of CroppedImage)
-    Public CoinTypeID As Int32
+    Public Type As String
+    Public TypeStrength As Double
     Public HorizontalCenter As Int32
     Public CaptureTime As DateTime
     Public Sub New(croppedImage As CroppedImage)
@@ -15,18 +16,17 @@ Public Class Coin
         HorizontalCenter = croppedImage.HorizontalCenter
         CaptureTime = croppedImage.CaptureTime
         Dim st As Stopwatch = Stopwatch.StartNew
-        CoinTypeID = Classify()
+        Type = Classify()
         Console.WriteLine("Classify took: " & st.ElapsedMilliseconds)
-        If CoinTypeID = 0 Then
-            File.Copy(CurrentDirectory & croppedImage.FileName, ArchivedDirectory & "heads\" & croppedImage.FileName)
-        Else
-            File.Copy(CurrentDirectory & croppedImage.FileName, ArchivedDirectory & "tails\" & croppedImage.FileName)
+        Dim ArchivedTypeDirectory As String = ArchivedDirectory & Type & "\"
+        If Not Directory.Exists(ArchivedTypeDirectory) Then
+            Directory.CreateDirectory(ArchivedTypeDirectory)
         End If
-
+        File.Copy(CurrentDirectory & croppedImage.FileName, ArchivedTypeDirectory & croppedImage.FileName)
 
     End Sub
 
-    Public Function Classify() As Int32
+    Public Function Classify() As String
         'This works, but is very clunky as it flashes the command shell 
         'This needs to be replaced with a .Net POST!
         Dim oProcess As New Process()
@@ -50,19 +50,7 @@ Public Class Coin
         End Using
         Console.WriteLine(sOutput)
         Dim j As Object = New JavaScriptSerializer().Deserialize(Of Object)(sOutput)
-        Dim tails As Double
-        Dim heads As Double
-        If j("predictions")(0)(0) = "tails" Then
-            tails = j("predictions")(0)(1)
-        End If
-        If j("predictions")(0)(0) = "heads" Then
-            tails = j("predictions")(0)(1)
-        End If
-
-        If tails > 90 Or heads > 90 Then
-            Return 1
-        Else
-            Return 0
-        End If
+        TypeStrength = j("predictions")(0)(1)
+        Return j("predictions")(0)(0)
     End Function
 End Class

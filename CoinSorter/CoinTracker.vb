@@ -13,7 +13,6 @@ Module CoinTracker
     'Public DigitsJobID As String = "20150720-190912-2cfe"  ' Very simple AlexNet 256x256 Heads Tails
     Public DigitsJobID As String = "20150810-213455-64df"
 
-
     Public CurrentDirectory As String = "C:/Temp/TempCoinImages/"
     Public ArchivedDirectory As String = "F:/liveview/"
 
@@ -29,7 +28,8 @@ Module CoinTracker
             Dim coinIsDup As Boolean
             Dim coinID As Int32
             Coins.AddorUpdate(croppedImage, coinIsDup, coinID)
-            If Not coinIsDup And Coins(coinID).CoinTypeID = 1 Then
+            'Sort out strong Lincoln memorials:
+            If Not coinIsDup And Coins(coinID).Type = "tails" And Coins(coinID).TypeStrength > 80 Then
                 PowerSupply.ToggleSolenoid(Coins(coinID).CaptureTime, Coins(coinID).HorizontalCenter)
             End If
         End If

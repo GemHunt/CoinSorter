@@ -91,7 +91,7 @@ Partial Class frmMenu
         Me.TrackBarmSeconds.Size = New System.Drawing.Size(418, 45)
         Me.TrackBarmSeconds.TabIndex = 8
         Me.TrackBarmSeconds.TickFrequency = 10
-        Me.TrackBarmSeconds.Value = 127
+        Me.TrackBarmSeconds.Value = 200
         '
         'lblSolenoidDelay
         '
@@ -111,7 +111,7 @@ Partial Class frmMenu
         Me.TrackBarSolenoidDelay.Size = New System.Drawing.Size(418, 45)
         Me.TrackBarSolenoidDelay.TabIndex = 10
         Me.TrackBarSolenoidDelay.TickFrequency = 5
-        Me.TrackBarSolenoidDelay.Value = 770
+        Me.TrackBarSolenoidDelay.Value = 840
         '
         'RichTextBox1
         '

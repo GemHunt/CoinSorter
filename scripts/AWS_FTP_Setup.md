@@ -10,7 +10,7 @@ sudo apt-get install vsftpd
 sudo vi /etc/vsftpd.conf
 Add the following lines to the bottom of the vsftpd.conf file:
 #Change pasv_address to the Public IP of the AWS Instance:
-pasv_address=54.161.233.40   
+pasv_address=50.16.43.125
 pasv_enable=YES
 pasv_min_port=1024
 pasv_max_port=1048
