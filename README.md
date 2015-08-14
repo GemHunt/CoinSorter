@@ -13,13 +13,13 @@ For example a coin collector could use this to
 	semi-automatically sort coins in his basement at home 
 	from his smart phone while he is waiting in line at the grocery store.
 
-CoinSorter Project:
+#CoinSorter Project:
 This program watches a directory for images to appear. 
 The image is sent to DIGITS (The Nivida Caffe front end) for classification.
 Finally a solenoid turns on for coins that meet a certain criteria.
 Written in VB.Net v4.5 Framework. 
 
-CanonSDKTutorial-noexe:
+#CanonSDKTutorial-noexe:
 Originally created by Johannes Bildstein at:
 http://www.codeproject.com/Articles/688276/Canon-EDSDK-Tutorial-in-Csharp
 Changes:
