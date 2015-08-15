@@ -1,5 +1,5 @@
 %imageName needs to be set when this script is called:
-%imageName = 'C:\Temp\TempCoinImages\100559.jpg';
+%imageName = 'C:\Temp\TempCoinImages\100100015.jpg';
 
 %close all;
 %tic
@@ -9,8 +9,8 @@
 %toc; disp('1');
 
 %totalImages = 154;
-dirName =  imageName(1:length(imageName)-10);
-imageID = str2num(imageName(length(imageName)-9:length(imageName)-4));
+dirName =  imageName(1:length(imageName)-13);
+imageID = str2num(imageName(length(imageName)-12:length(imageName)-4));
 
 %for iter = 1:totalImages
 %imageID = 100001 + iter;
@@ -120,7 +120,7 @@ for blobID = 1:size(b,2)
     
     %rotated the image because the pennys look like ovals and this oval needs to be horizontal:
     %There should be real homography calculations here...)
-    pennyRotated = imrotate(penny,b(blobID).theta_ * -1);
+    pennyRotated = imrotate(penny,b(blobID).theta_ * -1,'bilinear');
     
     
     %Squeeze the image so the penny is round again:
@@ -152,7 +152,7 @@ for blobID = 1:size(b,2)
     %resize from 128x128 to 64x64
     %pennyCropped = impyramid(pennyCropped,'reduce');
            
-    imwrite(pennyCropped,strcat(dirName,num2str(imageID), '_', num2str(cropID) , '_',  num2str(int16(b(blobID).uc) + 10000)   , '.jpg'));
+    imwrite(pennyCropped,strcat(dirName,num2str(imageID), num2str(cropID) ,  sprintf('%04d', int16(b(blobID).uc)) , '.jpg'));
     RegionFeatures(cropIter) = b(blobID);
     BlobIndex(cropIter) = cropID;
     cropIter = cropIter + 1;
