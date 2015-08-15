@@ -33,6 +33,38 @@ g2.2xlarge or g2.8xlarge
 #Paul's Comment:  If you going through this much trouble, 
 #I would just register as a developer and download CuDnn 3 first. 
 
+
+
+
+#FTP Install Notes
+#FTP is not required, but I think it's handy. 
+#There are all sorts of examples of using vsftpd on AWS, but they all a bit different. 
+#This is what works for me, just to get things started. 
+#This is just for temporary instance that only I would be using. 
+
+#AWS Security group changes: 
+#Make sure 20-21 and 1024-1048 is open to your IP
+cd ~
+sudo apt-get update
+sudo apt-get install vsftpd
+
+sudo vi /etc/vsftpd.conf
+#Add the following lines to the bottom of the vsftpd.conf file:
+#Change pasv_address to the Public IP of the AWS Instance:
+pasv_address=54.157.147.8
+pasv_enable=YES
+pasv_min_port=1024
+pasv_max_port=1048
+port_enable=YES
+pasv_addr_resolve=YES
+write_enable=YES
+
+#Change it to ubuntu password to something: 
+sudo passwd ubuntu
+sudo service vsftpd restart
+cd ~
+
+
 # don't forget to get your system up to date
 sudo apt-get update
 sudo apt-get dist-upgrade
@@ -66,33 +98,6 @@ make
 ./deviceQuery
 
 
-#FTP Install Notes
-#There are all sorts of examples of using vsftpd on AWS, but they all a bit different. 
-#This is what works for me, just to get things started. 
-#This is just for temporary instance that only I would be using. 
-
-#AWS Security group changes: 
-#Make sure 20-21 and 1024-1048 is open to your IP
-cd ~
-sudo apt-get update
-sudo apt-get install vsftpd
-
-sudo vi /etc/vsftpd.conf
-#Add the following lines to the bottom of the vsftpd.conf file:
-#Change pasv_address to the Public IP of the AWS Instance:
-pasv_address=54.157.147.8
-pasv_enable=YES
-pasv_min_port=1024
-pasv_max_port=1048
-port_enable=YES
-pasv_addr_resolve=YES
-write_enable=YES
-
-#Change it to ubuntu password to something: 
-#(I just use "ubuntu", I don't know, you are on SSH and it's the server can only respond to your IP. 
-sudo passwd ubuntu
-sudo service vsftpd restart
-cd ~
 
 # Install CuDNN v 3
 #You can't just get the file: sudo wget https://developer.nvidia.com/rdp/assets/cudnn-7.0-linux-x64-v3-rc
@@ -160,12 +165,11 @@ for req in $(cat requirements.txt); do sudo pip install $req; done
 
 cd ~
 
-#Starting and Configuring DIGITS
-#The first time you start DIGITS it will ask you number of questions for the 
-# purpose of its configuration.
-# But those settings are pretty much self-explanatory 
-# and you can change them afterwards in ~/.digits/digits.cfg
 # You might want to consider locating your job-directory ( jobs_dir) on an EBS 
+# See https://github.com/NVIDIA/DIGITS/blob/master/docs/GettingStarted.md for details. 
+# I set the the jobs_dir at /data/digits/jobs by using the --config option:
+#./digits-devserver --config
+
 
 # start the server
 ./digits/digits-devserver

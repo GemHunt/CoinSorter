@@ -18,6 +18,8 @@ port_enable=YES
 pasv_addr_resolve=YES
 write_enable=YES
 
-sudo passwd ubuntu  -> Change it to ubuntu
+#Change password:
+sudo passwd ubuntu
 
+#Restart server for changes to take effect:
 sudo service vsftpd restart
