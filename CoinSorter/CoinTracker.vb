@@ -9,16 +9,16 @@ Module CoinTracker
     Public CoinRadiusOnFullImage As Double = 140
     Public MsCoinsAreInView As Double = 10000
     Public ImageWidth As Int32 = 960
-    Public DigitsIPAddress As String = "50.16.43.125"
-    'Public DigitsJobID As String = "20150720-190912-2cfe"  ' Very simple AlexNet 256x256 Heads Tails
-    Public DigitsJobID As String = "20150810-213455-64df"
+    Public DigitsIPAddress As String = "54.157.133.214"
+    Public DigitsJobID As String = "20150815-201431-6cde"  ' 6 Types AlexNet 256x256
+
 
     Public CurrentDirectory As String = "C:/Temp/TempCoinImages/"
     Public ArchivedDirectory As String = "F:/liveview/"
 
     Public Sub HandleNewImages(sender As Object, e As IO.FileSystemEventArgs)
         Dim fi As New FileInfo(e.FullPath)
-        If fi.Name.Length = 10 Then
+        If fi.Name.Length = 13 Then
             Dim fullImage As New FullImage(fi.Name)
             FullImages.Add(fullImage)
         End If
@@ -26,7 +26,7 @@ Module CoinTracker
             Dim croppedImage As New CroppedImage(fi.Name)
             CroppedImages.Add(croppedImage)
             Dim coinIsDup As Boolean
-            Dim coinID As Int32
+            Dim coinID As Int64
             Coins.AddorUpdate(croppedImage, coinIsDup, coinID)
             'Sort out strong Lincoln memorials:
             If Not coinIsDup And Coins(coinID).Type = "tails" And Coins(coinID).TypeStrength > 80 Then

@@ -1,7 +1,7 @@
 ﻿Imports System.Threading
 Public Class CroppedImage
-    Public CroppedImageID As Int32
-    Public ImageID As Int32
+    Public CroppedImageID As Int64
+    Public ImageID As Int64
     Public CropID As Int32
     Public HorizontalCenter As Int32
     Public CaptureTime As DateTime
@@ -9,10 +9,10 @@ Public Class CroppedImage
 
     Public Sub New(NewFileName As String)
         FileName = NewFileName
-        ImageID = CInt(NewFileName.Substring(0, 6))
-        CropID = CInt(NewFileName.Substring(7, 3))
+        ImageID = CInt(NewFileName.Substring(0, 9))
+        CropID = CInt(NewFileName.Substring(9, 3))
         CroppedImageID = ImageID * 1000 + CropID
-        HorizontalCenter = CInt(NewFileName.Substring(12, 4))
+        HorizontalCenter = CInt(NewFileName.Substring(13, 4))
         While Not FullImages.ContainsKey(ImageID)
             Thread.Sleep(5)
         End While

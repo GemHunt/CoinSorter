@@ -1,10 +1,10 @@
 ﻿Public Class CoinDirectory
-    Inherits Dictionary(Of Int32, Coin)
+    Inherits Dictionary(Of int64, Coin)
     Private CoinsInView As New HashSet(Of Coin)
 
 
 
-    Public Sub AddorUpdate(croppedImage As CroppedImage, ByRef coinIsDup As Boolean, ByRef coinID As Int32)
+    Public Sub AddorUpdate(croppedImage As CroppedImage, ByRef coinIsDup As Boolean, ByRef coinID As Int64)
         coinID = GetCoinID(croppedImage)
 
         If coinID = 0 Then
@@ -19,7 +19,7 @@
         End If
     End Sub
 
-    Private Function GetCoinID(croppedImage As CroppedImage) As Int32
+    Private Function GetCoinID(croppedImage As CroppedImage) As Int64
         ' updateCoinsInView()
         For Each coin In CoinsInView
             Dim span As TimeSpan = croppedImage.CaptureTime - coin.CaptureTime

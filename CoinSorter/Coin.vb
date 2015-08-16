@@ -4,7 +4,7 @@ Imports System.IO
 Imports System.Web.Script.Serialization
 
 Public Class Coin
-    Public coinID As Int32  'The first CroppedImageID
+    Public coinID As Int64  'The first CroppedImageID
     Public CoinCroppedImages As New HashSet(Of CroppedImage)
     Public Type As String
     Public TypeStrength As Double
