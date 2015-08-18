@@ -99,14 +99,23 @@ Public Class Coin
                 Dim job_id As New StringContent(digitsJobID, System.Text.Encoding.UTF8)
                 content.Add(job_id, "job_id")
 
-                Dim crop = Bitmap.FromFile(fileName)
+                'OK, this is making the image to short for Digits??:
+                'Dim buff() As Byte = ConvertImageFiletoBytes(fileName)
+
+                'A delay was put in to allow the file to be fully written: 
+                Thread.Sleep(50)
+                Dim crop As Bitmap = Bitmap.FromFile(fileName)
+                Dim crop2 As Bitmap = crop.Clone
+                crop.Dispose()
                 Dim converter As New ImageConverter()
-                Dim buff() As Byte = converter.ConvertTo(crop, GetType(Byte()))
+                Dim buff() As Byte = converter.ConvertTo(crop2, GetType(Byte()))
+                crop2.Dispose()
+
                 content.Add(New StreamContent(New MemoryStream(buff)), "image_file", "image_file")
 
                 Using message = Await client.PostAsync(GetDigitsCall(digitsIPAddress, digitsJobID), content)
                     Dim sOutput = Await message.Content.ReadAsStringAsync()
-                    crop.Dispose()
+                    'crop.Dispose()
 
                     Dim j As Object = New JavaScriptSerializer().Deserialize(Of Object)(sOutput)
                     TypeStrength = j("predictions")(0)(1)
@@ -129,7 +138,28 @@ Public Class Coin
         End Using
     End Function
 
-
+    Public Function ConvertImageFiletoBytes(ByVal ImageFilePath As String) As Byte()
+        Dim _tempByte() As Byte = Nothing
+        If String.IsNullOrEmpty(ImageFilePath) = True Then
+            Throw New ArgumentNullException("Image File Name Cannot be Null or Empty", "ImageFilePath")
+            Return Nothing
+        End If
+        Try
+            Dim _fileInfo As New IO.FileInfo(ImageFilePath)
+            Dim _NumBytes As Long = _fileInfo.Length
+            Dim _FStream As New IO.FileStream(ImageFilePath, IO.FileMode.Open, IO.FileAccess.Read)
+            Dim _BinaryReader As New IO.BinaryReader(_FStream)
+            _tempByte = _BinaryReader.ReadBytes(Convert.ToInt32(_NumBytes))
+            _fileInfo = Nothing
+            _NumBytes = 0
+            _FStream.Close()
+            _FStream.Dispose()
+            _BinaryReader.Close()
+            Return _tempByte
+        Catch ex As Exception
+            Return Nothing
+        End Try
+    End Function
 
 
 End Class
