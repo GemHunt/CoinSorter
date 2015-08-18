@@ -18,7 +18,7 @@ namespace WinFormsUI
         List<int> ISOList;
         List<Camera> CamList;
         Bitmap Evf_Bmp;
-        int LVBw, LVBh, w, h, imageID = 100 * 1010000;
+        int LVBw, LVBh, w, h, imageID = 100 * 1020000;
         DateTime lastImageTime = DateTime.Now;
         float LVBratio, LVration;
         Images images = new Images();

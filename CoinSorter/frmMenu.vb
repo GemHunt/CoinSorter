@@ -31,6 +31,14 @@
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        imageDirectory = New ImageHandler()
+        Dim fileName As String = "F:/liveview/heads\1010000021030599.jpg"
+        If System.IO.File.Exists(fileName) Then
+            System.IO.File.Delete(fileName)
+        End If
+
+        Dim fullImage As New FullImage("101000002.jpg")
+        FullImages.Add(fullImage)
+        Dim cropped As New CroppedImage("1010000021030599.jpg")
+        Dim coin As New Coin(cropped)
     End Sub
 End Class

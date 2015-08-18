@@ -1,4 +1,12 @@
-#Open the FTP config for editing:
+#1.) Attach your EBS Volume after starting your instance. 
+#2.) Mount the Existing volume
+sudo mount /dev/xvdf /data
+
+#3.) Start the DIGITS server:
+./digits/digits-devserver
+
+
+#4.) If FTP Needed:   Open the FTP config for editing:
 sudo vi /etc/vsftpd.conf
 
 #Change pasv_address to the Public IP of the AWS Instance:
@@ -10,11 +18,9 @@ sudo service vsftpd restart
 
 
 
-#Attach your EBS Volume after starting your instance. 
-#Mount the Existing volume
-sudo mount /dev/xvdf /data
-#Add permissions:
-sudo chmod 777 /data
+
+
+
 
 
 

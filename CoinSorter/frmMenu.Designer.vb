@@ -123,11 +123,11 @@ Partial Class frmMenu
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(569, 118)
+        Me.Button1.Location = New System.Drawing.Point(519, 118)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(64, 71)
+        Me.Button1.Size = New System.Drawing.Size(147, 71)
         Me.Button1.TabIndex = 13
-        Me.Button1.Text = "Button1"
+        Me.Button1.Text = "Test DIGITS Call"
         Me.Button1.UseVisualStyleBackColor = True
         '
         'frmMenu
