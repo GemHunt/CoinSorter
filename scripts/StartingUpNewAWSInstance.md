@@ -16,6 +16,8 @@ sudo mount /dev/xvdf /data
 #Add permissions:
 sudo chmod 777 /data
 
+
+
 #Shuting down:
 sudo umount -d /dev/xvdf
 
