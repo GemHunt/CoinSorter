@@ -1,7 +1,7 @@
 # CoinSorter
 Sorts coins by solenoid on a conveyor by classifying images with Caffe &amp; DIGETS
 
-This group of programs and scripts is just a quick proof of concept to show physical coins sorting. It's currently sorting about 2 pennies a second, continuously. With only one solenoid only 2 physical bins are are currently set up. 
+This group of programs and scripts is just a quick proof of concept to show physical coin sorting. It's currently sorting about 2 pennies a second, continuously. With only one solenoid only 2 physical bins are are currently set up. 
 
 **The end goal is a low cost system / kit that can:**
 * handle, inspect, count, sort, and position small parts.
@@ -14,7 +14,7 @@ This group of programs and scripts is just a quick proof of concept to show phys
 * while he is waiting in line at the bank,
 * to dump the last batch of coins he searched. 
 
-There is clear demand for a coin sorting tool and it’s not just people interested in coins. Since everyone one understands what coins are, it’s a great part to demonstrate what a low cost system like this can do. 
+There is clear demand for a coin sorting tool and it’s not just people interested in coins. Since everyone one understands what coins are, coins a great "small part" to demonstrate what a low cost system like this can do. 
 
 #CoinSorter Project:
 This program watches a directory for images to appear. 
@@ -23,14 +23,19 @@ Finally a solenoid turns on for coins that meet a certain criteria.
 Written in VB.Net v4.5 Framework. 
 
 #CanonSDKTutorial-noexe:
+The image capture program
 Originally created by Johannes Bildstein at:
 http://www.codeproject.com/Articles/688276/Canon-EDSDK-Tutorial-in-Csharp
+
 Changes:
-Save LiveView captaures 
-Call a MATLAB script to crop the coins to 256x256 images
-I did not include the Canon SDK DLLs. 
+* Saves LiveView captures 
+* Calls a MATLAB script to crop the coins to 256x256 images
+* I did not include the Canon SDK DLLs. 
+
+To better understand where this system is heading read the Prototype CoinSorter Milestone description:
+https://github.com/GemHunt/CoinSorter/milestones
+and it's issues:
+https://github.com/GemHunt/CoinSorter/milestones/Prototype%20CoinSorter
 
 
-
-Milestones coming soon...
 
