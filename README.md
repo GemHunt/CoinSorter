@@ -11,7 +11,7 @@ The end goal is a low cost system that can
 	with local or remote control.
 For example a coin collector could use this to
 	semi-automatically sort coins in his basement at home 
-	from his smart phone while he is waiting in line at the grocery store.
+	from his smart phone while he is waiting in line at the bank to dump the last batch of coins he searched. 
 
 #CoinSorter Project:
 This program watches a directory for images to appear. 
