@@ -9,9 +9,12 @@ Only 2 physical bins are are currently set up.
 The end goal is a low cost system that can
 	handle, inspect, count, sort, and position small parts 
 	with local or remote control.
-For example a coin collector could use this to
-	semi-automatically sort coins in his basement at home 
-	from his smart phone while he is waiting in line at the bank to dump the last batch of coins he searched. 
+For example a coin collector could use this to,
+	semi-automatically sort coins remotely,
+	in his basement at home, 
+	from his smart phone,
+	while he is waiting in line at the bank,
+	to dump the last batch of coins he searched. 
 
 #CoinSorter Project:
 This program watches a directory for images to appear. 
