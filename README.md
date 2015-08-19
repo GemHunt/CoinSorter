@@ -7,8 +7,8 @@ Caffe sorts into 6 different types, US Lincon, US Memorial, US Wheat, CA Maple, 
 Only 2 physical bins are are currently set up. 
 
 The end goal is a low cost system that can
-	handle, inspect, count, sort, and position small parts 
-	with local or remote control.
+--* handle, inspect, count, sort, and position small parts 
+--* with local or remote control.
 For example a coin collector could use this to,
 	semi-automatically sort coins remotely,
 	in his basement at home, 
