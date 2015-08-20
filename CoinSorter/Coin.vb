@@ -28,7 +28,7 @@ Public Class Coin
 
     Public Function ClassifyWithCurl() As String
         'This works, but is very clunky as it flashes the command shell 
-        'This needs to be replaced with a .Net POST!
+        'The .Net POST is much better
         Dim oProcess As New Process()
         Dim callURL As String = DigitsIPAddress & ":5000/models/images/classification/classify_one.json"
         Dim commandLine As New StringBuilder
@@ -54,18 +54,6 @@ Public Class Coin
         Return j("predictions")(0)(0)
     End Function
 
-    Public Function GetDigitsCall() As String
-        Dim digitsCall As New StringBuilder
-        digitsCall.Append(DigitsIPAddress)
-        digitsCall.Append(":5000/models/images/classification/classify_one.json")
-        digitsCall.Append(" -XPOST -F job_id=")
-        digitsCall.Append(DigitsJobID)
-        digitsCall.Append(" -F image_file=@")
-        digitsCall.Append(CurrentDirectory & CoinCroppedImages(0).FileName)
-        Return digitsCall.ToString
-    End Function
-
-
     Public Function Classify() As String
         Dim callURL As String = DigitsIPAddress & ":5000/models/images/classification/classify_one.json"
         Dim commandLine As New StringBuilder
@@ -81,7 +69,6 @@ Public Class Coin
         TypeStrength = j("predictions")(0)(1)
         Return j("predictions")(0)(0)
     End Function
-
 
     Public Shared Function GetDigitsCall(DigitsIPAddress As String, DigitsJobID As String) As String
         Dim digitsCall As New StringBuilder()
@@ -99,23 +86,24 @@ Public Class Coin
                 Dim job_id As New StringContent(digitsJobID, System.Text.Encoding.UTF8)
                 content.Add(job_id, "job_id")
 
-                'OK, this is making the image to short for Digits??:
-                'Dim buff() As Byte = ConvertImageFiletoBytes(fileName)
-
                 'A delay was put in to allow the file to be fully written: 
                 Thread.Sleep(50)
+                'Depending on how the image was read,
+                'DIGITS was complaining files where tuncated by 20-30 byte without this 50 ms delay,
+                'or an "out of memory" error was occuring,
+                'and it's not a memory issue, it's a poorly worded mesg from Windows GDI
+                
                 Dim crop As Bitmap = Bitmap.FromFile(fileName)
-                Dim crop2 As Bitmap = crop.Clone
-                crop.Dispose()
+                'Dim crop2 As Bitmap = crop.Clone
+                'crop.Dispose()
                 Dim converter As New ImageConverter()
-                Dim buff() As Byte = converter.ConvertTo(crop2, GetType(Byte()))
-                crop2.Dispose()
+                Dim buff() As Byte = converter.ConvertTo(crop, GetType(Byte()))
+                crop.Dispose()
 
                 content.Add(New StreamContent(New MemoryStream(buff)), "image_file", "image_file")
 
                 Using message = Await client.PostAsync(GetDigitsCall(digitsIPAddress, digitsJobID), content)
                     Dim sOutput = Await message.Content.ReadAsStringAsync()
-                    'crop.Dispose()
 
                     Dim j As Object = New JavaScriptSerializer().Deserialize(Of Object)(sOutput)
                     TypeStrength = j("predictions")(0)(1)
@@ -128,12 +116,13 @@ Public Class Coin
                     File.Copy(CurrentDirectory & CoinCroppedImages(0).FileName, ArchivedTypeDirectory & CoinCroppedImages(0).FileName)
 
                     'Sort out strong Lincoln memorials:
-                    If Coins(coinID).Type = "tails" And Coins(coinID).TypeStrength > 80 Then
+                    'If Coins(coinID).Type = "tails" And Coins(coinID).TypeStrength > 80 Then
+
+                    'Sort out Lincoln memorials:
+                    If Coins(coinID).Type = "tails" Then
                         PowerSupply.ToggleSolenoid(Coins(coinID).CaptureTime, Coins(coinID).HorizontalCenter)
                     End If
-
                 End Using
-
             End Using
         End Using
     End Function
@@ -160,6 +149,4 @@ Public Class Coin
             Return Nothing
         End Try
     End Function
-
-
 End Class
