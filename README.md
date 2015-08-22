@@ -3,18 +3,18 @@ Sorts coins by solenoid on a conveyor by classifying images with Caffe &amp; DIG
 
 This group of programs and scripts is just a quick proof of concept to show physical coin sorting. It's currently sorting about 2 pennies a second, continuously. With only one solenoid only 2 physical bins are are currently set up. 
 
-**The end goal is a low cost system / kit that can:**
-* handle, inspect, count, sort, and position small parts.
+**The goal is a open low cost system / kit that can:**
+* handle, image, inspect, count, sort, and position small parts.
 * with local or remote control.
 
-**For example a coin collector could use this to:**
-* semi-automatically sort coins remotely,
+**For example a coin collector could one day configure the system to:**
+* semi-automatically inspect coins remotely,
 * in his basement at home, 
 * from his smart phone,
 * while he is waiting in line at the bank,
 * to dump the last batch of coins he searched. 
 
-There is clear demand for a coin sorting tool and it’s not just people interested in coins. Since everyone one understands what coins are, coins a great "small part" to demonstrate what a low cost system like this can do. 
+There is clear demand for a coin sorting tool, but it’s not just people interested in coins that would use this.  Since everyone one understands what coins are, coins a great "small part" to demonstrate what a low cost system like this can do. 
 
 #CoinSorter Project:
 This program watches a directory for images to appear. 
@@ -36,6 +36,14 @@ To better understand where this system is heading read the Prototype CoinSorter 
 https://github.com/GemHunt/CoinSorter/milestones
 and it's issues:
 https://github.com/GemHunt/CoinSorter/milestones/Prototype%20CoinSorter
+
+This project is project is brought to you by:
+
+GemHunt.com: a for profit company helping people learn robotics, machine vision, and deep learning while providing DIY small part handling systems. 
+
+Thanks!  
+Paul Krush
+
 
 
 
