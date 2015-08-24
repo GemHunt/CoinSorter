@@ -119,7 +119,7 @@ Public Class Coin
                     'If Coins(coinID).Type = "tails" And Coins(coinID).TypeStrength > 80 Then
 
                     'Sort out Lincoln memorials:
-                    If Coins(coinID).Type = "tails" Then
+                    If Coins(coinID).Type = "1982D" Or Coins(coinID).Type = "1982P" Then
                         PowerSupply.ToggleSolenoid(Coins(coinID).CaptureTime, Coins(coinID).HorizontalCenter)
                     End If
                 End Using
