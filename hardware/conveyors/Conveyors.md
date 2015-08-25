@@ -1,9 +1,9 @@
-**Three types of conveyor ends have been used successfully:**
+﻿**Three types of conveyor ends have been used successfully:**
 * Motor end in ¾” MDF
 * Pulley end in ¾ MDF
 * Pulley end in ¼ MDF
 
-These pulleys built from ¾” frames have turned out way better than I thought they would. I first used 1mm thick belting at 100RP; this was a bit under powered. All the power is used to move the thick belts. It would move a full gallon of milk with no issues. 
+These conveyors built from ¾” frames have turned out way better than I thought they would. I first used 1mm thick belting at 100RPM and this was a bit under-powered. All the power is used to move the thicker belt under tension. It would move a full gallon of milk(3+ kilos) with no issues. 
 
 With the 0.15mm thick belting that is currently be used the motors can be smaller, especially if you put in ball bearings. 
 
