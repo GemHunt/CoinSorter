@@ -6,16 +6,8 @@ This group of programs and scripts is just a quick proof of concept to show phys
 
 ![Image of Conveyor 5](/hardware/conveyors/5small.jpg) 
 
-There is clear demand for a coin sorting and inspection tool, but it’s not just people interested in coins that would use this.  Since everyone one understands what coins are, coins a great "small part" to demonstrate what a low cost system like this can do. It's also a great project to help people learn computer vision. 
-
-**The overall goal is a open low cost system / kit that can:**
-* handle, image, inspect, count, sort, and position small parts.
-* with local or remote control.
-
-To better understand where this system is heading read the Prototype CoinSorter Milestone description:
-https://github.com/GemHunt/CoinSorter/milestones
-and it's issues:
-https://github.com/GemHunt/CoinSorter/milestones/Prototype%20CoinSorter
+To understand where this system is heading in the short term see the [prototype CoinSorter's issues](
+https://github.com/GemHunt/CoinSorter/milestones/Prototype%20CoinSorter).
 
 [View parts list and documentation](/hardware/conveyors/conveyors.md) for the conveyors and the [CAD files](/hardware/conveyors/). 
 
