@@ -24,7 +24,7 @@ For a long term project direction [check out the issues for future milestones.](
 
 This project is project is brought to you by:
 
-[GemHunt.com](GemHunt.com): a for profit company helping people learn robotics, machine vision, and deep learning while providing DIY small part handling systems. 
+[GemHunt.com](http://www.GemHunt.com): a for profit company helping people learn robotics, machine vision, and deep learning while providing DIY small part handling systems. 
 
 Thanks!  
 Paul Krush
