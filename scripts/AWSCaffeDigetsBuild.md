@@ -16,6 +16,7 @@ Starting with AMI:
 Unbuntu 14.04 (Near the top of the list) 
 g2.2xlarge or g2.8xlarge
 *************************************************************************
+```
 #This is written as a script, but I don't see how you could run it as one...
 #There is just too many things that change and can go wrong. 
 #I just copy and paste one or more lines at a time. 
@@ -28,7 +29,7 @@ g2.2xlarge or g2.8xlarge
 #The last step requires NVIDIA to unlock your account 
 #and that might take hours or 1-2 days.
 #But you can get started also without cuDNN library. 
-#As soon as you have the okay from them – download cuDNN and upload it to your instance.
+#As soon as you have the okay from them â€“ download cuDNN and upload it to your instance.
 
 #Paul's Comment:  If you going through this much trouble, 
 #I would just register as a developer and download CuDnn 3 first. 
@@ -190,12 +191,4 @@ cd ~
 #sudo mount /dev/xvdf /data
 #Add permissions:
 #sudo chmod 777 /data
-
-
-
-
-
-
-
-
-
+```
