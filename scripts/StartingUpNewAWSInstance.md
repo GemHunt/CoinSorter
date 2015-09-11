@@ -1,6 +1,11 @@
+```
 #1.) Attach your EBS Volume after starting your instance. 
 #2.) Mount the Existing volume
 sudo mount /dev/xvdf /data
+
+#gets rid of Failed to initialize libdc1394
+sudo ln /dev/null /dev/raw1394
+
 
 #3.) Start the DIGITS server:
 ./digits/digits-devserver
@@ -18,12 +23,6 @@ sudo service vsftpd restart
 
 
 
-
-
-
-
-
-
 #Shuting down:
 sudo umount -d /dev/xvdf
-
+```

@@ -9,8 +9,9 @@ Module CoinTracker
     Public CoinRadiusOnFullImage As Double = 140
     Public MsCoinsAreInView As Double = 10000
     Public ImageWidth As Int32 = 960
-    Public DigitsIPAddress As String = "54.237.50.36"
-    Public DigitsJobID As String = "20150818-221113-b8aa"
+    Public DigitsIPAddress As String = "54.237.126.195"
+    Public DigitsJobID As String = "20150908-210406-6a9a"
+
 
     Public CurrentDirectory As String = "C:\Temp\TempCoinImages\"
     Public ArchivedDirectory As String = "F:\liveview\"

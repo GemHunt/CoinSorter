@@ -26,6 +26,10 @@ Public Class Coin
 
     End Sub
 
+    Sub New()
+        ' TODO: Complete member initialization 
+    End Sub
+
     Public Function ClassifyWithCurl() As String
         'This works, but is very clunky as it flashes the command shell 
         'The .Net POST is much better
@@ -126,6 +130,57 @@ Public Class Coin
             End Using
         End Using
     End Function
+
+
+    Public Shared Async Function Classify(digitsIPAddress As String, digitsJobID As String, fileName As String) As Task
+
+        Using client = New System.Net.Http.HttpClient()
+            Using content = New MultipartFormDataContent()
+                Dim job_id As New StringContent(digitsJobID, System.Text.Encoding.UTF8)
+                content.Add(job_id, "job_id")
+
+                Dim crop As Bitmap = Bitmap.FromFile(fileName)
+                Dim converter As New ImageConverter()
+                Dim buff() As Byte = converter.ConvertTo(crop, GetType(Byte()))
+                crop.Dispose()
+
+                content.Add(New StreamContent(New MemoryStream(buff)), "image_file", "image_file")
+
+                Dim ss As Stopwatch = Stopwatch.StartNew
+
+                Using message = Await client.PostAsync(GetDigitsCall(digitsIPAddress, digitsJobID), content)
+                    Dim sOutput = Await message.Content.ReadAsStringAsync()
+
+                    Dim j As Object = New JavaScriptSerializer().Deserialize(Of Object)(sOutput)
+                    Dim typeString As String = j("predictions")(0)(0)
+
+                    'Dim ArchivedTypeDirectory As String = ArchivedDirectory & typeString & "\"
+                    'If Not Directory.Exists(ArchivedTypeDirectory) Then
+                    '    Directory.CreateDirectory(ArchivedTypeDirectory)
+                    'End If
+
+                    'Dim angleFileName As String = fileName.Replace("heads", "HeadsAngle").Replace(".jpg", typeString & ".jpg")
+
+                    'File.Copy(fileName, angleFileName, True)
+
+                    'Dim fileNameAngle As String = Val(fileName.Substring(45, 3)) - 180
+                    'If fileNameAngle < 0 Then
+                    '    fileNameAngle += 180
+                    'End If
+
+
+                    Dim output As New StringBuilder
+                    'output.Append(fileNameAngle & vbTab)
+                    For x = 0 To 4
+                        output.Append(j("predictions")(x)(0) & vbTab)
+                        output.Append(j("predictions")(x)(1) & vbTab)
+                    Next
+                    Console.WriteLine(output.ToString)
+                End Using
+            End Using
+        End Using
+    End Function
+
 
     Public Function ConvertImageFiletoBytes(ByVal ImageFilePath As String) As Byte()
         Dim _tempByte() As Byte = Nothing

@@ -4,6 +4,7 @@ There are all sorts of examples of using vsftpd on AWS, but they all a bit diffe
 
 Security group changes: 
 Make sure 20-21 and 1024-1048 is open to your IP
+```
 sudo apt-get update
 sudo apt-get install vsftpd
 
@@ -23,3 +24,4 @@ sudo passwd ubuntu
 
 #Restart server for changes to take effect:
 sudo service vsftpd restart
+```

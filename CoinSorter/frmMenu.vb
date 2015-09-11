@@ -1,4 +1,9 @@
-﻿Public Class frmMenu
+﻿Imports System.IO
+Imports System.Threading
+Public Class frmMenu
+    Private imagesToClassify As New List(Of FileInfo)
+    Private imagesToClassifyIndex As Int32
+
     Private imageDirectory As New ImageHandler()
 
     Private Sub frmMenu_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -6,6 +11,8 @@
         PowerSupply.SolenoidVoltage = TrackBarVoltage.Value
         PowerSupply.SolenoidOnTime = TrackBarmSeconds.Value
         PowerSupply.MilliSecondsFromEndOfImageToSolenoid = TrackBarSolenoidDelay.Value
+        Dim dir As New DirectoryInfo("F:\Rotated\HeadsWithRotation360\180\")
+        imagesToClassify = dir.GetFiles.ToList
     End Sub
 
     Private Sub cmdBreak_Click(sender As Object, e As EventArgs) Handles cmdBreak.Click
@@ -31,14 +38,19 @@
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Dim fileName As String = "F:/liveview/heads\1010000021030599.jpg"
-        If System.IO.File.Exists(fileName) Then
-            System.IO.File.Delete(fileName)
+        Timer1.Enabled = True
+
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+
+        Dim t As task = Coin.Classify(DigitsIPAddress, DigitsJobID, imagesToClassify(imagesToClassifyIndex).FullName)
+        imagesToClassifyIndex += 1
+        If imagesToClassifyIndex = imagesToClassify.Count Then
+            Timer1.Enabled = False
         End If
 
-        Dim fullImage As New FullImage("101000002.jpg")
-        FullImages.Add(fullImage)
-        Dim cropped As New CroppedImage("1010000021030599.jpg")
-        Dim coin As New Coin(cropped)
+
+
     End Sub
 End Class

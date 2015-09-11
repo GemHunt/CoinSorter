@@ -22,6 +22,7 @@ Partial Class frmMenu
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMenu))
         Me.cmdBreak = New System.Windows.Forms.Button()
         Me.lblSolenoidVoltage = New System.Windows.Forms.Label()
@@ -33,6 +34,7 @@ Partial Class frmMenu
         Me.TrackBarSolenoidDelay = New System.Windows.Forms.TrackBar()
         Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
         Me.Button1 = New System.Windows.Forms.Button()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         CType(Me.TrackBarVoltage, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TrackBarmSeconds, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TrackBarSolenoidDelay, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -130,6 +132,10 @@ Partial Class frmMenu
         Me.Button1.Text = "Test DIGITS Call"
         Me.Button1.UseVisualStyleBackColor = True
         '
+        'Timer1
+        '
+        Me.Timer1.Interval = 5
+        '
         'frmMenu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -164,5 +170,6 @@ Partial Class frmMenu
     Friend WithEvents TrackBarSolenoidDelay As System.Windows.Forms.TrackBar
     Friend WithEvents RichTextBox1 As System.Windows.Forms.RichTextBox
     Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents Timer1 As System.Windows.Forms.Timer
 
 End Class

@@ -30,7 +30,7 @@ tic
 
 X = 1:256;
 Y = 1:256;
-penny = imread('F:\Pennies\Run001\crop\100002_102.jpg');
+penny = imread('F:\LiveView Pennies\copper\copper\tails\100001_102_10458.jpg');
 penny = double(penny(:,:,3));
 
 
@@ -40,8 +40,8 @@ donutMapY = double(zeros(360,10));
 %donutInsideRadius = 94;
 %donutThickness = 10;
 
-donutInsideRadius = 1;
-donutThickness = 120;
+donutInsideRadius = 94;
+donutThickness = 28;
 
 
 for x = 360:-1:1;
