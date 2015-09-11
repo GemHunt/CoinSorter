@@ -4,7 +4,7 @@ Sorts coins by solenoid on a conveyor by classifying images with [Caffe](https:/
 
 To understand where this system is heading in the short term see the [2nd Proof of Concept issues](https://github.com/GemHunt/CoinSorter/milestones/2nd%20Proof%20of%20Concept) and the [Prototype Coinsorter Issues](https://github.com/GemHunt/CoinSorter/milestones/Portable%20Prototype%20Coin%20Sorter)
 
-[Check out the [starting point issues](https://github.com/GemHunt/CoinSorter/labels/starting%20point) to see what is currently being worked on.
+Check out the [starting point issues](https://github.com/GemHunt/CoinSorter/labels/starting%20point) to see what is currently being worked on.
 
 This group of programs and scripts is currently just a quick proof of concept to show physical coin sorting. It's currently sorting about 2 pennies a second, continuously. One solenoid and 2 physical bins are currently set up. Using Caffe it’s easy to distinguish between designs of coins. For example you can train a convolutional neural network (CNN, what Caffe uses) to determine if a coin image is heads vs tails or say recognize the state on a random US state quarter image. Using the "copper" image set out on [GemHunt.com](http://www.gemHunt.com) Caffe can tell heads vs tails between US copper pennies 99.9% of the time. This can be done using using [DIGITS](https://github.com/NVIDIA/DIGITS) with default setting of AlexNet with no programming involved!  
 
