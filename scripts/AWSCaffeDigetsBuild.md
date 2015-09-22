@@ -1,3 +1,5 @@
+﻿I have used this 4 times:
+
 1.) I(Paul Krush) started with this, by Raffael Vogler:
 GPU Powered DeepLearning with NVIDIA DIGITS on EC2:
 http://www.joyofdata.de/blog/gpu-powered-deeplearning-with-nvidia-digits/
@@ -6,15 +8,18 @@ http://www.joyofdata.de/blog/gpu-powered-deeplearning-with-nvidia-digits/
 
 3.) I then rebuilt for cudnn3 and Nidvia Caffe v0.13.0 
 	This one took me about 2 hours 
+4.) Then I built a local server. (9/22/2015)
+	MSI H81M-E33 motherboard, Intel G3258 Processor, 8GB of Ram, 250GB SSD, GTX 970
+	It really was the same as AWS except for installing ubuntu 14.04
+	Changes AWS or Local:
+		cuDnn is now "prod" (not rc) 
+		cuda 7.5 is now installing by default
+		udo was needed before Caffe requirements
 
 I think Nivida is saying they have an web-installer that does better. I don't see how?
 
 I use ModaXterm(Free) instead of Putty because there was some sort of issue with 
 	DIGITS needing an X-Server. Login: ubuntu
-
-Starting with AMI:
-Unbuntu 14.04 (Near the top of the list) 
-g2.2xlarge or g2.8xlarge
 *************************************************************************
 ```
 #This is written as a script, but I don't see how you could run it as one...
@@ -33,8 +38,6 @@ g2.2xlarge or g2.8xlarge
 
 #Paul's Comment:  If you going through this much trouble, 
 #I would just register as a developer and download CuDnn 3 first. 
-
-
 
 
 #FTP Install Notes
@@ -83,7 +86,10 @@ sudo wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86
 # installing CUDA
 sudo dpkg -i cuda-repo-ubuntu1404_7.0-28_amd64.deb
  
+#Does this do anthing here:
 sudo apt-get update
+sudo apt-get dist-upgrade
+
 sudo apt-get install cuda
  
 # setting the environment variables so CUDA will be found
@@ -93,11 +99,10 @@ echo -e "\nexport LD_LIBRARY_PATH=/usr/local/cuda/lib64" >> .bashrc
 sudo reboot
  
 # installing the samples and checking the GPU
-cuda-install-samples-7.0.sh ~/
-cd NVIDIA\_CUDA-7.0\_Samples/1\_Utilities/deviceQuery  
+cuda-install-samples-7.5.sh ~/
+cd NVIDIA\_CUDA-7.5\_Samples/1\_Utilities/deviceQuery  
 make  
 ./deviceQuery
-
 
 
 # Install CuDNN v 3
@@ -106,16 +111,18 @@ make
 #This is why FTP was the step before this. 
 #So first FTP the cudnn-7.0-linux-x64-v3.0-rc.tgz file to home
 
-gzip -d cudnn-7.0-linux-x64-v3.0-rc.tgz
-tar xf cudnn-7.0-linux-x64-v3.0-rc.tar
+gzip -d cudnn-7.0-linux-x64-v3.0-prod.tgz
+tar xf cudnn-7.0-linux-x64-v3.0-prod.tar
 
 # copy the library files into CUDA's include and lib folders
-sudo cp cuda/include/cudnn.h /usr/local/cuda-7.0/include
-sudo cp cuda/lib64/libcudnn* /usr/local/cuda-7.0/lib64
+sudo cp cuda/include/cudnn.h /usr/local/cuda-7.5/include
+sudo cp cuda/lib64/libcudnn* /usr/local/cuda-7.5/lib64
 
 
 #Installing caffe
 #Main source for this and the following step is the readme of the DIGITS project.
+sudo apt-get install udo
+
 sudo apt-get install libprotobuf-dev libleveldb-dev \
   libsnappy-dev libopencv-dev libboost-all-dev libhdf5-serial-dev \
   libgflags-dev libgoogle-glog-dev liblmdb-dev protobuf-compiler \
@@ -126,11 +133,10 @@ sudo apt-get install python-dev python-pip python-numpy gfortran
 #Install Git:
 sudo apt-get install git
 
-# the version number of the required branch might change
 # consult https://github.com/NVIDIA/DIGITS/blob/master/README.md
-git clone --branch v0.13.0 https://github.com/NVIDIA/caffe.git   
+git clone https://github.com/NVIDIA/caffe.git   
  
-#This takes a long time,(20-30+ minutes) 
+#This takes a long time,(10-30+ minutes)
 cd ~/caffe/python
 for req in $(cat requirements.txt); do sudo pip install $req; done
  
@@ -147,6 +153,7 @@ make pycaffe
 make test
 make runtest
 
+
 echo -e "\nexport CAFFE_HOME=/home/ubuntu/caffe" >> ~/.bashrc
 # load the new environmental variables
 bash
@@ -156,6 +163,7 @@ cd ~
 git clone https://github.com/NVIDIA/DIGITS.git digits   
 cd digits
 sudo apt-get install graphviz gunicorn
+
 for req in $(cat requirements.txt); do sudo pip install $req; done
 
 ###I added this line because the pycaffe module was not being found in Digits:
@@ -163,14 +171,12 @@ for req in $(cat requirements.txt); do sudo pip install $req; done
 ###echo 'export PYTHONPATH=/home/ubuntu/caffe/python' >> ~/.bashrc 
 ###bash 
 
-
 cd ~
 
 # You might want to consider locating your job-directory ( jobs_dir) on an EBS 
 # See https://github.com/NVIDIA/DIGITS/blob/master/docs/GettingStarted.md for details. 
 # I set the the jobs_dir at /data/digits/jobs by using the --config option:
 #./digits-devserver --config
-
 
 # start the server
 ./digits/digits-devserver

@@ -7,18 +7,28 @@ I also had to run it 3 times because of download issues.
 I also ran build in VS 2013 for the solution file, opps, that's the same thing. 
 Deleted build folder, and started over
 
+
 Changes notes
 Be sure to have at least 10GB free, it said 8.5GB
 Executing "cmake -G..." again 
 cmake -G Visual Studio 12 2013 Win64 ..\caffe-builder
 
+
 I could not find caffe.exe until I build the caffe project in windows. 
-I was expecting --build would do it. 
+I was expecting --build would do it:
 cmake --build .
 
 
+Configure first then change this:
+Change D:\GitHub\build\DownloadCache\caffe\CMakeLists.txt
+	caffe_option(CPU_ONLY  "Build Caffe without CUDA support" OFF) # TODO: rename to USE_CUDA
+	to	
+	caffe_option(CPU_ONLY  "Build Caffe without CUDA support" ON) # TODO: rename to USE_CUDA
 
+	also change:
+	set(PYTHON2_EXECUTABLE ${PYTHON_EXECUTABLE} CACHE FILEPATH "C:\\Python27\\")
 
+Then Generate
 
 
 
