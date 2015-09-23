@@ -1,9 +1,9 @@
 clear;
 close all;
 %Make the directories to start with:
-  for angle = 0:1:359;
-      mkdir(strcat('F:\Rotated\HeadsWithRotation360\',sprintf('%03d', angle),'\'));
-  end
+ % for angle = 0:1:359;
+  %    mkdir(strcat('F:\Rotated\HeadsWithRotation360\',sprintf('%03d', angle),'\'));
+  %end
 
 imageSizeX = 227;
 imageSizeY = 227;
@@ -25,13 +25,13 @@ centerMask(:,:,3) = centerMask(:,:,1);
 %centerMask = centerMask & innerMask;
 centerMask = uint8(centerMask);
 
-dirName = 'F:\Rotated\HeadsWithRotation\';
+dirName = 'D:\CoinImages\Rotated\HeadsWithRotation\';
 F = dir(strcat(dirName , '*.jpg'));
 for ii = 1:length(F)
     startDegree = 180-double( str2num(F(ii).name(17:19)));
     penny = imread(strcat(dirName , F(ii).name));
-    for angle = 0:1:1;
-    %for angle = 0:1:359;
+    %for angle = 0:1:1;
+    for angle = 0:1:359;
         pennyRotated = imrotate(penny,angle + startDegree,'bilinear');
         rotatedSize = size(pennyRotated);
         rotatedSize = rotatedSize(1);
@@ -43,7 +43,7 @@ for ii = 1:length(F)
         pennyMasked = pennyRotated .* centerMask;
         penny40 =  imresize(pennyMasked, [40,40]);
         penny40 = rgb2gray(penny40);
-        imwrite(penny40,strcat('F:\Rotated\HeadsWithRotation360Test\',sprintf('%03d', angle),'\',F(ii).name(1:16),'.png'));
+        imwrite(penny40,strcat('F:\Rotated\HeadsWithRotation360\',sprintf('%03d', angle),'\',F(ii).name(1:16),'.png'));
     end
 end
 
