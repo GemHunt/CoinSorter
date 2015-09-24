@@ -13,7 +13,6 @@ Be sure to have at least 10GB free, it said 8.5GB
 Executing "cmake -G..." again 
 cmake -G Visual Studio 12 2013 Win64 ..\caffe-builder
 
-
 I could not find caffe.exe until I build the caffe project in windows. 
 I was expecting --build would do it:
 cmake --build .
@@ -29,8 +28,6 @@ Change D:\GitHub\build\DownloadCache\caffe\CMakeLists.txt
 	set(PYTHON2_EXECUTABLE ${PYTHON_EXECUTABLE} CACHE FILEPATH "C:\\Python27\\")
 
 Then Generate
-
-
 
 
 # Caffe-Builder
