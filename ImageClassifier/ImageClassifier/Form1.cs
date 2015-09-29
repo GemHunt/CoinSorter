@@ -21,6 +21,9 @@ namespace ImageClassifier
         [DllImport("D:\\GitHub\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int ReleaseMemory(IntPtr ptr);
 
+        [DllImport("D:\\GitHub\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int captureFromWebCam();
+
         public Form1()
         {
             InitializeComponent();
@@ -28,7 +31,7 @@ namespace ImageClassifier
 
         private void button1_Click(object sender, EventArgs e)
         {
-            String dir = "F:\\20150924-184701-f9a5_epoch_11.0\\";
+            String dir = "F:\\20150924-184701-f9a5_epoch_3.0\\";
             //String dir = "F:\\model\\";
 
 
@@ -48,7 +51,7 @@ namespace ImageClassifier
                 List<double> predictions = new List<double>();
                 for (int i = 0; i < 359; i += 36)
                 {
-                    string fileName = image_file.Replace("\\140\\", "\\" + i.ToString("D3") + "\\");
+                    string fileName = image_file.Replace("\\000\\", "\\" + i.ToString("D3") + "\\");
                     IntPtr ptr = ClassifyImage(model_file, trained_file, mean_file, label_file, fileName);
 
                     double[] result = new double[3];
@@ -87,14 +90,26 @@ namespace ImageClassifier
 
                     FileInfo fi = new FileInfo(image_file);
                     String fullImage = "D:\\CoinImages\\Rotated\\heads\\" + fi.FullName.Substring(36, 16);
-                    int angle = Convert.ToInt32(average * 10);
+                    //int angle = Convert.ToInt32(average * 10);
                     //File.Move(fullImage + ".jpg", fullImage + angle.ToString("D4") + ".jpg");
 
                     counter++;
-                    if (counter == 50) { break; }
+                    if (counter == 1) { break; }
                 }
             }
-            Console.WriteLine("Mean Standard Deviations: " + standardDeviations.Average());
+            //Console.WriteLine("Mean Standard Deviations: " + standardDeviations.Average());
+        }
+
+        private void cmdWebCam_Click(object sender, EventArgs e)
+        {
+            captureFromWebCam();
+            Application.Exit();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            //captureFromWebCam();
+          
         }
     }
 }

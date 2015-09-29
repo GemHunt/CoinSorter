@@ -9,16 +9,42 @@
 #include <vector>
 #include <windows.h>
 
+
+///for web cam
+#include <iostream>
+using namespace cv;
+using std::cout;
+using std::endl;
+///for web cam
+
+//for Theshold
+int findContour(Mat);
+int coinRadius = 255;
+int coinX = 200;
+int coinY = 200;
+//for Theshold
+
+
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 
 using namespace caffe;  // NOLINT(build/namespaces)
 using std::string;
 
+
 /* Pair (label, confidence) representing a prediction. */
 typedef std::pair<string, float> Prediction;
 
-extern "C" __declspec(dllexport) int SetupNetwork(const char *model_file, const char *trained_file, const char *mean_file, const char *label_file, const char *image_file);
-//extern "C" __declspec(dllexport) int ClassifyImage(const char *image_file);
+extern "C" __declspec(dllexport) double* ClassifyImage(const char *model_file, const char *trained_file, const char *mean_file, const char *label_file, const char *image_file);
+extern "C" __declspec(dllexport) int captureFromWebCam(const char *model_file, const char *trained_file, const char *mean_file, const char *label_file);
+double* ClassifyImage(const char *model_file, const char *trained_file, const char *mean_file, const char *label_file, cv::Mat img);
+
+
+extern "C" __declspec(dllexport) int ReleaseMemory(double* pArray)
+{
+	delete[] pArray;
+	return 0;
+}
+
 
 class Classifier {
 public:
@@ -50,7 +76,7 @@ private:
 
 
 Classifier::Classifier() {
-	}
+}
 
 
 void Classifier::Setup(const string& model_file,
@@ -231,29 +257,77 @@ void Classifier::Preprocess(const cv::Mat& img,
 }
 
 
-int SetupNetwork(const char *model_file, const char *trained_file, const char *mean_file, const char *label_file, const char *image_file) {
+double* ClassifyImage(const char *model_file, const char *trained_file, const char *mean_file, const char *label_file, const char *image_file) {
+	cv::Mat img = cv::imread(image_file, -1);
+	CHECK(!img.empty()) << "Unable to decode image " << image_file;
+	return ClassifyImage(model_file, trained_file, mean_file, label_file, img);
+}
+
+
+double* ClassifyImage(const char *model_file, const char *trained_file, const char *mean_file, const char *label_file, cv::Mat img) {
 	//::google::InitGoogleLogging("classification-d.dll");
 
 	static int counter;
 	counter += 1;
 	static Classifier classifier;
+
 	if (counter == 1) {
 		classifier.Setup(model_file, trained_file, mean_file, label_file);
 	}
-	
 
-	cv::Mat img = cv::imread(image_file, -1);
-	CHECK(!img.empty()) << "Unable to decode image " << image_file;
-	
+
 	std::vector<Prediction> predictions = classifier.Classify(img);
-	
 	/* Print the top N predictions. */
+	double * result = new double[3];
+	cout << "11" << endl;
+
+
+	double totalConfidence = 0;
+	double totalPredicted = 0;
+	double totalPredictedConfidence = 0;
+	cout << "12" << endl;
+
+	std::string::size_type sz;     // alias of size_t
+	cout << "13" << endl;
+
+
 	for (size_t i = 0; i < predictions.size(); ++i) {
 		Prediction p = predictions[i];
+		cout << "14" << endl;
+
+		//double confidence = p.second;
+		//double degreePredicted = std::stod(p.first, &sz);
+		//totalPredicted += degreePredicted;
+		//totalPredictedConfidence += (confidence * degreePredicted);
+		//totalConfidence += confidence;
 		std::cout << std::fixed << std::setprecision(4) << p.second << " - \""
 			<< p.first << "\"" << std::endl;
 	}
-	return counter;
+
+
+	cout << "15" << endl;
+
+
+	/*
+	double totalPredictedMean = totalPredicted / 5;
+	double totalPredictedSquareMeanDeviations = 0;
+
+	for (size_t i = 0; i < predictions.size(); ++i) {
+	Prediction p = predictions[i];
+	double degreePredicted = std::stod(p.first, &sz);
+	totalPredictedSquareMeanDeviations += (totalPredictedMean - degreePredicted) * (totalPredictedMean - degreePredicted);
+	}
+	//this could be better because it could take the confidence into account:
+	double predictedStandardDeviation = sqrt(totalPredictedSquareMeanDeviations / 5);
+
+	//This is not correct around 359-000-001
+	//this does not acount for outliers(112)  222-112-223-221-220
+	result[0] = totalPredictedConfidence / totalConfidence;
+	result[1] = totalConfidence;
+	result[2] = predictedStandardDeviation;
+
+	*/
+	return result;
 }
 
 
@@ -296,3 +370,222 @@ int SetupNetwork(const char *model_file, const char *trained_file, const char *m
 //	}
 //	return 1;
 //}
+
+
+
+int captureFromWebCam(const char *model_file, const char *trained_file, const char *mean_file, const char *label_file)
+{
+	VideoCapture cap(0); // open the video camera no. 0
+
+	if (!cap.isOpened())  // if not success, exit program
+	{
+		cout << "Cannot open the video cam" << endl;
+		return -1;
+	}
+
+	double dWidth = cap.get(CV_CAP_PROP_FRAME_WIDTH); //get the width of frames of the video
+	double dHeight = cap.get(CV_CAP_PROP_FRAME_HEIGHT); //get the height of frames of the video
+
+	cout << "Frame size : " << dWidth << " x " << dHeight << endl;
+
+	namedWindow("MyVideo", CV_WINDOW_AUTOSIZE); //create a window called "MyVideo"
+
+	while (1)
+	{
+		Mat frame;
+
+		bool bSuccess = cap.read(frame); // read a new frame from video
+
+		if (!bSuccess) //if not success, break loop
+		{
+			cout << "Cannot read a frame from video stream" << endl;
+			break;
+		}
+
+		int thickness = 1;
+		int lineType = 8;
+
+
+		//int coinRadius = 208;
+		int frameWidth = frame.cols;
+		int frameHeight = frame.rows;
+
+		/*
+		circle(frame,
+		Point(frameWidth / 2, frameHeight/2),
+		coinRadius,
+		Scalar(0, 0, 255),
+		thickness,
+		lineType);*/
+
+		// Setup a rectangle to define your region of interest
+
+		cout << "8" << endl;
+
+		findContour(frame);
+		//ClassifyImage(model_file, trained_file, mean_file, label_file, croppedFrame);
+
+		//cv::Rect myROI(frameWidth / 2 - coinRadius, frameHeight / 2 - coinRadius, coinRadius * 2, coinRadius * 2);
+		//cv::Rect myROI(coinCenter.x - coinRadius, coinCenter.y - coinRadius, coinRadius * 2, coinRadius * 2);
+		cout << "18" << endl;
+		coinRadius = 208;
+		cout << "19" << endl;
+		
+		//Why -1? I don't know, it's just is better centered:
+		int centerX = coinX - coinRadius  + 1;
+		int centerY = coinY - coinRadius;
+		if (centerX < 0){
+			centerX = 0;
+		}
+		
+		if (centerX + coinRadius * 2 > frame.cols - 1){
+			centerX = 0;
+		}
+		
+		if (centerY < 0){
+			centerY = 0;
+		}
+		
+		if (centerY + coinRadius * 2 > frame.rows - 1){
+			centerY = 0;
+		}
+
+
+
+		cout << "centerX:" << centerX << endl;
+		cout << "centerY:" << centerY << endl;
+
+		cv::Rect myROI(centerX, centerY, coinRadius * 2, coinRadius * 2);
+		cout << "20" << endl;
+		cv::Mat croppedFrame = frame(myROI);
+		cout << "21" << endl;
+		imshow("MyVideo", croppedFrame); //show the frame in "MyVideo" window
+
+		if (waitKey(1) == 27) //wait for 'esc' key press for 30ms. If 'esc' key is pressed, break loop
+		{
+			cout << "esc key is pressed by user" << endl;
+			destroyWindow("MyVideo");
+			break;
+		}
+	}
+	return 0;
+}
+
+
+//*******  Contour finding sample *****
+Mat src;
+int HMin = 24;
+int HMax = 140;
+int VMin = 0;
+int VMax = 255;
+int SMin = 0;
+int SMax = 255;
+int max_thresh = 255;
+RNG rng(12345);
+
+/// Function header
+void thresh_callback(int, void*);
+
+/** @function main */
+int findContour(Mat input)
+{
+	src = input;
+	/// Convert image to gray and blur it
+	//cvtColor(src, src_gray, CV_BGR2GRAY);
+	//blur(src_gray, src_gray, Size(7, 7));
+
+	/// Create Window
+	char* source_window = "Source";
+	namedWindow(source_window, CV_WINDOW_AUTOSIZE);
+	imshow(source_window, src);
+
+	createTrackbar(" HMin:", "Source", &HMin, max_thresh, thresh_callback);
+	createTrackbar(" HMax:", "Source", &HMax, max_thresh, thresh_callback);
+	createTrackbar(" VMin:", "Source", &VMin, max_thresh, thresh_callback);
+	createTrackbar(" VMax:", "Source", &VMax, max_thresh, thresh_callback);
+	createTrackbar(" SMin:", "Source", &SMin, max_thresh, thresh_callback);
+	createTrackbar(" SMax:", "Source", &SMax, max_thresh, thresh_callback);
+	thresh_callback(0, 0);
+
+	//waitKey(0);
+	return(0);
+}
+
+/** @function thresh_callback */
+void thresh_callback(int, void*)
+{
+	cout << "9" << endl;
+	//Mat threshold_output;
+	vector<vector<Point> > contours;
+	vector<Vec4i> hierarchy;
+
+	/// Detect edges using Threshold
+	//threshold(src_gray, threshold_output, thresh, 255, THRESH_BINARY);
+
+	cv::Mat HSV, threshold;
+	cvtColor(src, HSV, COLOR_BGR2HSV);
+	//inRange(HSV, cv::Scalar(HMin, SMin, VMin), cv::Scalar(HMax, SMax, VMax), threshold);
+	inRange(HSV, cv::Scalar(HMin, SMin, VMin), cv::Scalar(HMax, SMax, VMax), threshold);
+	Mat erodeElement = getStructuringElement(MORPH_RECT, cv::Size(5, 5));
+	Mat dilateElement = getStructuringElement(MORPH_RECT, cv::Size(12, 12));
+	erode(threshold, threshold, erodeElement);
+	dilate(threshold, threshold, dilateElement);
+	//cv::resize(threshold, threshold, cv::Size(360, 286));
+	cout << "10" << endl;
+
+	/// Find contours
+	findContours(threshold, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
+	cout << "11" << endl;
+
+	/// Approximate contours to polygons + get bounding rects and circles
+	vector<vector<Point> > contours_poly(contours.size());
+	//vector<Rect> boundRect(contours.size());
+	cout << "12" << endl;
+	vector<Point2f>center(contours.size());
+	cout << "13" << endl;
+	vector<float>radius(contours.size());
+	cout << "14" << endl;
+	for (int i = 0; i < contours.size(); i++)
+	{
+		approxPolyDP(Mat(contours[i]), contours_poly[i], 3, true);
+		//boundRect[i] = boundingRect(Mat(contours_poly[i]));
+		minEnclosingCircle((Mat)contours_poly[i], center[i], radius[i]);
+	}
+	cout << "15" << endl;
+
+	/// Draw polygonal contour + bonding rects + circles
+	Mat drawing = Mat::zeros(threshold.size(), CV_8UC3);
+	for (int i = 0; i < contours.size(); i++)
+	{
+		if ((radius[i] > 125) && (radius[i] < 230))  {
+			Scalar color = Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));
+			drawContours(drawing, contours_poly, i, color, 1, 8, vector<Vec4i>(), 0, Point());
+			//rectangle(drawing, boundRect[i].tl(), boundRect[i].br(), color, 2, 8, 0);
+			circle(drawing, center[i], (int)radius[i], color, 2, 8, 0);
+			coinRadius = (int)radius[i];
+			
+			/// Get the moments
+			Moments mu;
+			mu = moments(contours[i], false);
+			coinX = mu.m10 / mu.m00;
+			coinY = mu.m01 / mu.m00;
+		}
+	}
+
+	cout << "16" << endl;
+	/// Show in a window
+	namedWindow("Contours", CV_WINDOW_AUTOSIZE);
+	imshow("Contours", drawing);
+
+	namedWindow("threshold", CV_WINDOW_AUTOSIZE);
+	imshow("threshold", threshold);
+	cout << "17" << endl;
+}
+
+
+
+
+
+
+
+
