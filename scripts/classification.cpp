@@ -24,6 +24,9 @@ int coinX = 200;
 int coinY = 200;
 //for Theshold
 
+void rotate(cv::Mat& src, double angle, cv::Mat& dst);
+
+
 
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 
@@ -279,36 +282,35 @@ double* ClassifyImage(const char *model_file, const char *trained_file, const ch
 	std::vector<Prediction> predictions = classifier.Classify(img);
 	/* Print the top N predictions. */
 	double * result = new double[3];
-	cout << "11" << endl;
+	//cout << "11" << endl;
 
 
 	double totalConfidence = 0;
 	double totalPredicted = 0;
 	double totalPredictedConfidence = 0;
-	cout << "12" << endl;
+	//cout << "12" << endl;
 
 	std::string::size_type sz;     // alias of size_t
-	cout << "13" << endl;
+	//cout << "13" << endl;
 
 
 	for (size_t i = 0; i < predictions.size(); ++i) {
 		Prediction p = predictions[i];
-		cout << "14" << endl;
+		//cout << "14" << endl;
 
-		//double confidence = p.second;
-		//double degreePredicted = std::stod(p.first, &sz);
-		//totalPredicted += degreePredicted;
-		//totalPredictedConfidence += (confidence * degreePredicted);
-		//totalConfidence += confidence;
+		double confidence = p.second;
+		double degreePredicted = std::stod(p.first, &sz);
+		totalPredicted += degreePredicted;
+		totalPredictedConfidence += (confidence * degreePredicted);
+		totalConfidence += confidence;
 		std::cout << std::fixed << std::setprecision(4) << p.second << " - \""
 			<< p.first << "\"" << std::endl;
 	}
 
 
-	cout << "15" << endl;
+	//cout << "15" << endl;
 
 
-	/*
 	double totalPredictedMean = totalPredicted / 5;
 	double totalPredictedSquareMeanDeviations = 0;
 
@@ -324,9 +326,8 @@ double* ClassifyImage(const char *model_file, const char *trained_file, const ch
 	//this does not acount for outliers(112)  222-112-223-221-220
 	result[0] = totalPredictedConfidence / totalConfidence;
 	result[1] = totalConfidence;
-	result[2] = predictedStandardDeviation;
+	result[3] = predictedStandardDeviation;
 
-	*/
 	return result;
 }
 
@@ -420,16 +421,15 @@ int captureFromWebCam(const char *model_file, const char *trained_file, const ch
 
 		// Setup a rectangle to define your region of interest
 
-		cout << "8" << endl;
+		//cout << "8" << endl;
 
 		findContour(frame);
-		//ClassifyImage(model_file, trained_file, mean_file, label_file, croppedFrame);
-
+		
 		//cv::Rect myROI(frameWidth / 2 - coinRadius, frameHeight / 2 - coinRadius, coinRadius * 2, coinRadius * 2);
 		//cv::Rect myROI(coinCenter.x - coinRadius, coinCenter.y - coinRadius, coinRadius * 2, coinRadius * 2);
-		cout << "18" << endl;
+		//cout << "18" << endl;
 		coinRadius = 208;
-		cout << "19" << endl;
+		//cout << "19" << endl;
 		
 		//Why -1? I don't know, it's just is better centered:
 		int centerX = coinX - coinRadius  + 1;
@@ -452,14 +452,20 @@ int captureFromWebCam(const char *model_file, const char *trained_file, const ch
 
 
 
-		cout << "centerX:" << centerX << endl;
-		cout << "centerY:" << centerY << endl;
-
 		cv::Rect myROI(centerX, centerY, coinRadius * 2, coinRadius * 2);
-		cout << "20" << endl;
+		//cout << "20" << endl;
 		cv::Mat croppedFrame = frame(myROI);
-		cout << "21" << endl;
-		imshow("MyVideo", croppedFrame); //show the frame in "MyVideo" window
+		
+		cout << "" << endl;
+		
+		double* result = ClassifyImage(model_file, trained_file, mean_file, label_file, croppedFrame);
+
+
+		cv::Mat rotatedFrame;
+		rotate(croppedFrame, 360 - result[0], rotatedFrame);
+		
+
+		imshow("MyVideo", rotatedFrame); //show the frame in "MyVideo" window
 
 		if (waitKey(1) == 27) //wait for 'esc' key press for 30ms. If 'esc' key is pressed, break loop
 		{
@@ -514,7 +520,7 @@ int findContour(Mat input)
 /** @function thresh_callback */
 void thresh_callback(int, void*)
 {
-	cout << "9" << endl;
+	//cout << "9" << endl;
 	//Mat threshold_output;
 	vector<vector<Point> > contours;
 	vector<Vec4i> hierarchy;
@@ -531,27 +537,27 @@ void thresh_callback(int, void*)
 	erode(threshold, threshold, erodeElement);
 	dilate(threshold, threshold, dilateElement);
 	//cv::resize(threshold, threshold, cv::Size(360, 286));
-	cout << "10" << endl;
+	//cout << "10" << endl;
 
 	/// Find contours
 	findContours(threshold, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
-	cout << "11" << endl;
+	//cout << "11" << endl;
 
 	/// Approximate contours to polygons + get bounding rects and circles
 	vector<vector<Point> > contours_poly(contours.size());
 	//vector<Rect> boundRect(contours.size());
-	cout << "12" << endl;
+	//cout << "12" << endl;
 	vector<Point2f>center(contours.size());
-	cout << "13" << endl;
+	//cout << "13" << endl;
 	vector<float>radius(contours.size());
-	cout << "14" << endl;
+	//cout << "14" << endl;
 	for (int i = 0; i < contours.size(); i++)
 	{
 		approxPolyDP(Mat(contours[i]), contours_poly[i], 3, true);
 		//boundRect[i] = boundingRect(Mat(contours_poly[i]));
 		minEnclosingCircle((Mat)contours_poly[i], center[i], radius[i]);
 	}
-	cout << "15" << endl;
+	//cout << "15" << endl;
 
 	/// Draw polygonal contour + bonding rects + circles
 	Mat drawing = Mat::zeros(threshold.size(), CV_8UC3);
@@ -572,14 +578,23 @@ void thresh_callback(int, void*)
 		}
 	}
 
-	cout << "16" << endl;
+	//cout << "16" << endl;
 	/// Show in a window
-	namedWindow("Contours", CV_WINDOW_AUTOSIZE);
-	imshow("Contours", drawing);
+	//namedWindow("Contours", CV_WINDOW_AUTOSIZE);
+	//imshow("Contours", drawing);
 
-	namedWindow("threshold", CV_WINDOW_AUTOSIZE);
-	imshow("threshold", threshold);
-	cout << "17" << endl;
+	//namedWindow("threshold", CV_WINDOW_AUTOSIZE);
+	//imshow("threshold", threshold);
+	//cout << "17" << endl;
+}
+
+
+void rotate(cv::Mat& src, double angle, cv::Mat& dst)
+{
+	int len = std::max(src.cols, src.rows);
+	cv::Point2f pt(len / 2., len / 2.);
+	cv::Mat r = cv::getRotationMatrix2D(pt, angle, 1.0);
+	cv::warpAffine(src, dst, r, cv::Size(len, len));
 }
 
 
