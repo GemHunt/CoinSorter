@@ -49,7 +49,8 @@ namespace ImageClassifier
             foreach (string image_file in files)
             {
                 List<double> predictions = new List<double>();
-                for (int i = 0; i < 359; i += 36)
+                
+                for (int i = 0; i < 359; i += 360)
                 {
                     string fileName = image_file.Replace("\\000\\", "\\" + i.ToString("D3") + "\\");
                     IntPtr ptr = ClassifyImage(model_file, trained_file, mean_file, label_file, fileName);
