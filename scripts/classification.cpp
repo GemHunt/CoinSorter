@@ -25,7 +25,8 @@ int coinY = 200;
 //for Theshold
 
 void rotate(cv::Mat& src, double angle, cv::Mat& dst);
-
+void deskew(cv::Mat& src, float angle, cv::Mat& dst);
+int Skew = 7;
 
 
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
@@ -419,11 +420,12 @@ int captureFromWebCam(const char *model_file, const char *trained_file, const ch
 		thickness,
 		lineType);*/
 
-		// Setup a rectangle to define your region of interest
+		
+		
+		cv::Mat deskewedFrame = Mat::zeros(frame.rows, frame.cols, frame.type());
+		deskew(frame, Skew, deskewedFrame);
 
-		//cout << "8" << endl;
-
-		findContour(frame);
+		findContour(deskewedFrame);
 		
 		//cv::Rect myROI(frameWidth / 2 - coinRadius, frameHeight / 2 - coinRadius, coinRadius * 2, coinRadius * 2);
 		//cv::Rect myROI(coinCenter.x - coinRadius, coinCenter.y - coinRadius, coinRadius * 2, coinRadius * 2);
@@ -438,7 +440,7 @@ int captureFromWebCam(const char *model_file, const char *trained_file, const ch
 			centerX = 0;
 		}
 		
-		if (centerX + coinRadius * 2 > frame.cols - 1){
+		if (centerX + coinRadius * 2 > deskewedFrame.cols - 1){
 			centerX = 0;
 		}
 		
@@ -446,26 +448,26 @@ int captureFromWebCam(const char *model_file, const char *trained_file, const ch
 			centerY = 0;
 		}
 		
-		if (centerY + coinRadius * 2 > frame.rows - 1){
+		if (centerY + coinRadius * 2 > deskewedFrame.rows - 1){
 			centerY = 0;
 		}
 
 
-
 		cv::Rect myROI(centerX, centerY, coinRadius * 2, coinRadius * 2);
 		//cout << "20" << endl;
-		cv::Mat croppedFrame = frame(myROI);
-		
+		cv::Mat croppedFrame = deskewedFrame(myROI);
 		cout << "" << endl;
 		
 		double* result = ClassifyImage(model_file, trained_file, mean_file, label_file, croppedFrame);
-
-
+		
 		cv::Mat rotatedFrame;
 		rotate(croppedFrame, 360 - result[0], rotatedFrame);
 		
+		if (result[1] > .9) {
+			imshow("MyVideo", rotatedFrame); //show the frame in "MyVideo" window
+		}
 
-		imshow("MyVideo", rotatedFrame); //show the frame in "MyVideo" window
+		
 
 		if (waitKey(1) == 27) //wait for 'esc' key press for 30ms. If 'esc' key is pressed, break loop
 		{
@@ -487,6 +489,7 @@ int VMax = 255;
 int SMin = 0;
 int SMax = 255;
 int max_thresh = 255;
+int max_skew = 60;
 RNG rng(12345);
 
 /// Function header
@@ -511,6 +514,8 @@ int findContour(Mat input)
 	createTrackbar(" VMax:", "Source", &VMax, max_thresh, thresh_callback);
 	createTrackbar(" SMin:", "Source", &SMin, max_thresh, thresh_callback);
 	createTrackbar(" SMax:", "Source", &SMax, max_thresh, thresh_callback);
+	
+	createTrackbar(" Skew:", "Source", &Skew, max_skew, thresh_callback);
 	thresh_callback(0, 0);
 
 	//waitKey(0);
@@ -588,14 +593,42 @@ void thresh_callback(int, void*)
 	//cout << "17" << endl;
 }
 
-
 void rotate(cv::Mat& src, double angle, cv::Mat& dst)
 {
 	int len = std::max(src.cols, src.rows);
 	cv::Point2f pt(len / 2., len / 2.);
 	cv::Mat r = cv::getRotationMatrix2D(pt, angle, 1.0);
-	cv::warpAffine(src, dst, r, cv::Size(len, len));
+	cv::warpAffine(src, dst, r, cv::Size(len, len), cv::INTER_CUBIC);
 }
+
+void deskew(cv::Mat& src, float shiftpixels, cv::Mat& dst)
+{
+	Point2f srcTri[3];
+	Point2f dstTri[3];
+
+	Mat rot_mat(2, 3, CV_32FC1);
+	Mat warp_mat(2, 3, CV_32FC1);
+		
+	/// Set your 3 points to calculate the  Affine Transform
+	srcTri[0] = Point2f(0, 0);
+	srcTri[1] = Point2f(src.cols - 1, 0);
+	srcTri[2] = Point2f(0, src.rows - 1);
+
+	//dstTri is the same except the bottom is moved over shiftpixels:
+	dstTri[0] = srcTri[0];
+	dstTri[1] = srcTri[1];
+	dstTri[2] = Point2f(shiftpixels, src.rows);
+
+	/// Get the Affine Transform
+	warp_mat = getAffineTransform(srcTri, dstTri);
+
+	// Apply the Affine Transform just found to the src image
+	warpAffine(src, dst, warp_mat, dst.size(), cv::INTER_CUBIC);
+}
+
+
+
+
 
 
 
