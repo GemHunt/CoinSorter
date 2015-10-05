@@ -1,5 +1,6 @@
 int sensorPin = A0;    // select the input pin for the potentiometer
 int sensorValue = 0;  // variable to store the value coming from the sensor
+int offCount = 0;
 
 void setup() {
   
@@ -8,11 +9,25 @@ void setup() {
   while (!Serial) {
     ; // wait for serial port to connect. Needed for Leonardo only
   }
-  // prints title with ending line break
-  //Serial.println("Reading PIN 0");
+  
 }
 
 void loop() {
-     Serial.print((analogRead(sensorPin)-650)/40 );
-     Serial.print("\n");
+  if (analogRead(sensorPin) > 900)  {
+      offCount = offCount + 1;
+    }
+  else
+  {
+  if (offCount != 0) {
+      //if it's under 50 it's just a bounce. 
+      if (offCount > 50) {
+        Serial.println(offCount );
+      }
+      offCount = 0;
+      }
+  } 
+   
+
+     
+     
 }

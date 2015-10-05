@@ -24,10 +24,27 @@ namespace ImageClassifier
         [DllImport("D:\\GitHub\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int captureFromWebCam();
 
+        SerialPortManager _spManager;
+
         public Form1()
         {
             InitializeComponent();
+            _spManager = new SerialPortManager();
+            _spManager.NewSerialDataRecieved += new EventHandler<SerialDataEventArgs>(_spManager_NewSerialDataRecieved);
         }
+
+       
+        void _spManager_NewSerialDataRecieved(object sender, SerialDataEventArgs e)
+        {
+            if (this.InvokeRequired)
+            {
+                // Using this.Invoke causes deadlock when closing serial port, and BeginInvoke is good practice anyway.
+                this.BeginInvoke(new EventHandler<SerialDataEventArgs>(_spManager_NewSerialDataRecieved), new object[] { sender, e });
+                return;
+            }
+            Console.WriteLine(Encoding.ASCII.GetString(e.Data));
+        }
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -112,5 +129,12 @@ namespace ImageClassifier
             //captureFromWebCam();
           
         }
+
+        // Handles the "Start Listening"-buttom click event
+        private void cmdRead_Click(object sender, EventArgs e)
+        {
+            _spManager.StartListening();
+        }
+        
     }
 }
