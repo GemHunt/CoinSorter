@@ -40,6 +40,7 @@ typedef std::pair<string, float> Prediction;
 
 extern "C" __declspec(dllexport) double* ClassifyImage(const char *model_file, const char *trained_file, const char *mean_file, const char *label_file, const char *image_file);
 extern "C" __declspec(dllexport) int captureFromWebCam(const char *model_file, const char *trained_file, const char *mean_file, const char *label_file);
+
 double* ClassifyImage(const char *model_file, const char *trained_file, const char *mean_file, const char *label_file, cv::Mat img);
 
 
@@ -316,9 +317,9 @@ double* ClassifyImage(const char *model_file, const char *trained_file, const ch
 	double totalPredictedSquareMeanDeviations = 0;
 
 	for (size_t i = 0; i < predictions.size(); ++i) {
-	Prediction p = predictions[i];
-	double degreePredicted = std::stod(p.first, &sz);
-	totalPredictedSquareMeanDeviations += (totalPredictedMean - degreePredicted) * (totalPredictedMean - degreePredicted);
+		Prediction p = predictions[i];
+		double degreePredicted = std::stod(p.first, &sz);
+		totalPredictedSquareMeanDeviations += (totalPredictedMean - degreePredicted) * (totalPredictedMean - degreePredicted);
 	}
 	//this could be better because it could take the confidence into account:
 	double predictedStandardDeviation = sqrt(totalPredictedSquareMeanDeviations / 5);
@@ -377,107 +378,114 @@ double* ClassifyImage(const char *model_file, const char *trained_file, const ch
 
 int captureFromWebCam(const char *model_file, const char *trained_file, const char *mean_file, const char *label_file)
 {
-	VideoCapture cap(0); // open the video camera no. 0
+	static bool setup = false;
+	double dWidth, dHeight;
+	VideoCapture cap;
+	if (setup == false) {
 
-	if (!cap.isOpened())  // if not success, exit program
-	{
-		cout << "Cannot open the video cam" << endl;
-		return -1;
+		cap.open(0); // open the video camera no. 0
+
+		if (!cap.isOpened())  // if not success, exit program
+		{
+			cout << "Cannot open the video cam" << endl;
+			return -1;
+		}
+
+		dWidth = cap.get(CV_CAP_PROP_FRAME_WIDTH); //get the width of frames of the video
+		dHeight = cap.get(CV_CAP_PROP_FRAME_HEIGHT); //get the height of frames of the video
+
+		cout << "Frame size : " << dWidth << " x " << dHeight << endl;
+
+		namedWindow("MyVideo", CV_WINDOW_AUTOSIZE); //create a window called "MyVideo"
+		setup = true;
 	}
 
-	double dWidth = cap.get(CV_CAP_PROP_FRAME_WIDTH); //get the width of frames of the video
-	double dHeight = cap.get(CV_CAP_PROP_FRAME_HEIGHT); //get the height of frames of the video
 
-	cout << "Frame size : " << dWidth << " x " << dHeight << endl;
+	Mat frame;
 
-	namedWindow("MyVideo", CV_WINDOW_AUTOSIZE); //create a window called "MyVideo"
+	bool bSuccess = cap.read(frame); // read a new frame from video
 
-	while (1)
+	if (!bSuccess) //if not success, break loop
 	{
-		Mat frame;
+		cout << "Cannot read a frame from video stream" << endl;
+		return 0;
+	}
 
-		bool bSuccess = cap.read(frame); // read a new frame from video
-
-		if (!bSuccess) //if not success, break loop
-		{
-			cout << "Cannot read a frame from video stream" << endl;
-			break;
-		}
-
-		int thickness = 1;
-		int lineType = 8;
+	int thickness = 1;
+	int lineType = 8;
 
 
-		//int coinRadius = 208;
-		int frameWidth = frame.cols;
-		int frameHeight = frame.rows;
+	//int coinRadius = 208;
+	int frameWidth = frame.cols;
+	int frameHeight = frame.rows;
 
-		/*
-		circle(frame,
-		Point(frameWidth / 2, frameHeight/2),
-		coinRadius,
-		Scalar(0, 0, 255),
-		thickness,
-		lineType);*/
-
-		
-		
-		cv::Mat deskewedFrame = Mat::zeros(frame.rows, frame.cols, frame.type());
-		deskew(frame, Skew, deskewedFrame);
-
-		findContour(deskewedFrame);
-		
-		//cv::Rect myROI(frameWidth / 2 - coinRadius, frameHeight / 2 - coinRadius, coinRadius * 2, coinRadius * 2);
-		//cv::Rect myROI(coinCenter.x - coinRadius, coinCenter.y - coinRadius, coinRadius * 2, coinRadius * 2);
-		//cout << "18" << endl;
-		coinRadius = 208;
-		//cout << "19" << endl;
-		
-		//Why -1? I don't know, it's just is better centered:
-		int centerX = coinX - coinRadius  + 1;
-		int centerY = coinY - coinRadius;
-		if (centerX < 0){
-			centerX = 0;
-		}
-		
-		if (centerX + coinRadius * 2 > deskewedFrame.cols - 1){
-			centerX = 0;
-		}
-		
-		if (centerY < 0){
-			centerY = 0;
-		}
-		
-		if (centerY + coinRadius * 2 > deskewedFrame.rows - 1){
-			centerY = 0;
-		}
+	/*
+	circle(frame,
+	Point(frameWidth / 2, frameHeight/2),
+	coinRadius,
+	Scalar(0, 0, 255),
+	thickness,
+	lineType);*/
 
 
-		cv::Rect myROI(centerX, centerY, coinRadius * 2, coinRadius * 2);
-		//cout << "20" << endl;
-		cv::Mat croppedFrame = deskewedFrame(myROI);
-		cout << "" << endl;
-		
-		double* result = ClassifyImage(model_file, trained_file, mean_file, label_file, croppedFrame);
-		
-		cv::Mat rotatedFrame;
-		rotate(croppedFrame, 360 - result[0], rotatedFrame);
-		
-		if (result[1] > .9) {
-			imshow("MyVideo", rotatedFrame); //show the frame in "MyVideo" window
-		}
 
-		
+	cv::Mat deskewedFrame = Mat::zeros(frame.rows, frame.cols, frame.type());
+	deskew(frame, Skew, deskewedFrame);
 
-		if (waitKey(1) == 27) //wait for 'esc' key press for 30ms. If 'esc' key is pressed, break loop
-		{
-			cout << "esc key is pressed by user" << endl;
-			destroyWindow("MyVideo");
-			break;
-		}
+	findContour(deskewedFrame);
+
+	//cv::Rect myROI(frameWidth / 2 - coinRadius, frameHeight / 2 - coinRadius, coinRadius * 2, coinRadius * 2);
+	//cv::Rect myROI(coinCenter.x - coinRadius, coinCenter.y - coinRadius, coinRadius * 2, coinRadius * 2);
+	//cout << "18" << endl;
+	coinRadius = 208;
+	//cout << "19" << endl;
+
+	//Why -1? I don't know, it's just is better centered:
+	int centerX = coinX - coinRadius + 1;
+	int centerY = coinY - coinRadius;
+	if (centerX < 0){
+		centerX = 0;
+	}
+
+	if (centerX + coinRadius * 2 > deskewedFrame.cols - 1){
+		centerX = 0;
+	}
+
+	if (centerY < 0){
+		centerY = 0;
+	}
+
+	if (centerY + coinRadius * 2 > deskewedFrame.rows - 1){
+		centerY = 0;
+	}
+
+
+	cv::Rect myROI(centerX, centerY, coinRadius * 2, coinRadius * 2);
+	//cout << "20" << endl;
+	cv::Mat croppedFrame = deskewedFrame(myROI);
+	cout << "" << endl;
+
+	double* result = ClassifyImage(model_file, trained_file, mean_file, label_file, croppedFrame);
+
+	cv::Mat rotatedFrame;
+	rotate(croppedFrame, 360 - result[0], rotatedFrame);
+
+	if (result[1] > .9) {
+		imshow("MyVideo", rotatedFrame); //show the frame in "MyVideo" window
+	}
+
+
+
+	if (waitKey(1) == 27) //wait for 'esc' key press for 30ms. If 'esc' key is pressed, break loop
+	{
+		cout << "esc key is pressed by user" << endl;
+		destroyWindow("MyVideo");
+		return 0;
 	}
 	return 0;
 }
+
+
 
 
 //*******  Contour finding sample *****
@@ -514,7 +522,7 @@ int findContour(Mat input)
 	createTrackbar(" VMax:", "Source", &VMax, max_thresh, thresh_callback);
 	createTrackbar(" SMin:", "Source", &SMin, max_thresh, thresh_callback);
 	createTrackbar(" SMax:", "Source", &SMax, max_thresh, thresh_callback);
-	
+
 	createTrackbar(" Skew:", "Source", &Skew, max_skew, thresh_callback);
 	thresh_callback(0, 0);
 
@@ -574,7 +582,7 @@ void thresh_callback(int, void*)
 			//rectangle(drawing, boundRect[i].tl(), boundRect[i].br(), color, 2, 8, 0);
 			circle(drawing, center[i], (int)radius[i], color, 2, 8, 0);
 			coinRadius = (int)radius[i];
-			
+
 			/// Get the moments
 			Moments mu;
 			mu = moments(contours[i], false);
@@ -608,7 +616,7 @@ void deskew(cv::Mat& src, float shiftpixels, cv::Mat& dst)
 
 	Mat rot_mat(2, 3, CV_32FC1);
 	Mat warp_mat(2, 3, CV_32FC1);
-		
+
 	/// Set your 3 points to calculate the  Affine Transform
 	srcTri[0] = Point2f(0, 0);
 	srcTri[1] = Point2f(src.cols - 1, 0);
