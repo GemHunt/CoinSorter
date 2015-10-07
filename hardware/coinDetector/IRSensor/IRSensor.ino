@@ -13,7 +13,7 @@ void setup() {
 }
 
 void loop() {
-   //Serial.println(analogRead(sensorPin));
+  //Serial.println(analogRead(sensorPin));
   
   //What does 900 mean? This needs somethings that adjusts
   // for the average power of the sensor through 

@@ -25,6 +25,7 @@ namespace ImageClassifier
         public static extern int captureFromWebCam();
 
         SerialPortManager _spManager;
+        int IRSensorCount = 0;
 
         public Form1()
         {
@@ -43,7 +44,12 @@ namespace ImageClassifier
                 return;
             }
             Console.WriteLine(Encoding.ASCII.GetString(e.Data));
-            captureFromWebCam();
+            Timer timerIRSensorDelay = new Timer();
+            timerIRSensorDelay.Interval = trackBar1.Value; 
+            timerIRSensorDelay.Enabled = true;
+            timerIRSensorDelay.Tick += new EventHandler(timerIRSensorDelay_Tick);
+            IRSensorCount += 1;
+            lblIRSensorCount.Text = "IR Sensor Count: " + IRSensorCount;
 
         }
 
@@ -136,6 +142,13 @@ namespace ImageClassifier
         {
             _spManager.StartListening();
         }
-        
+
+      private void timerIRSensorDelay_Tick(object sender, EventArgs e)
+        {
+         Timer timerIRSensorDelay = (Timer)sender;
+         timerIRSensorDelay.Enabled = false;
+         captureFromWebCam();
+        }
+       
     }
 }
