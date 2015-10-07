@@ -15,13 +15,13 @@ namespace ImageClassifier
 {
     public partial class Form1 : Form
     {
-        [DllImport("D:\\GitHub\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll")]
+        [DllImport("E:\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll")]
         public static extern IntPtr ClassifyImage(String model_file, String trained_file, String mean_file, String label_file, String image_file);
 
-        [DllImport("D:\\GitHub\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("E:\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int ReleaseMemory(IntPtr ptr);
 
-        [DllImport("D:\\GitHub\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("E:\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int captureFromWebCam();
 
         SerialPortManager _spManager;
@@ -43,6 +43,8 @@ namespace ImageClassifier
                 return;
             }
             Console.WriteLine(Encoding.ASCII.GetString(e.Data));
+            captureFromWebCam();
+
         }
 
 
@@ -50,8 +52,7 @@ namespace ImageClassifier
         {
             String dir = "F:\\20150924-184701-f9a5_epoch_3.0\\";
             //String dir = "F:\\model\\";
-
-
+            
             String model_file = dir + "deploy.prototxt";
             String trained_file = dir + "snapshot.caffemodel";
             String mean_file = dir + "mean.binaryproto";
@@ -121,7 +122,7 @@ namespace ImageClassifier
         private void cmdWebCam_Click(object sender, EventArgs e)
         {
             captureFromWebCam();
-            Application.Exit();
+            //Application.Exit();
         }
 
         private void Form1_Load(object sender, EventArgs e)
