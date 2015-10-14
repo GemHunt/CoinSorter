@@ -34,6 +34,7 @@
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.lblIRSensorCount = new System.Windows.Forms.Label();
             this.lblCamCount = new System.Windows.Forms.Label();
+            this.cmdToggle = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -96,11 +97,22 @@
             this.lblCamCount.TabIndex = 5;
             this.lblCamCount.Text = "Cam Count";
             // 
+            // cmdToggle
+            // 
+            this.cmdToggle.Location = new System.Drawing.Point(487, 121);
+            this.cmdToggle.Name = "cmdToggle";
+            this.cmdToggle.Size = new System.Drawing.Size(87, 52);
+            this.cmdToggle.TabIndex = 6;
+            this.cmdToggle.Text = "Toggle ";
+            this.cmdToggle.UseVisualStyleBackColor = true;
+            this.cmdToggle.Click += new System.EventHandler(this.cmdToggle_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(975, 245);
+            this.Controls.Add(this.cmdToggle);
             this.Controls.Add(this.lblCamCount);
             this.Controls.Add(this.lblIRSensorCount);
             this.Controls.Add(this.trackBar1);
@@ -124,6 +136,7 @@
         private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.Label lblIRSensorCount;
         private System.Windows.Forms.Label lblCamCount;
+        private System.Windows.Forms.Button cmdToggle;
     }
 }
 

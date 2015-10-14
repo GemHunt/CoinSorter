@@ -73,6 +73,10 @@ namespace ImageClassifier
             _serialPort.Close();
         }
 
+        public void Toggle()
+        {
+            _serialPort.WriteLine("T");
+        }
 
         // Call to release serial port
         public void Dispose()

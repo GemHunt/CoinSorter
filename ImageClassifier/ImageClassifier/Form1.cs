@@ -149,6 +149,11 @@ namespace ImageClassifier
          timerIRSensorDelay.Enabled = false;
          captureFromWebCam();
         }
+
+      private void cmdToggle_Click(object sender, EventArgs e)
+      {
+          _spManager.Toggle();
+      }
        
     }
 }
