@@ -7,7 +7,8 @@ http://www.joyofdata.de/blog/gpu-powered-deeplearning-with-nvidia-digits/
 2.) I rebuilt for Digits 2.
 
 3.) I then rebuilt for cudnn3 and Nidvia Caffe v0.13.0 
-	This one took me about 2 hours 
+	This one took me about 2 hours
+	
 4.) Then I built a local server. (9/22/2015)
 	MSI H81M-E33 motherboard, Intel G3258 Processor, 8GB of Ram, 250GB SSD, GTX 970
 	It really was the same as AWS except for installing ubuntu 14.04
