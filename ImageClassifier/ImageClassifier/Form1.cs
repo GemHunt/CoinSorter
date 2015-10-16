@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.IO;
 
-
 namespace ImageClassifier
 {
     public partial class Form1 : Form
@@ -26,6 +25,7 @@ namespace ImageClassifier
 
         SerialPortManager _spManager;
         int IRSensorCount = 0;
+        //Boolean toggleNextCoin = true;
 
         public Form1()
         {
@@ -34,7 +34,7 @@ namespace ImageClassifier
             _spManager.NewSerialDataRecieved += new EventHandler<SerialDataEventArgs>(_spManager_NewSerialDataRecieved);
         }
 
-       
+
         void _spManager_NewSerialDataRecieved(object sender, SerialDataEventArgs e)
         {
             if (this.InvokeRequired)
@@ -45,20 +45,29 @@ namespace ImageClassifier
             }
             Console.WriteLine(Encoding.ASCII.GetString(e.Data));
             Timer timerIRSensorDelay = new Timer();
-            timerIRSensorDelay.Interval = trackBar1.Value; 
+            timerIRSensorDelay.Interval = trackBarSensorDelay.Value;
             timerIRSensorDelay.Enabled = true;
             timerIRSensorDelay.Tick += new EventHandler(timerIRSensorDelay_Tick);
             IRSensorCount += 1;
             lblIRSensorCount.Text = "IR Sensor Count: " + IRSensorCount;
 
+            //Toggle every other coin:
+            // toggleNextCoin = !toggleNextCoin;
+            // if (toggleNextCoin) {
+            Timer timerToggleDelay = new Timer();
+            timerToggleDelay.Interval = trackBarSensorDelay.Value + trackBarToggleDelay.Value;
+            timerToggleDelay.Enabled = true;
+            timerToggleDelay.Tick += new EventHandler(timerToggleDelay_Tick);
+            // }
         }
+
 
 
         private void button1_Click(object sender, EventArgs e)
         {
             String dir = "F:\\20150924-184701-f9a5_epoch_3.0\\";
             //String dir = "F:\\model\\";
-            
+
             String model_file = dir + "deploy.prototxt";
             String trained_file = dir + "snapshot.caffemodel";
             String mean_file = dir + "mean.binaryproto";
@@ -73,7 +82,7 @@ namespace ImageClassifier
             foreach (string image_file in files)
             {
                 List<double> predictions = new List<double>();
-                
+
                 for (int i = 0; i < 359; i += 360)
                 {
                     string fileName = image_file.Replace("\\000\\", "\\" + i.ToString("D3") + "\\");
@@ -134,7 +143,7 @@ namespace ImageClassifier
         private void Form1_Load(object sender, EventArgs e)
         {
             //captureFromWebCam();
-          
+
         }
 
         // Handles the "Start Listening"-buttom click event
@@ -143,17 +152,37 @@ namespace ImageClassifier
             _spManager.StartListening();
         }
 
-      private void timerIRSensorDelay_Tick(object sender, EventArgs e)
+        private void timerIRSensorDelay_Tick(object sender, EventArgs e)
         {
-         Timer timerIRSensorDelay = (Timer)sender;
-         timerIRSensorDelay.Enabled = false;
-         captureFromWebCam();
+            Timer timerIRSensorDelay = (Timer)sender;
+            timerIRSensorDelay.Enabled = false;
+            captureFromWebCam();
         }
 
-      private void cmdToggle_Click(object sender, EventArgs e)
-      {
-          _spManager.Toggle();
-      }
-       
+
+        private void timerToggleDelay_Tick(object sender, EventArgs e)
+        {
+            Timer timerToggleDelay = (Timer)sender;
+            timerToggleDelay.Enabled = false;
+            _spManager.Toggle();
+        }
+
+
+
+        private void cmdToggle_Click(object sender, EventArgs e)
+        {
+            _spManager.Toggle();
+        }
+
+        private void checkLive_CheckedChanged(object sender, EventArgs e)
+        {
+            timerWebcam.Enabled = checkLive.Checked;
+        }
+
+        private void timerWebcam_Tick(object sender, EventArgs e)
+        {
+            captureFromWebCam();
+        }
+
     }
 }

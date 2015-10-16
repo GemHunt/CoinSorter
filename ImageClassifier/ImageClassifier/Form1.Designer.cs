@@ -28,14 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.button1 = new System.Windows.Forms.Button();
             this.cmdWebCam = new System.Windows.Forms.Button();
             this.cmdRead = new System.Windows.Forms.Button();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.trackBarSensorDelay = new System.Windows.Forms.TrackBar();
             this.lblIRSensorCount = new System.Windows.Forms.Label();
             this.lblCamCount = new System.Windows.Forms.Label();
             this.cmdToggle = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            this.checkLive = new System.Windows.Forms.CheckBox();
+            this.timerWebcam = new System.Windows.Forms.Timer(this.components);
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.trackBarToggleDelay = new System.Windows.Forms.TrackBar();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarSensorDelay)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarToggleDelay)).BeginInit();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -68,16 +77,16 @@
             this.cmdRead.UseVisualStyleBackColor = true;
             this.cmdRead.Click += new System.EventHandler(this.cmdRead_Click);
             // 
-            // trackBar1
+            // trackBarSensorDelay
             // 
-            this.trackBar1.Location = new System.Drawing.Point(12, 199);
-            this.trackBar1.Maximum = 1500;
-            this.trackBar1.Minimum = 1;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(941, 45);
-            this.trackBar1.TabIndex = 3;
-            this.trackBar1.TickFrequency = 100;
-            this.trackBar1.Value = 300;
+            this.trackBarSensorDelay.Location = new System.Drawing.Point(6, 31);
+            this.trackBarSensorDelay.Maximum = 1500;
+            this.trackBarSensorDelay.Minimum = 1;
+            this.trackBarSensorDelay.Name = "trackBarSensorDelay";
+            this.trackBarSensorDelay.Size = new System.Drawing.Size(941, 45);
+            this.trackBarSensorDelay.TabIndex = 3;
+            this.trackBarSensorDelay.TickFrequency = 100;
+            this.trackBarSensorDelay.Value = 340;
             // 
             // lblIRSensorCount
             // 
@@ -107,22 +116,76 @@
             this.cmdToggle.UseVisualStyleBackColor = true;
             this.cmdToggle.Click += new System.EventHandler(this.cmdToggle_Click);
             // 
+            // checkLive
+            // 
+            this.checkLive.AutoSize = true;
+            this.checkLive.Location = new System.Drawing.Point(273, 12);
+            this.checkLive.Name = "checkLive";
+            this.checkLive.Size = new System.Drawing.Size(92, 17);
+            this.checkLive.TabIndex = 7;
+            this.checkLive.Text = "Live Webcam";
+            this.checkLive.UseVisualStyleBackColor = true;
+            this.checkLive.CheckedChanged += new System.EventHandler(this.checkLive_CheckedChanged);
+            // 
+            // timerWebcam
+            // 
+            this.timerWebcam.Interval = 250;
+            this.timerWebcam.Tick += new System.EventHandler(this.timerWebcam_Tick);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.trackBarSensorDelay);
+            this.groupBox1.Location = new System.Drawing.Point(4, 181);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(958, 96);
+            this.groupBox1.TabIndex = 9;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Sensor Delay";
+            // 
+            // trackBarToggleDelay
+            // 
+            this.trackBarToggleDelay.Location = new System.Drawing.Point(6, 31);
+            this.trackBarToggleDelay.Maximum = 1500;
+            this.trackBarToggleDelay.Minimum = 1;
+            this.trackBarToggleDelay.Name = "trackBarToggleDelay";
+            this.trackBarToggleDelay.Size = new System.Drawing.Size(941, 45);
+            this.trackBarToggleDelay.TabIndex = 3;
+            this.trackBarToggleDelay.TickFrequency = 100;
+            this.trackBarToggleDelay.Value = 480;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.trackBarToggleDelay);
+            this.groupBox2.Location = new System.Drawing.Point(4, 283);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(958, 96);
+            this.groupBox2.TabIndex = 10;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Toggle Delay";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(975, 245);
+            this.ClientSize = new System.Drawing.Size(975, 402);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.checkLive);
             this.Controls.Add(this.cmdToggle);
             this.Controls.Add(this.lblCamCount);
             this.Controls.Add(this.lblIRSensorCount);
-            this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.cmdRead);
             this.Controls.Add(this.cmdWebCam);
             this.Controls.Add(this.button1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarSensorDelay)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarToggleDelay)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -133,10 +196,15 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button cmdWebCam;
         private System.Windows.Forms.Button cmdRead;
-        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.TrackBar trackBarSensorDelay;
         private System.Windows.Forms.Label lblIRSensorCount;
         private System.Windows.Forms.Label lblCamCount;
         private System.Windows.Forms.Button cmdToggle;
+        private System.Windows.Forms.CheckBox checkLive;
+        private System.Windows.Forms.Timer timerWebcam;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TrackBar trackBarToggleDelay;
+        private System.Windows.Forms.GroupBox groupBox2;
     }
 }
 

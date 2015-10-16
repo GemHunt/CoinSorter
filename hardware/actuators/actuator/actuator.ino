@@ -48,8 +48,9 @@ void readIRSensor() {
   else
   {
   if (offCount != 0) {
-      //if it's under 50 it's just a bounce. 
-      if (offCount > 50) {
+      //if it's under 50 it's just a bounce.
+      //if it's over 1800 pennies are stacked
+      if ((offCount > 50) && (offCount < 1800)) {
         Serial.println(offCount );
       }
       offCount = 0;
