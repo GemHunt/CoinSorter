@@ -26,7 +26,7 @@ int coinY = 200;
 
 void rotate(cv::Mat& src, double angle, cv::Mat& dst);
 void deskew(cv::Mat& src, float angle, cv::Mat& dst);
-int Skew = 7;
+int Skew = 32;
 
 
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
@@ -380,7 +380,7 @@ int captureFromWebCam(const char *model_file, const char *trained_file, const ch
 {
 	static bool setup = false;
 	double dWidth, dHeight;
-	VideoCapture cap;
+	static VideoCapture cap;
 	if (setup == false) {
 
 		cap.open(0); // open the video camera no. 0
@@ -402,8 +402,10 @@ int captureFromWebCam(const char *model_file, const char *trained_file, const ch
 
 
 	Mat frame;
-
-	bool bSuccess = cap.read(frame); // read a new frame from video
+	bool bSuccess;
+	bSuccess = cap.read(frame); // read a new frame from video
+	waitKey(1);
+	bSuccess = cap.read(frame); // read a new frame from video
 
 	if (!bSuccess) //if not success, break loop
 	{
@@ -463,19 +465,20 @@ int captureFromWebCam(const char *model_file, const char *trained_file, const ch
 	cv::Rect myROI(centerX, centerY, coinRadius * 2, coinRadius * 2);
 	//cout << "20" << endl;
 	cv::Mat croppedFrame = deskewedFrame(myROI);
-	cout << "" << endl;
+	
+	imshow("MyVideo", deskewedFrame);
+	waitKey(1);
+	//cout << "" << endl;
+	//double* result = ClassifyImage(model_file, trained_file, mean_file, label_file, croppedFrame);
 
-	double* result = ClassifyImage(model_file, trained_file, mean_file, label_file, croppedFrame);
+	//cv::Mat rotatedFrame;
+	//rotate(croppedFrame, 360 - result[0], rotatedFrame);
 
-	cv::Mat rotatedFrame;
-	rotate(croppedFrame, 360 - result[0], rotatedFrame);
+	//if (result[1] > .9) {
+	//	imshow("MyVideo", rotatedFrame); //show the frame in "MyVideo" window
+	//}
 
-	if (result[1] > .9) {
-		imshow("MyVideo", rotatedFrame); //show the frame in "MyVideo" window
-	}
-
-
-
+	
 	if (waitKey(1) == 27) //wait for 'esc' key press for 30ms. If 'esc' key is pressed, break loop
 	{
 		cout << "esc key is pressed by user" << endl;
@@ -484,7 +487,6 @@ int captureFromWebCam(const char *model_file, const char *trained_file, const ch
 	}
 	return 0;
 }
-
 
 
 
@@ -503,7 +505,6 @@ RNG rng(12345);
 /// Function header
 void thresh_callback(int, void*);
 
-/** @function main */
 int findContour(Mat input)
 {
 	src = input;
@@ -526,7 +527,7 @@ int findContour(Mat input)
 	createTrackbar(" Skew:", "Source", &Skew, max_skew, thresh_callback);
 	thresh_callback(0, 0);
 
-	//waitKey(0);
+	waitKey(1);
 	return(0);
 }
 
@@ -549,7 +550,7 @@ void thresh_callback(int, void*)
 	Mat dilateElement = getStructuringElement(MORPH_RECT, cv::Size(12, 12));
 	erode(threshold, threshold, erodeElement);
 	dilate(threshold, threshold, dilateElement);
-	//cv::resize(threshold, threshold, cv::Size(360, 286));
+	cv::resize(threshold, threshold, cv::Size(360, 286));
 	//cout << "10" << endl;
 
 	/// Find contours
@@ -558,7 +559,7 @@ void thresh_callback(int, void*)
 
 	/// Approximate contours to polygons + get bounding rects and circles
 	vector<vector<Point> > contours_poly(contours.size());
-	//vector<Rect> boundRect(contours.size());
+	vector<Rect> boundRect(contours.size());
 	//cout << "12" << endl;
 	vector<Point2f>center(contours.size());
 	//cout << "13" << endl;
@@ -567,8 +568,8 @@ void thresh_callback(int, void*)
 	for (int i = 0; i < contours.size(); i++)
 	{
 		approxPolyDP(Mat(contours[i]), contours_poly[i], 3, true);
-		//boundRect[i] = boundingRect(Mat(contours_poly[i]));
-		minEnclosingCircle((Mat)contours_poly[i], center[i], radius[i]);
+		boundRect[i] = boundingRect(Mat(contours_poly[i]));
+		//minEnclosingCircle((Mat)contours_poly[i], center[i], radius[i]);
 	}
 	//cout << "15" << endl;
 
@@ -579,7 +580,7 @@ void thresh_callback(int, void*)
 		if ((radius[i] > 125) && (radius[i] < 230))  {
 			Scalar color = Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));
 			drawContours(drawing, contours_poly, i, color, 1, 8, vector<Vec4i>(), 0, Point());
-			//rectangle(drawing, boundRect[i].tl(), boundRect[i].br(), color, 2, 8, 0);
+			rectangle(drawing, boundRect[i].tl(), boundRect[i].br(), color, 2, 8, 0);
 			circle(drawing, center[i], (int)radius[i], color, 2, 8, 0);
 			coinRadius = (int)radius[i];
 
@@ -593,11 +594,11 @@ void thresh_callback(int, void*)
 
 	//cout << "16" << endl;
 	/// Show in a window
-	//namedWindow("Contours", CV_WINDOW_AUTOSIZE);
-	//imshow("Contours", drawing);
+	namedWindow("Contours", CV_WINDOW_AUTOSIZE);
+	imshow("Contours", drawing);
 
-	//namedWindow("threshold", CV_WINDOW_AUTOSIZE);
-	//imshow("threshold", threshold);
+	namedWindow("threshold", CV_WINDOW_AUTOSIZE);
+	imshow("threshold", threshold);
 	//cout << "17" << endl;
 }
 

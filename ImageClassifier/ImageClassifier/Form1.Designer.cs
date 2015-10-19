@@ -86,7 +86,7 @@
             this.trackBarSensorDelay.Size = new System.Drawing.Size(941, 45);
             this.trackBarSensorDelay.TabIndex = 3;
             this.trackBarSensorDelay.TickFrequency = 100;
-            this.trackBarSensorDelay.Value = 340;
+            this.trackBarSensorDelay.Value = 570;
             // 
             // lblIRSensorCount
             // 
@@ -151,7 +151,7 @@
             this.trackBarToggleDelay.Size = new System.Drawing.Size(941, 45);
             this.trackBarToggleDelay.TabIndex = 3;
             this.trackBarToggleDelay.TickFrequency = 100;
-            this.trackBarToggleDelay.Value = 480;
+            this.trackBarToggleDelay.Value = 300;
             // 
             // groupBox2
             // 
