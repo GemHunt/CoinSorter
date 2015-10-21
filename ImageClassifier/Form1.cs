@@ -28,7 +28,7 @@ namespace ImageClassifier
 
         SerialPortManager _spManager;
         int imageID = 10000;
-        int IRSensorCount = 0;
+        int IRSensorCount = 184;
         //Boolean toggleNextCoin = true;
 
         public Form1()
@@ -197,9 +197,22 @@ namespace ImageClassifier
         private void cmdTestFindCoinCenter_Click(object sender, EventArgs e)
         {
             imageID ++;
-            if (File.Exists("F:/OpenCV/" + imageID + ".jpg")) {
+            TestFindCoinCenter();
+        }
+
+        private void cmdTestFindCoinCenterBack_Click(object sender, EventArgs e)
+        {
+            imageID --;
+            TestFindCoinCenter();
+        }
+
+        private void TestFindCoinCenter()
+        {
+            if (File.Exists("F:/OpenCV/" + imageID + ".jpg"))
+            {
                 findCoinCenter(imageID);
             }
         }
+
     }
 }
