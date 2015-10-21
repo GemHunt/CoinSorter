@@ -21,9 +21,13 @@ namespace ImageClassifier
         public static extern int ReleaseMemory(IntPtr ptr);
 
         [DllImport("E:\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int captureFromWebCam();
+        public static extern int captureFromWebCam(int imageID);
+
+        [DllImport("E:\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int findCoinCenter(int imageID);
 
         SerialPortManager _spManager;
+        int imageID = 10000;
         int IRSensorCount = 0;
         //Boolean toggleNextCoin = true;
 
@@ -184,5 +188,18 @@ namespace ImageClassifier
             captureFromWebCam();
         }
 
+
+        private void captureFromWebCam()
+        {
+            captureFromWebCam(IRSensorCount + 10000);
+        }
+
+        private void cmdTestFindCoinCenter_Click(object sender, EventArgs e)
+        {
+            imageID ++;
+            if (File.Exists("F:/OpenCV/" + imageID + ".jpg")) {
+                findCoinCenter(imageID);
+            }
+        }
     }
 }
