@@ -27,21 +27,25 @@ int YOffset = 127;
 
 int max_thresh = 255;
 
+void startCoinCenterGUI(Mat input);
 void thresh_callback(int, void*);
-Point2f findCoinCenter(Mat input);
+Point CoinCenter(Mat input, int showImages);
 
-extern "C" __declspec(dllexport) int findCoinCenter(int imageID) {
+
+extern "C" __declspec(dllexport) int FindCoinCenter(int imageID, int showImages) {
 	Mat input;
 	input = imread("F:/OpenCV/" + std::to_string(imageID) + ".jpg");
-	findCoinCenter(input);
-	return 0;
+	if (showImages == 1){
+		startCoinCenterGUI(input);
+	}
+
+	Point coinCenter = CoinCenter(input, showImages);
+	return coinCenter.y;
 }
 
-
-Point2f findCoinCenter(Mat input)
+void startCoinCenterGUI(Mat input)
 {
 	src = input;
-	Point2f coinCenter;
 
 	/// Create Window
 	char* source_window = "Source";
@@ -58,22 +62,21 @@ Point2f findCoinCenter(Mat input)
 	createTrackbar(" YOffset:", "Source", &YOffset, 200, thresh_callback);
 	thresh_callback(0, 0);
 	waitKey(1);
-	return(0);
 }
 
 /** @function thresh_callback */
-void thresh_callback(int, void*)
+void thresh_callback(int, void*){
+	CoinCenter(src, 1);
+}
+
+
+Point CoinCenter(Mat input, int showImages)
 {
-	//cout << "9" << endl;
-	//Mat threshold_output;
+	Point coinCenter;
 	vector<vector<Point> > contours;
 	vector<Vec4i> hierarchy;
 
-	/// Detect edges using Threshold
-	//threshold(src_gray, threshold_output, thresh, 255, THRESH_BINARY);
-
 	cv::Mat YCrCb, threshold, croppedFrame;
-	
 	cv::Rect myROI(0, 0, 639, YCrop);
 	croppedFrame = src(myROI);
 	cvtColor(croppedFrame, YCrCb, COLOR_RGB2YCrCb);
@@ -90,9 +93,10 @@ void thresh_callback(int, void*)
 	erode(threshold, threshold, erodeElement);
 	dilate(threshold, threshold, dilateElement);
 
-	namedWindow("threshold", CV_WINDOW_AUTOSIZE);
-	imshow("threshold", threshold);
-
+	if (showImages == 1){
+		namedWindow("threshold", CV_WINDOW_AUTOSIZE);
+		imshow("threshold", threshold);
+	}
 
 	//cv::resize(threshold, threshold, cv::Size(360, 286));
 	//cout << "10" << endl;
@@ -117,78 +121,66 @@ void thresh_callback(int, void*)
 	}
 	//cout << "15" << endl;
 
-	/// Draw polygonal contour + bonding rects + circles
-	Mat drawing = src.clone();
-	//Mat drawing = Mat::zeros(threshold.size(), CV_8UC3);
+
+	int contourIndex = -1;
+	int maxRadius = 0;
 	for (int i = 0; i < contours.size(); i++)
 	{
-		if (radius[i]>100) {
-			Scalar color = Scalar(0,255,0);
-			drawContours(drawing, contours_poly, i, color, 1, 8, vector<Vec4i>(), 0, Point());
-			rectangle(drawing, boundRect[i].tl(), boundRect[i].br(), color, 2, 8, 0);
-
-			//circle(drawing, center[i], (int)radius[i], color, 2, 8, 0);
-			//How should coinRadius be used?
-			//coinRadius = (int)radius[i];
-
-			/// Get the moments
-			Moments mu;
-			mu = moments(contours[i], false);
-			int coinX = (int)(mu.m10 / mu.m00) - XOffset;
-			int coinY = (int)(mu.m01 / mu.m00) + YOffset;
-			cv::Point blobCenter(coinX, coinY);
-			//circle(drawing, blobCenter, (int)radius[i], color, 1, 8, 0);
-			circle(drawing, blobCenter,coinRadius, color, 2, 8, 0);
+		if (radius[i]>maxRadius) {
+			maxRadius = (int)radius[i];
+			contourIndex = i;
 		}
 	}
 
-	namedWindow("Contours", CV_WINDOW_AUTOSIZE);
-	imshow("Contours", drawing);
+	//return nothing if nothing found:
+	if (contourIndex == -1){
+		return Point(0, 0);
+	}
 
-	//cout << "17" << endl;
+	Scalar color = Scalar(0, 255, 0);
+	Moments mu;
+	mu = moments(contours[contourIndex], false);
+	int coinX = (int)(mu.m10 / mu.m00) - XOffset;
+	int coinY = (int)(mu.m01 / mu.m00) + YOffset;
+	coinCenter = Point(coinX, coinY);
+	
+	if (showImages == 1){
+		/// Draw polygonal contour + bonding rects + circles
+		Mat drawing = src.clone();
+		//Mat drawing = Mat::zeros(threshold.size(), CV_8UC3);
+		drawContours(drawing, contours_poly, contourIndex, color, 1, 8, vector<Vec4i>(), 0, Point());
+		rectangle(drawing, boundRect[contourIndex].tl(), boundRect[contourIndex].br(), color, 2, 8, 0);
+		circle(drawing, coinCenter, coinRadius, color, 2, 8, 0);
+		namedWindow("Contours", CV_WINDOW_AUTOSIZE);
+		imshow("Contours", drawing);
+	}
+
+	return coinCenter;
+}
+
+Mat CropToCenter(Mat input, Point coinCenter)
+{
+	int centerX = (int)coinCenter.x - coinRadius;
+	int centerY = (int)coinCenter.y - coinRadius;
+	if (centerX < 0){
+		centerX = 0;
+	}
+
+	if (centerX + coinRadius * 2 > input.cols - 1){
+		centerX = 0;
+	}
+
+	if (centerY < 0){
+		centerY = 0;
+	}
+
+	if (centerY + coinRadius * 2 > input.rows - 1){
+		centerY = 0;
+	}
+
+	cv::Rect myROI(centerX, centerY, coinRadius * 2, coinRadius * 2);
+	//cout << "20" << endl;
+	return input(myROI);
 }
 
 
-
-
-
-/* show a cirle acound the coin:
-int thickness = 1;
-int lineType = 8;
-int frameWidth = frame.cols;
-int frameHeight = frame.rows;
-
-circle(frame,
-Point(frameWidth / 2, frameHeight/2),
-coinRadius,
-Scalar(0, 0, 255),
-thickness,
-lineType);*/
-
-
-
-/* Crop to center of the coin:
-int coinRadius = 208;
-//Why -1? I don't know, it's just is better centered:
-int centerX = (int)coinCenter.x - coinRadius + 1;
-int centerY = (int)coinCenter.y - coinRadius;
-if (centerX < 0){
-centerX = 0;
-}
-
-if (centerX + coinRadius * 2 > deskewedFrame.cols - 1){
-centerX = 0;
-}
-
-if (centerY < 0){
-centerY = 0;
-}
-
-if (centerY + coinRadius * 2 > deskewedFrame.rows - 1){
-centerY = 0;
-}
-
-cv::Rect myROI(centerX, centerY, coinRadius * 2, coinRadius * 2);
-//cout << "20" << endl;
-cv::Mat croppedFrame = deskewedFrame(myROI);
-*/

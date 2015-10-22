@@ -12,26 +12,26 @@ using System.IO;
 
 namespace ImageClassifier
 {
-    public partial class Form1 : Form
+    public partial class frmMain : Form
     {
         [DllImport("E:\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll")]
         public static extern IntPtr ClassifyImage(String model_file, String trained_file, String mean_file, String label_file, String image_file);
+                                      
 
         [DllImport("E:\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int ReleaseMemory(IntPtr ptr);
 
         [DllImport("E:\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int captureFromWebCam(int imageID);
+        public static extern int captureFromWebCam(int imageID,int show);
 
         [DllImport("E:\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int findCoinCenter(int imageID);
+        public static extern int FindCoinCenter(int imageID, int show);
 
         SerialPortManager _spManager;
-        int imageID = 10000;
-        int IRSensorCount = 184;
-        //Boolean toggleNextCoin = true;
-
-        public Form1()
+        int imageID = 10010;
+        int IRSensorCount = 0;
+        
+        public frmMain()
         {
             InitializeComponent();
             _spManager = new SerialPortManager();
@@ -191,7 +191,7 @@ namespace ImageClassifier
 
         private void captureFromWebCam()
         {
-            captureFromWebCam(IRSensorCount + 10000);
+            captureFromWebCam(IRSensorCount + 10000,1);
         }
 
         private void cmdTestFindCoinCenter_Click(object sender, EventArgs e)
@@ -210,7 +210,7 @@ namespace ImageClassifier
         {
             if (File.Exists("F:/OpenCV/" + imageID + ".jpg"))
             {
-                findCoinCenter(imageID);
+                FindCoinCenter(imageID,1);
             }
         }
 

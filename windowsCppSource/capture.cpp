@@ -10,7 +10,6 @@
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 using std::string;
 
-
 ///for web cam
 #include <iostream>
 using namespace cv;
@@ -18,11 +17,11 @@ using std::cout;
 using std::endl;
 ///for web cam
 
-extern "C" __declspec(dllexport) int captureFromWebCam(int imageID);
+extern "C" __declspec(dllexport) int captureFromWebCam(int imageID, int showImages);
 void deskew(cv::Mat& src, cv::Mat& dst);
-Point2f findCoinCenter(Mat input);
+Point CoinCenter(Mat input, int showImages);
 
-int captureFromWebCam(int imageID)
+int captureFromWebCam(int imageID, int showImages)
 {
 	static bool setup = false;
 	double dWidth, dHeight;
@@ -42,7 +41,9 @@ int captureFromWebCam(int imageID)
 
 		cout << "Frame size : " << dWidth << " x " << dHeight << endl;
 
-		namedWindow("MyVideo", CV_WINDOW_AUTOSIZE); //create a window called "MyVideo"
+		if (showImages == 1){
+			namedWindow("MyVideo", CV_WINDOW_AUTOSIZE); //create a window called "MyVideo"
+		}
 		setup = true;
 	}
 	
@@ -62,18 +63,23 @@ int captureFromWebCam(int imageID)
 	cv::Mat deskewedFrame = Mat::zeros(frame.rows, frame.cols, frame.type());
 	deskew(frame, deskewedFrame);
 	
-	//Point2f coinCenter = findCoinCenter(deskewedFrame);
-	
-	imwrite("F:/OpenCV/" + std::to_string(imageID) +".jpg", deskewedFrame);
+	//Point coinCenter = CoinCenter(deskewedFrame, showImages);
+	//cv::Mat crop = Mat::zeros(frame.rows, frame.cols, frame.type());
 
-	imshow("MyVideo", deskewedFrame);
+
+	imwrite("F:/OpenCV/" + std::to_string(imageID) + ".jpg", deskewedFrame);
 	
-	if (waitKey(1) == 27) //wait for 'esc' key press for 30ms. If 'esc' key is pressed, break loop
-	{
-		cout << "esc key is pressed by user" << endl;
-		destroyWindow("MyVideo");
-		return 0;
+	if (showImages == 1){
+		imshow("MyVideo", deskewedFrame);
+
+		if (waitKey(1) == 27) //wait for 'esc' key press for 30ms. If 'esc' key is pressed, break loop
+		{
+			cout << "esc key is pressed by user" << endl;
+			destroyWindow("MyVideo");
+			return 0;
+		}
 	}
+
 	return 0;
 }
 
