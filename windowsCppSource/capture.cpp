@@ -20,12 +20,15 @@ using std::endl;
 extern "C" __declspec(dllexport) int captureFromWebCam(int imageID, int showImages);
 void deskew(cv::Mat& src, cv::Mat& dst);
 Point CoinCenter(Mat input, int showImages);
+Mat CropToCenter(Mat input, Point coinCenter);
 
 int captureFromWebCam(int imageID, int showImages)
 {
+	//cout << "01" << endl;
 	static bool setup = false;
 	double dWidth, dHeight;
 	static VideoCapture cap;
+	//cout << "02" << endl;
 	if (setup == false) {
 
 		cap.open(0); // open the video camera no. 0
@@ -59,18 +62,26 @@ int captureFromWebCam(int imageID, int showImages)
 		cout << "Cannot read a frame from video stream" << endl;
 		return 0;
 	}
-
+	//cout << "03" << endl;
 	cv::Mat deskewedFrame = Mat::zeros(frame.rows, frame.cols, frame.type());
+	//cout << "04" << endl;
 	deskew(frame, deskewedFrame);
+	//cout << "05" << endl;
+
+	Point coinCenter = CoinCenter(deskewedFrame, showImages);
+	//cout << "06" << endl;
+	if (coinCenter.x == 0) {
+		cout << "Coin Not found" << endl;
+		return 0;
+	}
 	
-	//Point coinCenter = CoinCenter(deskewedFrame, showImages);
-	//cv::Mat crop = Mat::zeros(frame.rows, frame.cols, frame.type());
+	cv::Mat crop = CropToCenter(deskewedFrame, coinCenter);
 
 
-	imwrite("F:/OpenCV/" + std::to_string(imageID) + ".jpg", deskewedFrame);
+	imwrite("F:/OpenCV/" + std::to_string(imageID) + ".jpg", crop);
 	
 	if (showImages == 1){
-		imshow("MyVideo", deskewedFrame);
+		imshow("MyVideo", crop);
 
 		if (waitKey(1) == 27) //wait for 'esc' key press for 30ms. If 'esc' key is pressed, break loop
 		{

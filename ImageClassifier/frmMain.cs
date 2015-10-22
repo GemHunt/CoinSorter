@@ -28,7 +28,7 @@ namespace ImageClassifier
         public static extern int FindCoinCenter(int imageID, int show);
 
         SerialPortManager _spManager;
-        int imageID = 10010;
+        int imageID = 10000;
         int IRSensorCount = 0;
         
         public frmMain()
