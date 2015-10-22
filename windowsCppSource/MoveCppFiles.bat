@@ -1,0 +1,1 @@
+copy E:\build\DownloadCache\caffe\examples\cpp_classification\*.cpp C:\Users\pkrush\Documents\GemHunt\CoinSorter\windowsCppSource\

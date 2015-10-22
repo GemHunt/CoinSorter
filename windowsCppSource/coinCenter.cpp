@@ -16,13 +16,16 @@ int findContour(Mat);
 
 //*******  Contour finding sample *****
 Mat src;
-int CrMin = 177;
+int CrMin = 170;
 int CrMax = 255;
 int erodeSquare = 5;
-int dilateSquare = 12;
+int dilateSquare = 30;
+int coinRadius = 203;
+int YCrop = 180;
+int XOffset = 5;
+int YOffset = 127;
+
 int max_thresh = 255;
-int coinRadius = 200;
-RNG rng(12345);
 
 void thresh_callback(int, void*);
 Point2f findCoinCenter(Mat input);
@@ -47,9 +50,12 @@ Point2f findCoinCenter(Mat input)
 
 	createTrackbar(" CrMin:", "Source", &CrMin, max_thresh, thresh_callback);
 	createTrackbar(" CrMax:", "Source", &CrMax, max_thresh, thresh_callback);
-	createTrackbar(" erodeSquare:", "Source", &erodeSquare, 35, thresh_callback);
-	createTrackbar(" dilateSquare:", "Source", &dilateSquare, 35, thresh_callback);
-	createTrackbar(" coinRadius:", "Source", &coinRadius, 300, thresh_callback);
+	createTrackbar(" erode:", "Source", &erodeSquare, 35, thresh_callback);
+	createTrackbar(" dilate:", "Source", &dilateSquare, 35, thresh_callback);
+	createTrackbar(" radius:", "Source", &coinRadius, 300, thresh_callback);
+	createTrackbar(" YCrop:", "Source", &YCrop, 400, thresh_callback);
+	createTrackbar(" XOffset:", "Source", &XOffset, 20, thresh_callback);
+	createTrackbar(" YOffset:", "Source", &YOffset, 200, thresh_callback);
 	thresh_callback(0, 0);
 	waitKey(1);
 	return(0);
@@ -66,8 +72,11 @@ void thresh_callback(int, void*)
 	/// Detect edges using Threshold
 	//threshold(src_gray, threshold_output, thresh, 255, THRESH_BINARY);
 
-	cv::Mat YCrCb, threshold;
-	cvtColor(src, YCrCb, COLOR_RGB2YCrCb);
+	cv::Mat YCrCb, threshold, croppedFrame;
+	
+	cv::Rect myROI(0, 0, 639, YCrop);
+	croppedFrame = src(myROI);
+	cvtColor(croppedFrame, YCrCb, COLOR_RGB2YCrCb);
 	inRange(YCrCb, cv::Scalar(0, 0, CrMin), cv::Scalar(255, 255, CrMax), threshold);
 	if (erodeSquare == 0) {
 		erodeSquare = 1;
@@ -113,8 +122,8 @@ void thresh_callback(int, void*)
 	//Mat drawing = Mat::zeros(threshold.size(), CV_8UC3);
 	for (int i = 0; i < contours.size(); i++)
 	{
-		if (radius[i]>150) {
-			Scalar color = Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));
+		if (radius[i]>100) {
+			Scalar color = Scalar(0,255,0);
 			drawContours(drawing, contours_poly, i, color, 1, 8, vector<Vec4i>(), 0, Point());
 			rectangle(drawing, boundRect[i].tl(), boundRect[i].br(), color, 2, 8, 0);
 
@@ -125,11 +134,11 @@ void thresh_callback(int, void*)
 			/// Get the moments
 			Moments mu;
 			mu = moments(contours[i], false);
-			int coinX = mu.m10 / mu.m00;
-			int coinY = mu.m01 / mu.m00;
+			int coinX = (int)(mu.m10 / mu.m00) - XOffset;
+			int coinY = (int)(mu.m01 / mu.m00) + YOffset;
 			cv::Point blobCenter(coinX, coinY);
 			//circle(drawing, blobCenter, (int)radius[i], color, 1, 8, 0);
-			circle(drawing, blobCenter, coinRadius, color, 2, 8, 0);
+			circle(drawing, blobCenter,coinRadius, color, 2, 8, 0);
 		}
 	}
 
