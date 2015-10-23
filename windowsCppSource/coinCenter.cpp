@@ -74,19 +74,19 @@ void thresh_callback(int, void*){
 
 Point CoinCenter(Mat input, int showImages)
 {
-	cout << "101" << endl;
+	//cout << "101" << endl;
 	Point coinCenter;
 	vector<vector<Point> > contours;
 	vector<Vec4i> hierarchy;
-	cout << "102" << endl;
+	//cout << "102" << endl;
 	cv::Mat YCrCb, threshold, croppedFrame;
-	cout << "103" << endl;
+	//cout << "103" << endl;
 	cv::Rect myROI(0, 0, 639, YCrop);
-	cout << "103" << endl;
+	//cout << "103" << endl;
 	croppedFrame = input(myROI);
-	cout << "103" << endl;
+	//cout << "103" << endl;
 	cvtColor(croppedFrame, YCrCb, COLOR_RGB2YCrCb);
-	cout << "103" << endl;
+	//cout << "103" << endl;
 	inRange(YCrCb, cv::Scalar(0, 0, CrMin), cv::Scalar(255, 255, CrMax), threshold);
 	if (erodeSquare == 0) {
 		erodeSquare = 1;
@@ -99,39 +99,39 @@ Point CoinCenter(Mat input, int showImages)
 	Mat dilateElement = getStructuringElement(MORPH_RECT, cv::Size(dilateSquare, dilateSquare));
 	erode(threshold, threshold, erodeElement);
 	dilate(threshold, threshold, dilateElement);
-	cout << "104" << endl;
+	//cout << "104" << endl;
 	if (showImages == 1){
 		namedWindow("threshold", CV_WINDOW_AUTOSIZE);
 		imshow("threshold", threshold);
 	}
 
 	//cv::resize(threshold, threshold, cv::Size(360, 286));
-	cout << "10" << endl;
+	//cout << "10" << endl;
 
 	/// Find contours
 	findContours(threshold, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
-	cout << "11" << endl;
+	//cout << "11" << endl;
 
 	/// Approximate contours to polygons + get bounding rects and circles
 	vector<vector<Point> > contours_poly(contours.size());
 	vector<Rect> boundRect(contours.size());
-	cout << "12" << endl;
+	//cout << "12" << endl;
 	vector<Point2f>center(contours.size());
-	cout << "13" << endl;
+	//cout << "13" << endl;
 	vector<float>radius(contours.size());
-	cout << "14" << endl;
+	//cout << "14" << endl;
 	for (int i = 0; i < contours.size(); i++)
 	{
 		approxPolyDP(Mat(contours[i]), contours_poly[i], 3, true);
 		boundRect[i] = boundingRect(Mat(contours_poly[i]));
 		minEnclosingCircle((Mat)contours_poly[i], center[i], radius[i]);
 	}
-	cout << "15" << endl;
+	//cout << "15" << endl;
 
 
 	int contourIndex = -1;
 	int maxRadius = 0;
-	cout << "16" << endl;
+	//cout << "16" << endl;
 	for (int i = 0; i < contours.size(); i++)
 	{
 		if (radius[i]>maxRadius) {
@@ -152,7 +152,7 @@ Point CoinCenter(Mat input, int showImages)
 	int coinX = (int)(mu.m10 / mu.m00) - XOffset;
 	int coinY = (int)(mu.m01 / mu.m00) + YOffset;
 	coinCenter = Point(coinX, coinY);
-	cout << "17" << endl;
+	//cout << "17" << endl;
 	if (showImages == 1){
 		/// Draw polygonal contour + bonding rects + circles
 		Mat drawing = input.clone();
@@ -163,7 +163,7 @@ Point CoinCenter(Mat input, int showImages)
 		namedWindow("Contours", CV_WINDOW_AUTOSIZE);
 		imshow("Contours", drawing);
 	}
-	cout << "18" << endl;
+	//cout << "18" << endl;
 	return coinCenter;
 }
 

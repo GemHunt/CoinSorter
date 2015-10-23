@@ -68,18 +68,18 @@ int captureFromWebCam(int imageID, int showImages)
 	deskew(frame, deskewedFrame);
 	//cout << "05" << endl;
 
+	imwrite("F:/OpenCV/" + std::to_string(imageID) + "raw.jpg", deskewedFrame);
 	Point coinCenter = CoinCenter(deskewedFrame, showImages);
 	//cout << "06" << endl;
+	
 	if (coinCenter.x == 0) {
 		cout << "Coin Not found" << endl;
 		return 0;
 	}
 	
 	cv::Mat crop = CropToCenter(deskewedFrame, coinCenter);
-
-
 	imwrite("F:/OpenCV/" + std::to_string(imageID) + ".jpg", crop);
-	
+
 	if (showImages == 1){
 		imshow("MyVideo", crop);
 
