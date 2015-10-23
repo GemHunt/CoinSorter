@@ -28,8 +28,8 @@ namespace ImageClassifier
         public static extern int FindCoinCenter(int imageID, int show);
 
         SerialPortManager _spManager;
-        int imageID = 10000;
-        int IRSensorCount = 0;
+        int coinCenterImageID = 10000;
+        int IRSensorCount = 400;
         
         public frmMain()
         {
@@ -180,11 +180,12 @@ namespace ImageClassifier
 
         private void checkLive_CheckedChanged(object sender, EventArgs e)
         {
-            timerWebcam.Enabled = checkLive.Checked;
+            timerWebcam.Enabled = checkShowLiveWebcamView.Checked;
         }
 
         private void timerWebcam_Tick(object sender, EventArgs e)
         {
+            IRSensorCount++;
             captureFromWebCam();
         }
 
@@ -196,21 +197,21 @@ namespace ImageClassifier
 
         private void cmdTestFindCoinCenter_Click(object sender, EventArgs e)
         {
-            imageID ++;
+            coinCenterImageID++;
             TestFindCoinCenter();
         }
 
         private void cmdTestFindCoinCenterBack_Click(object sender, EventArgs e)
         {
-            imageID --;
+            coinCenterImageID--;
             TestFindCoinCenter();
         }
 
         private void TestFindCoinCenter()
         {
-            if (File.Exists("F:/OpenCV/" + imageID + ".jpg"))
+            if (File.Exists("F:/OpenCV/" + coinCenterImageID + ".jpg"))
             {
-                FindCoinCenter(imageID,1);
+                FindCoinCenter(coinCenterImageID, 1);
             }
         }
 

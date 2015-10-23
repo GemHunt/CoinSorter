@@ -29,55 +29,56 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.button1 = new System.Windows.Forms.Button();
-            this.cmdWebCam = new System.Windows.Forms.Button();
-            this.cmdRead = new System.Windows.Forms.Button();
+            this.cmdClassify = new System.Windows.Forms.Button();
+            this.cmdStartWebCam = new System.Windows.Forms.Button();
+            this.cmdOpenSerialPort = new System.Windows.Forms.Button();
             this.trackBarSensorDelay = new System.Windows.Forms.TrackBar();
             this.lblIRSensorCount = new System.Windows.Forms.Label();
-            this.lblCamCount = new System.Windows.Forms.Label();
-            this.cmdToggle = new System.Windows.Forms.Button();
-            this.checkLive = new System.Windows.Forms.CheckBox();
+            this.cmdManualSolenoidToggle = new System.Windows.Forms.Button();
+            this.checkShowLiveWebcamView = new System.Windows.Forms.CheckBox();
             this.timerWebcam = new System.Windows.Forms.Timer(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.trackBarToggleDelay = new System.Windows.Forms.TrackBar();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.cmdTestFindCoinCenter = new System.Windows.Forms.Button();
             this.cmdTestFindCoinCenterBack = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSensorDelay)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarToggleDelay)).BeginInit();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button1
+            // cmdClassify
             // 
-            this.button1.Location = new System.Drawing.Point(133, 137);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.cmdClassify.Location = new System.Drawing.Point(21, 130);
+            this.cmdClassify.Name = "cmdClassify";
+            this.cmdClassify.Size = new System.Drawing.Size(166, 27);
+            this.cmdClassify.TabIndex = 0;
+            this.cmdClassify.Text = "Classify";
+            this.cmdClassify.UseVisualStyleBackColor = true;
+            this.cmdClassify.Click += new System.EventHandler(this.button1_Click);
             // 
-            // cmdWebCam
+            // cmdStartWebCam
             // 
-            this.cmdWebCam.Location = new System.Drawing.Point(273, 57);
-            this.cmdWebCam.Name = "cmdWebCam";
-            this.cmdWebCam.Size = new System.Drawing.Size(96, 23);
-            this.cmdWebCam.TabIndex = 1;
-            this.cmdWebCam.Text = "Web Cam";
-            this.cmdWebCam.UseVisualStyleBackColor = true;
-            this.cmdWebCam.Click += new System.EventHandler(this.cmdWebCam_Click);
+            this.cmdStartWebCam.Location = new System.Drawing.Point(270, 52);
+            this.cmdStartWebCam.Name = "cmdStartWebCam";
+            this.cmdStartWebCam.Size = new System.Drawing.Size(152, 27);
+            this.cmdStartWebCam.TabIndex = 1;
+            this.cmdStartWebCam.Text = "Start Web Cam";
+            this.cmdStartWebCam.UseVisualStyleBackColor = true;
+            this.cmdStartWebCam.Click += new System.EventHandler(this.cmdWebCam_Click);
             // 
-            // cmdRead
+            // cmdOpenSerialPort
             // 
-            this.cmdRead.Location = new System.Drawing.Point(273, 106);
-            this.cmdRead.Name = "cmdRead";
-            this.cmdRead.Size = new System.Drawing.Size(96, 67);
-            this.cmdRead.TabIndex = 2;
-            this.cmdRead.Text = "Read Port";
-            this.cmdRead.UseVisualStyleBackColor = true;
-            this.cmdRead.Click += new System.EventHandler(this.cmdRead_Click);
+            this.cmdOpenSerialPort.Location = new System.Drawing.Point(270, 85);
+            this.cmdOpenSerialPort.Name = "cmdOpenSerialPort";
+            this.cmdOpenSerialPort.Size = new System.Drawing.Size(152, 27);
+            this.cmdOpenSerialPort.TabIndex = 2;
+            this.cmdOpenSerialPort.Text = "Open Serial Port";
+            this.cmdOpenSerialPort.UseVisualStyleBackColor = true;
+            this.cmdOpenSerialPort.Click += new System.EventHandler(this.cmdRead_Click);
             // 
             // trackBarSensorDelay
             // 
@@ -93,41 +94,32 @@
             // lblIRSensorCount
             // 
             this.lblIRSensorCount.AutoSize = true;
-            this.lblIRSensorCount.Location = new System.Drawing.Point(515, 66);
+            this.lblIRSensorCount.Location = new System.Drawing.Point(483, 99);
             this.lblIRSensorCount.Name = "lblIRSensorCount";
             this.lblIRSensorCount.Size = new System.Drawing.Size(85, 13);
             this.lblIRSensorCount.TabIndex = 4;
             this.lblIRSensorCount.Text = "IR Sensor Count";
             // 
-            // lblCamCount
+            // cmdManualSolenoidToggle
             // 
-            this.lblCamCount.AutoSize = true;
-            this.lblCamCount.Location = new System.Drawing.Point(515, 88);
-            this.lblCamCount.Name = "lblCamCount";
-            this.lblCamCount.Size = new System.Drawing.Size(59, 13);
-            this.lblCamCount.TabIndex = 5;
-            this.lblCamCount.Text = "Cam Count";
+            this.cmdManualSolenoidToggle.Location = new System.Drawing.Point(270, 118);
+            this.cmdManualSolenoidToggle.Name = "cmdManualSolenoidToggle";
+            this.cmdManualSolenoidToggle.Size = new System.Drawing.Size(152, 27);
+            this.cmdManualSolenoidToggle.TabIndex = 6;
+            this.cmdManualSolenoidToggle.Text = "Manual Solenoid Toggle ";
+            this.cmdManualSolenoidToggle.UseVisualStyleBackColor = true;
+            this.cmdManualSolenoidToggle.Click += new System.EventHandler(this.cmdToggle_Click);
             // 
-            // cmdToggle
+            // checkShowLiveWebcamView
             // 
-            this.cmdToggle.Location = new System.Drawing.Point(487, 121);
-            this.cmdToggle.Name = "cmdToggle";
-            this.cmdToggle.Size = new System.Drawing.Size(87, 52);
-            this.cmdToggle.TabIndex = 6;
-            this.cmdToggle.Text = "Toggle ";
-            this.cmdToggle.UseVisualStyleBackColor = true;
-            this.cmdToggle.Click += new System.EventHandler(this.cmdToggle_Click);
-            // 
-            // checkLive
-            // 
-            this.checkLive.AutoSize = true;
-            this.checkLive.Location = new System.Drawing.Point(273, 12);
-            this.checkLive.Name = "checkLive";
-            this.checkLive.Size = new System.Drawing.Size(92, 17);
-            this.checkLive.TabIndex = 7;
-            this.checkLive.Text = "Live Webcam";
-            this.checkLive.UseVisualStyleBackColor = true;
-            this.checkLive.CheckedChanged += new System.EventHandler(this.checkLive_CheckedChanged);
+            this.checkShowLiveWebcamView.AutoSize = true;
+            this.checkShowLiveWebcamView.Location = new System.Drawing.Point(270, 29);
+            this.checkShowLiveWebcamView.Name = "checkShowLiveWebcamView";
+            this.checkShowLiveWebcamView.Size = new System.Drawing.Size(148, 17);
+            this.checkShowLiveWebcamView.TabIndex = 7;
+            this.checkShowLiveWebcamView.Text = "Show Live Webcam View";
+            this.checkShowLiveWebcamView.UseVisualStyleBackColor = true;
+            this.checkShowLiveWebcamView.CheckedChanged += new System.EventHandler(this.checkLive_CheckedChanged);
             // 
             // timerWebcam
             // 
@@ -167,7 +159,7 @@
             // 
             // cmdTestFindCoinCenter
             // 
-            this.cmdTestFindCoinCenter.Location = new System.Drawing.Point(791, 79);
+            this.cmdTestFindCoinCenter.Location = new System.Drawing.Point(68, 27);
             this.cmdTestFindCoinCenter.Name = "cmdTestFindCoinCenter";
             this.cmdTestFindCoinCenter.Size = new System.Drawing.Size(119, 94);
             this.cmdTestFindCoinCenter.TabIndex = 11;
@@ -177,7 +169,7 @@
             // 
             // cmdTestFindCoinCenterBack
             // 
-            this.cmdTestFindCoinCenterBack.Location = new System.Drawing.Point(744, 79);
+            this.cmdTestFindCoinCenterBack.Location = new System.Drawing.Point(21, 27);
             this.cmdTestFindCoinCenterBack.Name = "cmdTestFindCoinCenterBack";
             this.cmdTestFindCoinCenterBack.Size = new System.Drawing.Size(41, 94);
             this.cmdTestFindCoinCenterBack.TabIndex = 12;
@@ -185,24 +177,33 @@
             this.cmdTestFindCoinCenterBack.UseVisualStyleBackColor = true;
             this.cmdTestFindCoinCenterBack.Click += new System.EventHandler(this.cmdTestFindCoinCenterBack_Click);
             // 
-            // Form1
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.cmdTestFindCoinCenterBack);
+            this.groupBox3.Controls.Add(this.cmdTestFindCoinCenter);
+            this.groupBox3.Controls.Add(this.cmdClassify);
+            this.groupBox3.Location = new System.Drawing.Point(723, 12);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(214, 163);
+            this.groupBox3.TabIndex = 13;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Test Image Files";
+            // 
+            // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(975, 402);
-            this.Controls.Add(this.cmdTestFindCoinCenterBack);
-            this.Controls.Add(this.cmdTestFindCoinCenter);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.checkLive);
-            this.Controls.Add(this.cmdToggle);
-            this.Controls.Add(this.lblCamCount);
+            this.Controls.Add(this.checkShowLiveWebcamView);
+            this.Controls.Add(this.cmdManualSolenoidToggle);
             this.Controls.Add(this.lblIRSensorCount);
-            this.Controls.Add(this.cmdRead);
-            this.Controls.Add(this.cmdWebCam);
-            this.Controls.Add(this.button1);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Controls.Add(this.cmdOpenSerialPort);
+            this.Controls.Add(this.cmdStartWebCam);
+            this.Name = "frmMain";
+            this.Text = "Coin Classifier";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSensorDelay)).EndInit();
             this.groupBox1.ResumeLayout(false);
@@ -210,6 +211,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarToggleDelay)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -217,20 +219,20 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button cmdWebCam;
-        private System.Windows.Forms.Button cmdRead;
+        private System.Windows.Forms.Button cmdClassify;
+        private System.Windows.Forms.Button cmdStartWebCam;
+        private System.Windows.Forms.Button cmdOpenSerialPort;
         private System.Windows.Forms.TrackBar trackBarSensorDelay;
         private System.Windows.Forms.Label lblIRSensorCount;
-        private System.Windows.Forms.Label lblCamCount;
-        private System.Windows.Forms.Button cmdToggle;
-        private System.Windows.Forms.CheckBox checkLive;
+        private System.Windows.Forms.Button cmdManualSolenoidToggle;
+        private System.Windows.Forms.CheckBox checkShowLiveWebcamView;
         private System.Windows.Forms.Timer timerWebcam;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TrackBar trackBarToggleDelay;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button cmdTestFindCoinCenter;
         private System.Windows.Forms.Button cmdTestFindCoinCenterBack;
+        private System.Windows.Forms.GroupBox groupBox3;
     }
 }
 
