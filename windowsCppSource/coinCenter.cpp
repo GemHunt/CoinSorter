@@ -36,7 +36,7 @@ Point CoinCenter(Mat input, int showImages);
 
 extern "C" __declspec(dllexport) int FindCoinCenter(int imageID, int showImages) {
 	Mat input;
-	input = imread("F:/OpenCV/" + std::to_string(imageID) + ".jpg");
+	input = imread("F:/OpenCV/" + std::to_string(imageID) + "raw.jpg");
 	if (showImages == 1){
 		startCoinCenterGUI(input);
 	}
