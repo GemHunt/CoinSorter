@@ -14,6 +14,7 @@ namespace ImageClassifier
     public partial class frmLabel : Form
     {
         List<String> fileList = new List<String>();
+        int LastListBoxWorkingLabelSelectedIndex = -1;
         public frmLabel()
         {
             InitializeComponent();
@@ -135,7 +136,7 @@ namespace ImageClassifier
             return clone;
         }
 
-        private void HandlePictureBoxClick(PictureBox pictureBox, bool allShown)
+        private void HandlePictureBoxClick(PictureBox pictureBox, bool allShown, bool skipCommand)
         {
             String imageName = pictureBox.Tag.ToString();
             String workingDirectory = getMainImageDirectory();
@@ -144,6 +145,13 @@ namespace ImageClassifier
                 return;
             }
 
+            groupBoxImages.Controls.Remove(pictureBox);
+            if (skipCommand)
+            {
+                return;
+            }
+            
+            
             String selectedCommand;
             if (allShown)
             {
@@ -168,22 +176,34 @@ namespace ImageClassifier
                 FileInfo fi = new FileInfo(imageName);
                 File.Move(imageName, newDirectory + fi.Name);
             }
-            groupBoxImages.Controls.Remove(pictureBox);
         }
 
         private void pictureBox_Click(object sender, EventArgs e)
         {
             PictureBox pictureBox = (PictureBox)sender;
-            HandlePictureBoxClick(pictureBox,false);
+            HandlePictureBoxClick(pictureBox,false,false);
         }
 
         private void listBoxWorkingLabel_SelectedIndexChanged(object sender, EventArgs e)
         {
             listBoxLabelAllShown.SelectedIndex = listBoxWorkingLabel.SelectedIndex;
-            ImageRefresh(true);
+            if (listBoxWorkingLabel.SelectedIndex == LastListBoxWorkingLabelSelectedIndex)
+            {
+                OnlyGetMore();
+            }
+            else {
+                ImageRefresh(true);
+            }
+            LastListBoxWorkingLabelSelectedIndex = listBoxWorkingLabel.SelectedIndex;
         }
 
+
         private void cmdLabelAll_Click(object sender, EventArgs e)
+        {
+            HandleAll(false);
+        }
+
+        private void HandleAll(bool skipCommand)
         {
             //A new list is needed because HandlePictureBoxClick is removing items from groupBoxImages.Controls. 
             List<PictureBox> pictureBoxes = new List<PictureBox>();
@@ -195,9 +215,25 @@ namespace ImageClassifier
 
             foreach (PictureBox pictureBox in pictureBoxes)
             {
-                HandlePictureBoxClick(pictureBox, true);
+                HandlePictureBoxClick(pictureBox, true, skipCommand);
             }
             ImageRefresh(false);
+        }
+
+        private void cmdGetMore_Click(object sender, EventArgs e)
+        {
+            OnlyGetMore();
+        }
+            
+        private void OnlyGetMore()
+        {
+            if (fileList.Count == 0)
+            {
+                ImageRefresh(true);
+            }
+            else {
+                HandleAll(true);
+            }
         }
 
     }

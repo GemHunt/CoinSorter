@@ -39,6 +39,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.cmdReadDirectoryAndRefresh = new System.Windows.Forms.Button();
             this.groupBoxImages = new System.Windows.Forms.GroupBox();
+            this.cmdGetMore = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listBoxLabelAllShown
@@ -151,11 +152,22 @@
             this.groupBoxImages.TabIndex = 8;
             this.groupBoxImages.TabStop = false;
             // 
+            // cmdGetMore
+            // 
+            this.cmdGetMore.Location = new System.Drawing.Point(1068, 6);
+            this.cmdGetMore.Name = "cmdGetMore";
+            this.cmdGetMore.Size = new System.Drawing.Size(111, 36);
+            this.cmdGetMore.TabIndex = 9;
+            this.cmdGetMore.Text = "Get More";
+            this.cmdGetMore.UseVisualStyleBackColor = true;
+            this.cmdGetMore.Click += new System.EventHandler(this.cmdGetMore_Click);
+            // 
             // frmLabel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1280, 961);
+            this.Controls.Add(this.cmdGetMore);
             this.Controls.Add(this.listBoxWorkingLabel);
             this.Controls.Add(this.groupBoxImages);
             this.Controls.Add(this.cmdReadDirectoryAndRefresh);
@@ -188,6 +200,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button cmdReadDirectoryAndRefresh;
         private System.Windows.Forms.GroupBox groupBoxImages;
+        private System.Windows.Forms.Button cmdGetMore;
 
     }
 }
