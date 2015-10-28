@@ -43,6 +43,7 @@
             this.cmdTestFindCoinCenter = new System.Windows.Forms.Button();
             this.cmdTestFindCoinCenterBack = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cmdImageLabelingWizard = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSensorDelay)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarToggleDelay)).BeginInit();
@@ -189,11 +190,22 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Test Image Files";
             // 
+            // cmdImageLabelingWizard
+            // 
+            this.cmdImageLabelingWizard.Location = new System.Drawing.Point(486, 29);
+            this.cmdImageLabelingWizard.Name = "cmdImageLabelingWizard";
+            this.cmdImageLabelingWizard.Size = new System.Drawing.Size(153, 50);
+            this.cmdImageLabelingWizard.TabIndex = 14;
+            this.cmdImageLabelingWizard.Text = "Image Labeling Wizard";
+            this.cmdImageLabelingWizard.UseVisualStyleBackColor = true;
+            this.cmdImageLabelingWizard.Click += new System.EventHandler(this.cmdImageLabelingWizard_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(975, 402);
+            this.Controls.Add(this.cmdImageLabelingWizard);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -233,6 +245,7 @@
         private System.Windows.Forms.Button cmdTestFindCoinCenter;
         private System.Windows.Forms.Button cmdTestFindCoinCenterBack;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button cmdImageLabelingWizard;
     }
 }
 

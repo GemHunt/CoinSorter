@@ -215,5 +215,11 @@ namespace ImageClassifier
             }
         }
 
+        private void cmdImageLabelingWizard_Click(object sender, EventArgs e)
+        {
+            frmLabel frm = new frmLabel();
+            frm.Show();
+        }
+
     }
 }
