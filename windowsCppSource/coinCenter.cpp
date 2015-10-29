@@ -18,14 +18,14 @@ int findContour(Mat);
 
 //*******  Contour finding sample *****
 Mat src;
-int CrMin = 170;
+int CrMin = 158;
 int CrMax = 255;
 int erodeSquare = 5;
 int dilateSquare = 30;
 int coinRadius = 203;
 int YCrop = 180;
-int XOffset = 5;
-int YOffset = 127;
+int XOffset = 2;
+int YOffset = 132;
 
 int max_thresh = 255;
 

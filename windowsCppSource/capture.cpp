@@ -28,7 +28,7 @@ int captureFromWebCam(int imageID, int showImages)
 	static bool setup = false;
 	double dWidth, dHeight;
 	static VideoCapture cap;
-	//cout << "02" << endl;
+	cout << "02" << endl;
 	if (setup == false) {
 
 		cap.open(0); // open the video camera no. 0
@@ -47,10 +47,10 @@ int captureFromWebCam(int imageID, int showImages)
 		if (showImages == 1){
 			namedWindow("MyVideo", CV_WINDOW_AUTOSIZE); //create a window called "MyVideo"
 		}
-		//cap.set(CV_CAP_PROP_BRIGHTNESS, 0);
-		//cap.set(CV_CAP_PROP_CONTRAST, 47);
-		//cap.set(CV_CAP_PROP_SATURATION, 32);
-		//cap.set(CV_CAP_PROP_GAIN, 24);
+		cap.set(CV_CAP_PROP_BRIGHTNESS, 0);
+		cap.set(CV_CAP_PROP_CONTRAST, 47);
+		cap.set(CV_CAP_PROP_SATURATION, 32);
+		cap.set(CV_CAP_PROP_GAIN, 24);
 
 		setup = true;
 	}
@@ -67,7 +67,7 @@ int captureFromWebCam(int imageID, int showImages)
 		cout << "Cannot read a frame from video stream" << endl;
 		return 0;
 	}
-	//cout << "03" << endl;
+	cout << "03" << endl;
 	cv::Mat deskewedFrame = Mat::zeros(frame.rows, frame.cols, frame.type());
 	//cout << "04" << endl;
 	deskew(frame, deskewedFrame);

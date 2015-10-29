@@ -90,7 +90,7 @@
             this.trackBarSensorDelay.Size = new System.Drawing.Size(941, 45);
             this.trackBarSensorDelay.TabIndex = 3;
             this.trackBarSensorDelay.TickFrequency = 100;
-            this.trackBarSensorDelay.Value = 570;
+            this.trackBarSensorDelay.Value = 555;
             // 
             // lblIRSensorCount
             // 

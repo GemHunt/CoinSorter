@@ -1,7 +1,7 @@
 clear;
 close all;
 
-dirName = 'F:\new\wheat\';
+dirName = 'F:\new4\tails\';
 F = dir(strcat(dirName , '*.jpg'));
 for ii = 1:length(F)
     lastCapture = imread(strcat(dirName,F(ii).name));

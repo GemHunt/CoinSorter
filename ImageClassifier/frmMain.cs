@@ -28,7 +28,7 @@ namespace ImageClassifier
         public static extern int FindCoinCenter(int imageID, int show);
 
         SerialPortManager _spManager;
-        int coinCenterImageID = 10406;
+        int coinCenterImageID = 10098;
         int IRSensorCount = 1;
         
         public frmMain()
@@ -192,7 +192,7 @@ namespace ImageClassifier
 
         private void captureFromWebCam()
         {
-            captureFromWebCam(IRSensorCount + 10000,1);
+            captureFromWebCam(IRSensorCount + 10000000,1);
         }
 
         private void cmdTestFindCoinCenter_Click(object sender, EventArgs e)
