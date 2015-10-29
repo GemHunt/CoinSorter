@@ -95,7 +95,7 @@
             // lblIRSensorCount
             // 
             this.lblIRSensorCount.AutoSize = true;
-            this.lblIRSensorCount.Location = new System.Drawing.Point(483, 99);
+            this.lblIRSensorCount.Location = new System.Drawing.Point(483, 118);
             this.lblIRSensorCount.Name = "lblIRSensorCount";
             this.lblIRSensorCount.Size = new System.Drawing.Size(85, 13);
             this.lblIRSensorCount.TabIndex = 4;
