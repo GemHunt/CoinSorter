@@ -24,7 +24,7 @@ namespace ImageClassifier
 
         SerialPortManager _spManager;
         int coinCenterImageID = 10098;
-        int IRSensorCount = 1;
+        int IRSensorCount = 1431;
         
         public frmMain()
         {

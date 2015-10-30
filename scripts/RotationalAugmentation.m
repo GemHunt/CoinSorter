@@ -5,18 +5,27 @@ imageSize = 406;
 imageSizeX = imageSize;
 imageSizeY = imageSize;
 [columnsInImage, rowsInImage] = meshgrid(1:imageSizeX, 1:imageSizeY);
-centerX = imageSize/2 - .5;
-centerY = imageSize/2 - .5;
+centerX = imageSize/2 + .5;
+centerY = imageSize/2 + .5;
 radius = imageSize/2;
-centerMask(:,:,1) = (rowsInImage - centerY).^2 + (columnsInImage - centerX).^2 <= radius.^2;
-centerMask(:,:,2) = centerMask(:,:,1);
-centerMask(:,:,3) = centerMask(:,:,1);
-centerMask = uint8(centerMask);
-
-dirName = 'F:\new4\canada_other\';
+CircleMask(:,:,1) = (rowsInImage - centerY).^2 + (columnsInImage - centerX).^2 <= radius.^2;
+CircleMask(:,:,2) = CircleMask(:,:,1);
+CircleMask(:,:,3) = CircleMask(:,:,1);
+CircleMask = uint8(CircleMask);
+%To save CircleMask:
+%CircleMask = rgb2gray(uint8(CircleMask * 255));
+%imwrite(CircleMask,'F:\CircleMask406.png');
+dirName = 'F:\new4\maple\';
 F = dir(strcat(dirName , '*.jpg'));
 for ii = 1:length(F)
     penny = imread(strcat(dirName , F(ii).name));
+    
+    %No Rotation:
+    %pennyMasked = penny .* CircleMask;
+    %penny40 =  imresize(pennyMasked, [40,40]);
+    %penny40 = rgb2gray(penny40);
+    %imwrite(penny40,strcat('F:\new4NotRot\maple\',F(ii).name));
+    
     for angle = 5:26:359;
         pennyRotated = imrotate(penny,angle,'bilinear');
         rotatedSize = size(pennyRotated);

@@ -100,7 +100,7 @@ namespace ImageClassifier
             String trained_file = dir + "snapshot.caffemodel";
             String mean_file = dir + "mean.binaryproto";
             String label_file = dir + "labels.txt";
-            String imageDir = "F:/new4/heads/";
+            String imageDir = "F:/new4/tails/";
 
             string[] files = Directory.GetFiles(imageDir);
 
