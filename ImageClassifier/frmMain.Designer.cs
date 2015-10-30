@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.cmdClassify = new System.Windows.Forms.Button();
             this.cmdStartWebCam = new System.Windows.Forms.Button();
             this.cmdOpenSerialPort = new System.Windows.Forms.Button();
             this.trackBarSensorDelay = new System.Windows.Forms.TrackBar();
@@ -44,22 +43,13 @@
             this.cmdTestFindCoinCenterBack = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.cmdImageLabelingWizard = new System.Windows.Forms.Button();
+            this.cmdClassifyImages = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSensorDelay)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarToggleDelay)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // cmdClassify
-            // 
-            this.cmdClassify.Location = new System.Drawing.Point(21, 130);
-            this.cmdClassify.Name = "cmdClassify";
-            this.cmdClassify.Size = new System.Drawing.Size(166, 27);
-            this.cmdClassify.TabIndex = 0;
-            this.cmdClassify.Text = "Classify";
-            this.cmdClassify.UseVisualStyleBackColor = true;
-            this.cmdClassify.Click += new System.EventHandler(this.button1_Click);
             // 
             // cmdStartWebCam
             // 
@@ -95,7 +85,7 @@
             // lblIRSensorCount
             // 
             this.lblIRSensorCount.AutoSize = true;
-            this.lblIRSensorCount.Location = new System.Drawing.Point(483, 118);
+            this.lblIRSensorCount.Location = new System.Drawing.Point(425, 149);
             this.lblIRSensorCount.Name = "lblIRSensorCount";
             this.lblIRSensorCount.Size = new System.Drawing.Size(85, 13);
             this.lblIRSensorCount.TabIndex = 4;
@@ -182,7 +172,6 @@
             // 
             this.groupBox3.Controls.Add(this.cmdTestFindCoinCenterBack);
             this.groupBox3.Controls.Add(this.cmdTestFindCoinCenter);
-            this.groupBox3.Controls.Add(this.cmdClassify);
             this.groupBox3.Location = new System.Drawing.Point(723, 12);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(214, 163);
@@ -200,11 +189,22 @@
             this.cmdImageLabelingWizard.UseVisualStyleBackColor = true;
             this.cmdImageLabelingWizard.Click += new System.EventHandler(this.cmdImageLabelingWizard_Click);
             // 
+            // cmdClassifyImages
+            // 
+            this.cmdClassifyImages.Location = new System.Drawing.Point(486, 85);
+            this.cmdClassifyImages.Name = "cmdClassifyImages";
+            this.cmdClassifyImages.Size = new System.Drawing.Size(153, 50);
+            this.cmdClassifyImages.TabIndex = 15;
+            this.cmdClassifyImages.Text = "Classify Images";
+            this.cmdClassifyImages.UseVisualStyleBackColor = true;
+            this.cmdClassifyImages.Click += new System.EventHandler(this.cmdClassifyImages_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(975, 402);
+            this.Controls.Add(this.cmdClassifyImages);
             this.Controls.Add(this.cmdImageLabelingWizard);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -231,7 +231,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Button cmdClassify;
         private System.Windows.Forms.Button cmdStartWebCam;
         private System.Windows.Forms.Button cmdOpenSerialPort;
         private System.Windows.Forms.TrackBar trackBarSensorDelay;
@@ -246,6 +245,7 @@
         private System.Windows.Forms.Button cmdTestFindCoinCenterBack;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button cmdImageLabelingWizard;
+        private System.Windows.Forms.Button cmdClassifyImages;
     }
 }
 

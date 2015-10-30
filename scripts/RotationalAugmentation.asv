@@ -27,7 +27,7 @@ for ii = 1:length(F)
         cropEnd = cropStart + imageSize -1;
         pennyCropped = pennyRotated(cropStart:cropEnd,cropStart:cropEnd,:);
         pennyMasked = pennyCropped .* centerMask;
-        %penny9th =  pennyMasked(164:243,321:400,:);
+        penny9 =  pennyMasked[280:400,135:270,:]);
         penny40 =  imresize(pennyMasked, [40,40]);
         penny40 = rgb2gray(penny40);
         imwrite(penny40,strcat('F:\new4Rot\canada_other\R',sprintf('%03d', angle),F(ii).name));
