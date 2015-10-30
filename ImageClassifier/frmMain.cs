@@ -14,8 +14,6 @@ namespace ImageClassifier
 {
     public partial class frmMain : Form
     {
-      
-
         [DllImport("E:\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int captureFromWebCam(int imageID,int show);
 

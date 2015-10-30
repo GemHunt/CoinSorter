@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CaffeModel.cs" />
     <Compile Include="frmClassifyImages.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,9 +82,13 @@
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImagesDB.cs" />
+    <Compile Include="LabelsDB.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResultsDB.cs" />
     <Compile Include="SerialPortManager.cs" />
+    <Compile Include="SQLiteDB.cs" />
     <EmbeddedResource Include="frmClassifyImages.resx">
       <DependentUpon>frmClassifyImages.cs</DependentUpon>
     </EmbeddedResource>

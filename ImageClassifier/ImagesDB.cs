@@ -6,7 +6,17 @@ using System.Threading.Tasks;
 
 namespace ImageClassifier
 {
-    class ImagesDB
+    class ImagesDB:SQLiteDB
     {
+        static public void AddImage(int imageID, int labelID)
+        {
+            StringBuilder SQL = new StringBuilder();
+            SQL.AppendLine("BEGIN;");
+            SQL.Append("Insert into Images (ImageID,LabelID) values (");
+            SQL.Append(imageID + ",");
+            SQL.AppendLine(labelID + ");");
+            SQL.AppendLine("COMMIT;");
+            ExecuteQuery(SQL.ToString());
+        }
     }
 }
