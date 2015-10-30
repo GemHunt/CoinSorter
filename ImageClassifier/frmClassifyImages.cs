@@ -17,11 +17,10 @@ namespace ImageClassifier
     {
         [DllImport("E:\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll")]
         public static extern IntPtr ClassifyImage(String model_file, String trained_file, String mean_file, String label_file, String image_file);
-
+        
         [DllImport("E:\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int ReleaseMemory(IntPtr ptr);
-
-
+        
         private SQLiteConnection sql_con;
         private SQLiteCommand sql_cmd;
         private SQLiteDataAdapter DB;
@@ -107,12 +106,13 @@ namespace ImageClassifier
 
             foreach (string image_file in files)
             {
-                //IntPtr ptr = ClassifyImage(model_file, trained_file, mean_file, label_file, image_file);
-                //double[] result = new double[2];
-                //Marshal.Copy(ptr, result, 0, 2);
-                //ReleaseMemory(ptr);
-                //AddResult(1, Convert.ToInt32(image_file.Substring(14, 8)), 1, result[0]);
-                AddImage(Convert.ToInt32(image_file.Substring(14, 8)), 0);
+                IntPtr ptr = ClassifyImage(model_file, trained_file, mean_file, label_file, image_file);
+                double[] result = new double[4];
+                Marshal.Copy(ptr, result, 0, 4);
+                ReleaseMemory(ptr);
+                AddResult(1, Convert.ToInt32(image_file.Substring(14, 8)),(int)result[0], result[2]);
+                AddResult(1, Convert.ToInt32(image_file.Substring(14, 8)),(int)result[1],result[3]);
+                //AddImage(Convert.ToInt32(image_file.Substring(14, 8)), 0);
 
             }
         }
