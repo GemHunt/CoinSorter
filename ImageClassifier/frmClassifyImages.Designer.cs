@@ -40,6 +40,7 @@
             this.chkIncludeSubDirectories = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txtNewImageDirectory = new System.Windows.Forms.TextBox();
+            this.chkMoveImages = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // txtModel
@@ -49,7 +50,7 @@
             this.txtModel.Name = "txtModel";
             this.txtModel.Size = new System.Drawing.Size(516, 26);
             this.txtModel.TabIndex = 0;
-            this.txtModel.Text = "20151031-201901-0b13_epoch_15.0";
+            this.txtModel.Text = "20151031-215554-2b47_epoch_5.0";
             // 
             // label1
             // 
@@ -108,7 +109,7 @@
             // 
             this.chkAddImagesToDataBase.AutoSize = true;
             this.chkAddImagesToDataBase.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkAddImagesToDataBase.Location = new System.Drawing.Point(17, 245);
+            this.chkAddImagesToDataBase.Location = new System.Drawing.Point(17, 275);
             this.chkAddImagesToDataBase.Name = "chkAddImagesToDataBase";
             this.chkAddImagesToDataBase.Size = new System.Drawing.Size(208, 24);
             this.chkAddImagesToDataBase.TabIndex = 6;
@@ -164,11 +165,25 @@
             this.txtNewImageDirectory.TabIndex = 8;
             this.txtNewImageDirectory.Text = "F:/New6/Crops";
             // 
+            // chkMoveImages
+            // 
+            this.chkMoveImages.AutoSize = true;
+            this.chkMoveImages.Checked = true;
+            this.chkMoveImages.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkMoveImages.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkMoveImages.Location = new System.Drawing.Point(17, 245);
+            this.chkMoveImages.Name = "chkMoveImages";
+            this.chkMoveImages.Size = new System.Drawing.Size(123, 24);
+            this.chkMoveImages.TabIndex = 10;
+            this.chkMoveImages.Text = "Move Images";
+            this.chkMoveImages.UseVisualStyleBackColor = true;
+            // 
             // frmClassifyImages
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(724, 272);
+            this.ClientSize = new System.Drawing.Size(724, 306);
+            this.Controls.Add(this.chkMoveImages);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtNewImageDirectory);
             this.Controls.Add(this.chkIncludeSubDirectories);
@@ -202,5 +217,6 @@
         private System.Windows.Forms.CheckBox chkIncludeSubDirectories;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtNewImageDirectory;
+        private System.Windows.Forms.CheckBox chkMoveImages;
     }
 }

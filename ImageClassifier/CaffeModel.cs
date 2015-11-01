@@ -17,7 +17,7 @@ namespace ImageClassifier
         [DllImport("E:\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int ReleaseMemory(IntPtr ptr);
 
-        public void Classify(String oldImageDirectory, String newImageDirectory, String model, String modelDirectory, bool toClassify, bool addImagesToDataBase, bool includeSubDir)
+        public void Classify(String oldImageDirectory, String newImageDirectory, String model, String modelDirectory, bool toClassify, bool addImagesToDataBase, bool moveImage, bool includeSubDir)
         {
             String model_file = modelDirectory +"/" + "deploy.prototxt";
             String trained_file = modelDirectory +"/" + "snapshot.caffemodel";
@@ -53,14 +53,16 @@ namespace ImageClassifier
                     double[] result = new double[resultCount * 2];
                     Marshal.Copy(ptr, result, 0, resultCount * 2);
                     ReleaseMemory(ptr);
-                    for (int count = 0; count > resultCount;count++ )
+                    for (int count = 0; count < 2;count++ )
                     {
-                        ResultsDB.AddResult(2, imageID, (int)result[count], result[count + resultCount]);
+                        ResultsDB.AddResult(2, imageID, (int)result[count], result[count + 2]);
                     }
 
-                    FileInfo fi = new FileInfo(image_file);
-                    String imageFileDestination = newImageDirectory + "/" + LabelsDB.GetLabel((int)result[0]) + "/" + fi.Name;
-                    File.Move(image_file, imageFileDestination);
+                    if (moveImage) {
+                        FileInfo fi = new FileInfo(image_file);
+                        String imageFileDestination = newImageDirectory + "/" + LabelsDB.GetLabel((int)result[0]) + "/" + fi.Name;
+                        File.Move(image_file, imageFileDestination);
+                    }
                 }
                 if (addImagesToDataBase)
                 {

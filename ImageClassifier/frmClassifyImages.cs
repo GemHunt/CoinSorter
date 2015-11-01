@@ -63,7 +63,7 @@ namespace ImageClassifier
                 return;
             }
 
-            caffe.Classify(txtOldImageDirectory.Text, txtNewImageDirectory.Text, txtModel.Text, modelDirectory, chkClassify.Checked, chkAddImagesToDataBase.Checked, chkIncludeSubDirectories.Checked);
+            caffe.Classify(txtOldImageDirectory.Text, txtNewImageDirectory.Text, txtModel.Text, modelDirectory, chkClassify.Checked, chkAddImagesToDataBase.Checked,chkMoveImages.Checked, chkIncludeSubDirectories.Checked);
         }
 
     }

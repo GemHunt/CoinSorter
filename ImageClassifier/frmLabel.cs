@@ -35,6 +35,11 @@ namespace ImageClassifier
 
         private void cmdReadDirectoryAndRefresh_Click(object sender, EventArgs e)
         {
+
+            //List<int> MislabeledImageIDs = ImagesDB.GetMislabeledImageIDs();
+
+
+            
             if (getMainImageDirectory() == null)
             {
                 return;

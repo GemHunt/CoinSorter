@@ -31,6 +31,16 @@ namespace ImageClassifier
             sql_cmd.ExecuteNonQuery();
         }
 
+
+        static public SQLiteDataReader GetNewReader(string SQL)
+        {
+            SQLiteCommand command = new SQLiteCommand(sql_con);
+            command.CommandText = SQL;
+            SQLiteDataReader reader = command.ExecuteReader();
+            return reader;
+        }
+
+
         static public void Close()
         {
             sql_con.Close();
