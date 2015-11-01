@@ -22,7 +22,7 @@ namespace ImageClassifier
 
         SerialPortManager _spManager;
         int coinCenterImageID = 10098;
-        int IRSensorCount = 1431;
+        int IRSensorCount = 5134;
         
         public frmMain()
         {
@@ -150,6 +150,13 @@ namespace ImageClassifier
         private void cmdClassifyImages_Click(object sender, EventArgs e)
         {
             frmClassifyImages frm = new frmClassifyImages();
+            frm.Show();
+        }
+
+        private void cmdAugmentImages_Click(object sender, EventArgs e)
+        {
+
+            frmAugmentImages frm = new frmAugmentImages();
             frm.Show();
         }
 

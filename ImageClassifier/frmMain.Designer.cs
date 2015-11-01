@@ -44,6 +44,7 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.cmdImageLabelingWizard = new System.Windows.Forms.Button();
             this.cmdClassifyImages = new System.Windows.Forms.Button();
+            this.cmdAugmentImages = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSensorDelay)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarToggleDelay)).BeginInit();
@@ -183,7 +184,7 @@
             // 
             this.cmdImageLabelingWizard.Location = new System.Drawing.Point(486, 29);
             this.cmdImageLabelingWizard.Name = "cmdImageLabelingWizard";
-            this.cmdImageLabelingWizard.Size = new System.Drawing.Size(153, 50);
+            this.cmdImageLabelingWizard.Size = new System.Drawing.Size(153, 35);
             this.cmdImageLabelingWizard.TabIndex = 14;
             this.cmdImageLabelingWizard.Text = "Image Labeling Wizard";
             this.cmdImageLabelingWizard.UseVisualStyleBackColor = true;
@@ -191,19 +192,30 @@
             // 
             // cmdClassifyImages
             // 
-            this.cmdClassifyImages.Location = new System.Drawing.Point(486, 85);
+            this.cmdClassifyImages.Location = new System.Drawing.Point(486, 111);
             this.cmdClassifyImages.Name = "cmdClassifyImages";
-            this.cmdClassifyImages.Size = new System.Drawing.Size(153, 50);
+            this.cmdClassifyImages.Size = new System.Drawing.Size(153, 33);
             this.cmdClassifyImages.TabIndex = 15;
             this.cmdClassifyImages.Text = "Classify Images";
             this.cmdClassifyImages.UseVisualStyleBackColor = true;
             this.cmdClassifyImages.Click += new System.EventHandler(this.cmdClassifyImages_Click);
+            // 
+            // cmdAugmentImages
+            // 
+            this.cmdAugmentImages.Location = new System.Drawing.Point(486, 70);
+            this.cmdAugmentImages.Name = "cmdAugmentImages";
+            this.cmdAugmentImages.Size = new System.Drawing.Size(153, 35);
+            this.cmdAugmentImages.TabIndex = 16;
+            this.cmdAugmentImages.Text = "Augment Images";
+            this.cmdAugmentImages.UseVisualStyleBackColor = true;
+            this.cmdAugmentImages.Click += new System.EventHandler(this.cmdAugmentImages_Click);
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(975, 402);
+            this.Controls.Add(this.cmdAugmentImages);
             this.Controls.Add(this.cmdClassifyImages);
             this.Controls.Add(this.cmdImageLabelingWizard);
             this.Controls.Add(this.groupBox3);
@@ -246,6 +258,7 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button cmdImageLabelingWizard;
         private System.Windows.Forms.Button cmdClassifyImages;
+        private System.Windows.Forms.Button cmdAugmentImages;
     }
 }
 

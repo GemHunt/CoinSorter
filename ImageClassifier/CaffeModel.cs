@@ -64,7 +64,7 @@ namespace ImageClassifier
                 }
                 if (addImagesToDataBase)
                 {
-                    ImagesDB.AddImage(imageID, 0);
+                    ImagesDB.AddImage(imageID, LabelsDB.GetLabelID(image_file));
                 }
             }
             SQLiteDB.Close();

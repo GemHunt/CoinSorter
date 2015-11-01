@@ -49,7 +49,7 @@
             this.txtModel.Name = "txtModel";
             this.txtModel.Size = new System.Drawing.Size(516, 26);
             this.txtModel.TabIndex = 0;
-            this.txtModel.Text = "20151029-155112-3793_epoch_11.0";
+            this.txtModel.Text = "20151031-201901-0b13_epoch_15.0";
             // 
             // label1
             // 
@@ -133,7 +133,6 @@
             this.txtRootModelDirectory.Size = new System.Drawing.Size(516, 26);
             this.txtRootModelDirectory.TabIndex = 0;
             this.txtRootModelDirectory.Text = "F:/Models/";
-            this.txtRootModelDirectory.TextChanged += new System.EventHandler(this.txtRootModelDirectory_TextChanged);
             // 
             // chkIncludeSubDirectories
             // 
@@ -145,7 +144,6 @@
             this.chkIncludeSubDirectories.TabIndex = 7;
             this.chkIncludeSubDirectories.Text = "Include SubDirectories";
             this.chkIncludeSubDirectories.UseVisualStyleBackColor = true;
-            this.chkIncludeSubDirectories.CheckedChanged += new System.EventHandler(this.chkIncludeSubDirectories_CheckedChanged);
             // 
             // label4
             // 
@@ -164,7 +162,7 @@
             this.txtNewImageDirectory.Name = "txtNewImageDirectory";
             this.txtNewImageDirectory.Size = new System.Drawing.Size(516, 26);
             this.txtNewImageDirectory.TabIndex = 8;
-            this.txtNewImageDirectory.Text = "F:/New5";
+            this.txtNewImageDirectory.Text = "F:/New6/Crops";
             // 
             // frmClassifyImages
             // 

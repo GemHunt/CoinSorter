@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace ImageClassifier
 {
-    class LabelsDB:SQLiteDB
+    class LabelsDB : SQLiteDB
     {
-        public static List<String> GetLabels(String labelFileName) {
+        public static List<String> GetLabels(String labelFileName)
+        {
             List<String> labels = new List<String>();
             string line;
 
@@ -42,9 +43,21 @@ namespace ImageClassifier
                     return ("unknown");
             }
         }
+        public static int GetLabelID(String dir)
+        {
+            //cheating: This should be from the database:
+            if (dir.Contains("canadaOther")) { return 0; }
+            if (dir.Contains("heads")) { return 1; }
+            if (dir.Contains("maple")) { return 2; }
+            if (dir.Contains("tails")) { return 3; }
+            if (dir.Contains("wheat")) { return 4; }
+            if (dir.Contains("bad")) { return 4; }
+            return -1;
+        }
     }
-
-
-
 }
+
+
+
+
 

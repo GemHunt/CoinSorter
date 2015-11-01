@@ -66,14 +66,5 @@ namespace ImageClassifier
             caffe.Classify(txtOldImageDirectory.Text, txtNewImageDirectory.Text, txtModel.Text, modelDirectory, chkClassify.Checked, chkAddImagesToDataBase.Checked, chkIncludeSubDirectories.Checked);
         }
 
-        private void txtRootModelDirectory_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void chkIncludeSubDirectories_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }

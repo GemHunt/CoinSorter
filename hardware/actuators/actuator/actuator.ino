@@ -38,7 +38,7 @@ void loop() {
 void readIRSensor() {
   //Serial.println(analogRead(sensorPin));
   
-  int irSensorVoltageCutoff = 800;
+  int irSensorVoltageCutoff = 750;
   // the average power of the sensor through an ever more dirty belt. 
   // Heck this is the dirty belt sensor!
   //irSensorVoltageCutoff needs to adjust, maybe it should be set on the PC side?
