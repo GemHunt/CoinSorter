@@ -59,7 +59,7 @@
             this.txtMainImageDirectory.Name = "txtMainImageDirectory";
             this.txtMainImageDirectory.Size = new System.Drawing.Size(657, 20);
             this.txtMainImageDirectory.TabIndex = 1;
-            this.txtMainImageDirectory.Text = "F:\\new";
+            this.txtMainImageDirectory.Text = "F:\\new6\\crops";
             // 
             // label1
             // 

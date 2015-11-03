@@ -23,8 +23,8 @@ namespace ImageClassifier
             SQL.AppendLine("From Images");
             SQL.AppendLine("Inner Join Results");
             SQL.AppendLine("On Images.ImageID = Results.ImageID");
-            SQL.AppendLine("And Results.Score > .5");
-            SQL.AppendLine("And Images.LabelID <> Results.LabelID");
+            SQL.AppendLine("And Results.Score < .5");
+            SQL.AppendLine("And Images.LabelID = Results.LabelID");
             SQL.AppendLine("Order by 1;");
             Open();
             SQLiteDataReader reader = GetNewReader(SQL.ToString());
@@ -36,8 +36,7 @@ namespace ImageClassifier
             return GetMislabeledImageIDs;
         }
 
-
-
+        
         static public void AddImage(int imageID, int labelID)
         {
             StringBuilder SQL = new StringBuilder();
@@ -49,6 +48,15 @@ namespace ImageClassifier
             ExecuteQuery(SQL.ToString());
         }
 
+        static public int GetImageIDFromFileName(String fileName)
+        {
+            if (fileName.Contains("raw")){
+                 return Convert.ToInt32(fileName.Substring(0, 8)) - 10000000;
+            }
+            return Convert.ToInt32(fileName.Substring(fileName.Length - 12, 8)) - 10000000;
+        }
+
+        
         static public void AugmentImages(String directory)
         {
             String cropDirectory = directory + "/Crops/";

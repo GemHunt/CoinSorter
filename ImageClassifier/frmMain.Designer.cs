@@ -58,17 +58,17 @@
             this.cmdStartWebCam.Name = "cmdStartWebCam";
             this.cmdStartWebCam.Size = new System.Drawing.Size(152, 27);
             this.cmdStartWebCam.TabIndex = 1;
-            this.cmdStartWebCam.Text = "Start Web Cam";
+            this.cmdStartWebCam.Text = "Manually Capture Once";
             this.cmdStartWebCam.UseVisualStyleBackColor = true;
             this.cmdStartWebCam.Click += new System.EventHandler(this.cmdWebCam_Click);
             // 
             // cmdOpenSerialPort
             // 
-            this.cmdOpenSerialPort.Location = new System.Drawing.Point(270, 85);
+            this.cmdOpenSerialPort.Location = new System.Drawing.Point(24, 52);
             this.cmdOpenSerialPort.Name = "cmdOpenSerialPort";
-            this.cmdOpenSerialPort.Size = new System.Drawing.Size(152, 27);
+            this.cmdOpenSerialPort.Size = new System.Drawing.Size(152, 59);
             this.cmdOpenSerialPort.TabIndex = 2;
-            this.cmdOpenSerialPort.Text = "Open Serial Port";
+            this.cmdOpenSerialPort.Text = "Start Automatic Capture From IR Sensor";
             this.cmdOpenSerialPort.UseVisualStyleBackColor = true;
             this.cmdOpenSerialPort.Click += new System.EventHandler(this.cmdRead_Click);
             // 
@@ -98,7 +98,7 @@
             this.cmdManualSolenoidToggle.Name = "cmdManualSolenoidToggle";
             this.cmdManualSolenoidToggle.Size = new System.Drawing.Size(152, 27);
             this.cmdManualSolenoidToggle.TabIndex = 6;
-            this.cmdManualSolenoidToggle.Text = "Manual Solenoid Toggle ";
+            this.cmdManualSolenoidToggle.Text = "Manually Solenoid Toggle ";
             this.cmdManualSolenoidToggle.UseVisualStyleBackColor = true;
             this.cmdManualSolenoidToggle.Click += new System.EventHandler(this.cmdToggle_Click);
             // 
@@ -107,9 +107,9 @@
             this.checkShowLiveWebcamView.AutoSize = true;
             this.checkShowLiveWebcamView.Location = new System.Drawing.Point(270, 29);
             this.checkShowLiveWebcamView.Name = "checkShowLiveWebcamView";
-            this.checkShowLiveWebcamView.Size = new System.Drawing.Size(148, 17);
+            this.checkShowLiveWebcamView.Size = new System.Drawing.Size(217, 17);
             this.checkShowLiveWebcamView.TabIndex = 7;
-            this.checkShowLiveWebcamView.Text = "Show Live Webcam View";
+            this.checkShowLiveWebcamView.Text = "Automatically Capture 4 Times a Second";
             this.checkShowLiveWebcamView.UseVisualStyleBackColor = true;
             this.checkShowLiveWebcamView.CheckedChanged += new System.EventHandler(this.checkLive_CheckedChanged);
             // 

@@ -36,10 +36,6 @@ namespace ImageClassifier
         private void cmdReadDirectoryAndRefresh_Click(object sender, EventArgs e)
         {
 
-            //List<int> MislabeledImageIDs = ImagesDB.GetMislabeledImageIDs();
-
-
-            
             if (getMainImageDirectory() == null)
             {
                 return;
@@ -83,14 +79,27 @@ namespace ImageClassifier
                 workingDirectory = workingDirectory + "//" + listBoxWorkingLabel.SelectedItem;
             }
 
-            if (newFileList) {
+            if (newFileList)
+            {
                 fileList.Clear();
                 String[] files = Directory.GetFiles(workingDirectory);
                 fileList.AddRange(files);
             }
+            
+            
+            List<int> MislabeledImageIDs = ImagesDB.GetMislabeledImageIDs();
+            List<String> weakFileList = new List<String>();
+            foreach (String fileName in fileList)
+            {
+                int imageID = Convert.ToInt32(fileName.Substring(fileName.Length - 12, 8)) - 10000000;
+                if (MislabeledImageIDs.Contains(imageID + 10000000))
+                {
+                    weakFileList.Add(fileName);
+                }
+            }
+            fileList = weakFileList;
 
             groupBoxImages.Controls.Clear();
-
             int imageSize = 120;
             for (int y = 0; y < 800; y = y + imageSize + 10)
             {
@@ -100,17 +109,26 @@ namespace ImageClassifier
                     {
                         return;
                     }
+                    String fileName = fileList[0];
+                    int imageID = Convert.ToInt32(fileName.Substring(fileName.Length - 12, 8)) - 10000000;
+                    fileList.RemoveAt(0);
                     PictureBox pictureBox = new PictureBox();
                     pictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-                    pictureBox.Tag = fileList[0];
-                    pictureBox.BackgroundImage = (Image)CloneImage(fileList[0]);
-                    fileList.RemoveAt(0);
+                    pictureBox.Tag = fileName;
+                    pictureBox.BackgroundImage = (Image)CloneImage(fileName);
                     pictureBox.Height = imageSize;
                     pictureBox.Width = imageSize;
                     pictureBox.Left = x;
                     pictureBox.Top = y + 10;
                     pictureBox.Click += new EventHandler(pictureBox_Click);
+                    pictureBox.Paint += new PaintEventHandler((sender, e) =>
+                    {
+                        e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+                        e.Graphics.DrawString(imageID.ToString(), Font, Brushes.Blue, 3, 3);
+                    });
                     groupBoxImages.Controls.Add(pictureBox);
+
+
                 }
             }
         }
@@ -155,8 +173,8 @@ namespace ImageClassifier
             {
                 return;
             }
-            
-            
+
+
             String selectedCommand;
             if (allShown)
             {
@@ -186,7 +204,7 @@ namespace ImageClassifier
         private void pictureBox_Click(object sender, EventArgs e)
         {
             PictureBox pictureBox = (PictureBox)sender;
-            HandlePictureBoxClick(pictureBox,false,false);
+            HandlePictureBoxClick(pictureBox, false, false);
         }
 
         private void listBoxWorkingLabel_SelectedIndexChanged(object sender, EventArgs e)
@@ -196,7 +214,8 @@ namespace ImageClassifier
             {
                 OnlyGetMore();
             }
-            else {
+            else
+            {
                 ImageRefresh(true);
             }
             LastListBoxWorkingLabelSelectedIndex = listBoxWorkingLabel.SelectedIndex;
@@ -212,7 +231,7 @@ namespace ImageClassifier
         {
             //A new list is needed because HandlePictureBoxClick is removing items from groupBoxImages.Controls. 
             List<PictureBox> pictureBoxes = new List<PictureBox>();
-            
+
             foreach (PictureBox pictureBox in groupBoxImages.Controls)
             {
                 pictureBoxes.Add(pictureBox);
@@ -229,14 +248,15 @@ namespace ImageClassifier
         {
             OnlyGetMore();
         }
-            
+
         private void OnlyGetMore()
         {
             if (fileList.Count == 0)
             {
                 ImageRefresh(true);
             }
-            else {
+            else
+            {
                 HandleAll(true);
             }
         }

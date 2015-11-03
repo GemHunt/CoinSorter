@@ -29,6 +29,13 @@ namespace ImageClassifier
             InitializeComponent();
             _spManager = new SerialPortManager();
             _spManager.NewSerialDataRecieved += new EventHandler<SerialDataEventArgs>(_spManager_NewSerialDataRecieved);
+
+            var di = new DirectoryInfo("F:/OpenCV/Raw/");
+            var lastFileName = di.GetFiles()
+             .OrderByDescending(f => f.Name)
+             .First();
+
+            IRSensorCount = ImagesDB.GetImageIDFromFileName(lastFileName.Name);
         }
 
 
