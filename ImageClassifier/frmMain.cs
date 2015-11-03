@@ -9,20 +9,22 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.IO;
+using System.Diagnostics;
 
 namespace ImageClassifier
 {
     public partial class frmMain : Form
     {
         [DllImport("E:\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int captureFromWebCam(int imageID,int show);
+        public static extern int captureFromWebCam(int imageID, bool show, bool classify, String modelDir);
 
         [DllImport("E:\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int FindCoinCenter(int imageID, int show);
+        public static extern int FindCoinCenter(int imageID, bool show);
 
         SerialPortManager _spManager;
         int coinCenterImageID = 10098;
-        int IRSensorCount = 5134;
+        int IRSensorCount = 0;
+        bool AutomaticCaptureOn = false;
         
         public frmMain()
         {
@@ -38,6 +40,9 @@ namespace ImageClassifier
             IRSensorCount = ImagesDB.GetImageIDFromFileName(lastFileName.Name);
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+        }
 
         void _spManager_NewSerialDataRecieved(object sender, SerialDataEventArgs e)
         {
@@ -58,18 +63,12 @@ namespace ImageClassifier
             //Toggle every other coin:
             // toggleNextCoin = !toggleNextCoin;
             // if (toggleNextCoin) {
-            Timer timerToggleDelay = new Timer();
-            timerToggleDelay.Interval = trackBarSensorDelay.Value + trackBarToggleDelay.Value;
-            timerToggleDelay.Enabled = true;
-            timerToggleDelay.Tick += new EventHandler(timerToggleDelay_Tick);
+            //Timer timerToggleDelay = new Timer();
+            //timerToggleDelay.Interval = trackBarSensorDelay.Value + trackBarToggleDelay.Value;
+            //timerToggleDelay.Enabled = true;
+            //timerToggleDelay.Tick += new EventHandler(timerToggleDelay_Tick);
             // }
         }
-
-
-
-      
-
-       
         
         private void cmdWebCam_Click(object sender, EventArgs e)
         {
@@ -77,25 +76,42 @@ namespace ImageClassifier
             //Application.Exit();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            //captureFromWebCam();
-
-        }
-
         // Handles the "Start Listening"-buttom click event
-        private void cmdRead_Click(object sender, EventArgs e)
+        private void cmdOpenSerialPort_Click(object sender, EventArgs e)
         {
-            _spManager.StartListening();
+            if (AutomaticCaptureOn) {
+                cmdOpenSerialPort.BackColor = SystemColors.ButtonFace;
+                cmdOpenSerialPort.Text = "Start Automatic Capture From IR Sensor";
+                AutomaticCaptureOn = false;
+                _spManager.StopListening();
+            } else {
+                cmdOpenSerialPort.BackColor = Color.LightGreen;
+                cmdOpenSerialPort.Text = "Stop Automatic Capture From IR Sensor";
+                AutomaticCaptureOn = true;
+                _spManager.StartListening();
+            }
         }
 
         private void timerIRSensorDelay_Tick(object sender, EventArgs e)
         {
             Timer timerIRSensorDelay = (Timer)sender;
             timerIRSensorDelay.Enabled = false;
-            captureFromWebCam();
+            System.Diagnostics.Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            int result = captureFromWebCam();
+            stopWatch.Stop();
+            Debug.WriteLine("cc took" + stopWatch.ElapsedMilliseconds);
+            if ((result == 1) || (result == 3) )
+            {
+                Timer timerToggleDelay = new Timer();
+                int totalDelay = trackBarToggleDelay.Value - (int)stopWatch.ElapsedMilliseconds;
+                if (totalDelay > 0){
+                    timerToggleDelay.Interval = totalDelay;
+                    timerToggleDelay.Enabled = true;
+                    timerToggleDelay.Tick += new EventHandler(timerToggleDelay_Tick);   
+                }
+            }
         }
-
 
         private void timerToggleDelay_Tick(object sender, EventArgs e)
         {
@@ -122,10 +138,9 @@ namespace ImageClassifier
             captureFromWebCam();
         }
 
-
-        private void captureFromWebCam()
+        private int captureFromWebCam()
         {
-            captureFromWebCam(IRSensorCount + 10000000,1);
+            return captureFromWebCam(IRSensorCount + 10000000, true, true,"F:/models/20151102-164707-4dfa_epoch_3.0");
         }
 
         private void cmdTestFindCoinCenter_Click(object sender, EventArgs e)
@@ -144,7 +159,7 @@ namespace ImageClassifier
         {
             if (File.Exists("F:/OpenCV/" + coinCenterImageID + "raw.jpg"))
             {
-                FindCoinCenter(coinCenterImageID, 1);
+                FindCoinCenter(coinCenterImageID, true);
             }
         }
 

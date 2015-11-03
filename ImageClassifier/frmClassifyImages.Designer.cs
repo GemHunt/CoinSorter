@@ -28,29 +28,27 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtModel = new System.Windows.Forms.TextBox();
+            this.txtModelDir = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cmdClassify = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.txtOldImageDirectory = new System.Windows.Forms.TextBox();
             this.chkClassify = new System.Windows.Forms.CheckBox();
             this.chkAddImagesToDataBase = new System.Windows.Forms.CheckBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtRootModelDirectory = new System.Windows.Forms.TextBox();
             this.chkIncludeSubDirectories = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txtNewImageDirectory = new System.Windows.Forms.TextBox();
             this.chkMoveImages = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
-            // txtModel
+            // txtModelDir
             // 
-            this.txtModel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtModel.Location = new System.Drawing.Point(184, 118);
-            this.txtModel.Name = "txtModel";
-            this.txtModel.Size = new System.Drawing.Size(516, 26);
-            this.txtModel.TabIndex = 0;
-            this.txtModel.Text = "20151031-215554-2b47_epoch_5.0";
+            this.txtModelDir.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtModelDir.Location = new System.Drawing.Point(184, 118);
+            this.txtModelDir.Name = "txtModelDir";
+            this.txtModelDir.Size = new System.Drawing.Size(516, 26);
+            this.txtModelDir.TabIndex = 0;
+            this.txtModelDir.Text = "F:/Models/20151102-164707-4dfa_epoch_3.0";
             // 
             // label1
             // 
@@ -58,9 +56,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(13, 121);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(56, 20);
+            this.label1.Size = new System.Drawing.Size(123, 20);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Model:";
+            this.label1.Text = "Model Directory:";
             // 
             // cmdClassify
             // 
@@ -116,25 +114,6 @@
             this.chkAddImagesToDataBase.Text = "Add Images to DataBase";
             this.chkAddImagesToDataBase.UseVisualStyleBackColor = true;
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(13, 153);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(162, 20);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "Root Model Directory:";
-            // 
-            // txtRootModelDirectory
-            // 
-            this.txtRootModelDirectory.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtRootModelDirectory.Location = new System.Drawing.Point(184, 150);
-            this.txtRootModelDirectory.Name = "txtRootModelDirectory";
-            this.txtRootModelDirectory.Size = new System.Drawing.Size(516, 26);
-            this.txtRootModelDirectory.TabIndex = 0;
-            this.txtRootModelDirectory.Text = "F:/Models/";
-            // 
             // chkIncludeSubDirectories
             // 
             this.chkIncludeSubDirectories.AutoSize = true;
@@ -163,7 +142,7 @@
             this.txtNewImageDirectory.Name = "txtNewImageDirectory";
             this.txtNewImageDirectory.Size = new System.Drawing.Size(516, 26);
             this.txtNewImageDirectory.TabIndex = 8;
-            this.txtNewImageDirectory.Text = "F:/New6/Crops";
+            this.txtNewImageDirectory.Text = "F:/New7/Crops";
             // 
             // chkMoveImages
             // 
@@ -192,10 +171,8 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtOldImageDirectory);
             this.Controls.Add(this.cmdClassify);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.txtRootModelDirectory);
-            this.Controls.Add(this.txtModel);
+            this.Controls.Add(this.txtModelDir);
             this.Name = "frmClassifyImages";
             this.Text = "Classify Images";
             this.ResumeLayout(false);
@@ -205,15 +182,13 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox txtModel;
+        private System.Windows.Forms.TextBox txtModelDir;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button cmdClassify;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtOldImageDirectory;
         private System.Windows.Forms.CheckBox chkClassify;
         private System.Windows.Forms.CheckBox chkAddImagesToDataBase;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtRootModelDirectory;
         private System.Windows.Forms.CheckBox chkIncludeSubDirectories;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtNewImageDirectory;

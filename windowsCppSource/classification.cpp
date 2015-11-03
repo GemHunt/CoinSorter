@@ -10,14 +10,19 @@
 #include <windows.h>
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 using namespace caffe;  // NOLINT(build/namespaces)
+#include <iostream>
 using std::string;
+using std::cout;
+using std::endl;
 
 /* Pair (label, confidence) representing a prediction. */
 typedef std::pair<string, float> Prediction;
 
-extern "C" __declspec(dllexport) double* ClassifyImage(const char *model_file, const char *trained_file, const char *mean_file, const char *label_file, const char *image_file);
+extern "C" __declspec(dllexport) double* ClassifyImage(const char *modelDir, const char *image_file);
 
-double* ClassifyImage(const char *model_file, const char *trained_file, const char *mean_file, const char *label_file, cv::Mat img);
+double* ClassifyImage(const char *modelDir, cv::Mat img);
+void cropCircle(cv::Mat& src, int sqSize, cv::Mat& dst);
+int GetLabelID(std::string label);
 
 extern "C" __declspec(dllexport) int ReleaseMemory(double* pArray)
 {
@@ -28,12 +33,8 @@ extern "C" __declspec(dllexport) int ReleaseMemory(double* pArray)
 class Classifier {
 public:
 	Classifier();
-	std::vector<Prediction> Classify(const cv::Mat& img, int N = 5);
-
-	void Setup(const string& model_file,
-		const string& trained_file,
-		const string& mean_file,
-		const string& label_file);
+	std::vector<Prediction> Classify(const cv::Mat& img, int N = 2);
+	void Setup(const string& modelDir);
 
 private:
 	void SetMean(const string& mean_file);
@@ -58,13 +59,14 @@ Classifier::Classifier() {
 }
 
 
-void Classifier::Setup(const string& model_file,
-	const string& trained_file,
-	const string& mean_file,
-	const string& label_file) {
+void Classifier::Setup(const string& modelDir) {
+
+	const string& model_file = modelDir + "/deploy.prototxt";
+	const string& trained_file = modelDir + "/snapshot.caffemodel";
+	const string& mean_file = modelDir + "/mean.binaryproto";
+	const string& label_file = modelDir + "/labels.txt";
 
 	Caffe::set_mode(Caffe::CPU);
-
 	/* Load the network. */
 	net_.reset(new Net<float>(model_file, TEST));
 	net_->CopyTrainedLayersFrom(trained_file);
@@ -236,73 +238,117 @@ void Classifier::Preprocess(const cv::Mat& img,
 }
 
 
-double* ClassifyImage(const char *model_file, const char *trained_file, const char *mean_file, const char *label_file, const char *image_file) {
-	cv::Mat img = cv::imread(image_file, -1);
+double* ClassifyImage(const char *modelDir, const char *image_file) {
+	cv::Mat img = cv::imread(image_file);
 	CHECK(!img.empty()) << "Unable to decode image " << image_file;
-	return ClassifyImage(model_file, trained_file, mean_file, label_file, img);
+	return ClassifyImage(modelDir, img);
 }
 
 
-double* ClassifyImage(const char *model_file, const char *trained_file, const char *mean_file, const char *label_file, cv::Mat img) {
+double* ClassifyImage(const char *modelDir, cv::Mat img) {
 	//::google::InitGoogleLogging("classification-d.dll");
 
+	static cv::Mat mask;
 	static int counter;
 	counter += 1;
 	static Classifier classifier;
 
 	if (counter == 1) {
-		classifier.Setup(model_file, trained_file, mean_file, label_file);
+		classifier.Setup(modelDir);
+		mask = cv::imread("F:/CircleMask406.png");
 	}
 
+	cropCircle(img, 60, img);
+	//img = img & mask;
+	////imwrite("F:/mask.png", mask);
+	////imwrite("F:/masked.png", img);
+	//cv::Size size(40, 40);
+	//cv::Mat img40;
+	//cv::resize(img, img40, size);
+	//cv::cvtColor(img40, img, CV_BGR2GRAY);
+	//imwrite("F:/output.png", img);
 
 	std::vector<Prediction> predictions = classifier.Classify(img);
-	/* Print the top N predictions. */
-	double * result = new double[3];
-	//cout << "11" << endl;
 
-
-	double totalConfidence = 0;
-	double totalPredicted = 0;
-	double totalPredictedConfidence = 0;
-	//cout << "12" << endl;
-
-	std::string::size_type sz;     // alias of size_t
-	//cout << "13" << endl;
-
+	double * result = new double[predictions.size() * 2];
+	cout << "Number of Predictions" << predictions.size() << endl;
 
 	for (size_t i = 0; i < predictions.size(); ++i) {
 		Prediction p = predictions[i];
-		//cout << "14" << endl;
-
-		double confidence = p.second;
-		double degreePredicted = std::stod(p.first, &sz);
-		totalPredicted += degreePredicted;
-		totalPredictedConfidence += (confidence * degreePredicted);
-		totalConfidence += confidence;
-		std::cout << std::fixed << std::setprecision(4) << p.second << " - \""
-			<< p.first << "\"" << std::endl;
+		cout << p.first << endl;
+		result[i] = GetLabelID(p.first);
+		result[i + predictions.size()] = p.second;
 	}
 
+	///* Print the top N predictions. */
+	//double * result = new double[3];
+	////cout << "11" << endl;
 
-	//cout << "15" << endl;
+
+	//double totalConfidence = 0;
+	//double totalPredicted = 0;
+	//double totalPredictedConfidence = 0;
+	////cout << "12" << endl;
+
+	//std::string::size_type sz;     // alias of size_t
+	////cout << "13" << endl;
 
 
-	double totalPredictedMean = totalPredicted / 5;
-	double totalPredictedSquareMeanDeviations = 0;
+	//for (size_t i = 0; i < predictions.size(); ++i) {
+	//	Prediction p = predictions[i];
+	//	//cout << "14" << endl;
 
-	for (size_t i = 0; i < predictions.size(); ++i) {
-		Prediction p = predictions[i];
-		double degreePredicted = std::stod(p.first, &sz);
-		totalPredictedSquareMeanDeviations += (totalPredictedMean - degreePredicted) * (totalPredictedMean - degreePredicted);
-	}
-	//this could be better because it could take the confidence into account:
-	double predictedStandardDeviation = sqrt(totalPredictedSquareMeanDeviations / 5);
+	//	double confidence = p.second;
+	//	double degreePredicted = std::stod(p.first, &sz);
+	//	totalPredicted += degreePredicted;
+	//	totalPredictedConfidence += (confidence * degreePredicted);
+	//	totalConfidence += confidence;
+	//	std::cout << std::fixed << std::setprecision(4) << p.second << " - \""
+	//		<< p.first << "\"" << std::endl;
+	//}
 
-	//This is not correct around 359-000-001
-	//this does not acount for outliers(112)  222-112-223-221-220
-	result[0] = totalPredictedConfidence / totalConfidence;
-	result[1] = totalConfidence;
-	result[3] = predictedStandardDeviation;
+
+	////cout << "15" << endl;
+
+
+	//double totalPredictedMean = totalPredicted / 5;
+	//double totalPredictedSquareMeanDeviations = 0;
+
+	//for (size_t i = 0; i < predictions.size(); ++i) {
+	//	Prediction p = predictions[i];
+	//	double degreePredicted = std::stod(p.first, &sz);
+	//	totalPredictedSquareMeanDeviations += (totalPredictedMean - degreePredicted) * (totalPredictedMean - degreePredicted);
+	//}
+	////this could be better because it could take the confidence into account:
+	//double predictedStandardDeviation = sqrt(totalPredictedSquareMeanDeviations / 5);
+
+	////This is not correct around 359-000-001
+	////this does not acount for outliers(112)  222-112-223-221-220
+	//result[0] = totalPredictedConfidence / totalConfidence;
+	//result[1] = totalConfidence;
+	//result[3] = predictedStandardDeviation;
 
 	return result;
 }
+
+int GetLabelID(std::string label){
+	if (label == "canadaOther"){
+		return 0;
+	}
+	if (label == "heads"){
+		return 1;
+	}
+	if (label == "maple"){
+		return 2;
+	}
+	if (label == "tails"){
+		return 3;
+	}
+	if (label == "wheat"){
+		return 4;
+	}
+	return -1;
+}
+
+
+

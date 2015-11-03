@@ -38,33 +38,23 @@ namespace ImageClassifier
                 return;
             }
 
-            if (!Directory.Exists(txtRootModelDirectory.Text))
+            if (!Directory.Exists(txtModelDir.Text))
             {
-                txtRootModelDirectory.Focus();
+                txtModelDir.Focus();
                 MessageBox.Show("Root Model Directory Does Not Exist");
                 return;
             }
 
             DirectoryInfo imageDirectory = new DirectoryInfo(txtOldImageDirectory.Text);
-            DirectoryInfo rootModelDirectory = new DirectoryInfo(txtRootModelDirectory.Text);
-            String modelDirectory = rootModelDirectory + txtModel.Text;
-
-            if (!Directory.Exists(modelDirectory))
-            {
-                txtModel.Focus();
-                MessageBox.Show(modelDirectory + " Does Not Exist");
-                return;
-            }
+            DirectoryInfo modelDir = new DirectoryInfo(txtModelDir.Text);
 
             if (chkClassify.Checked == false && chkAddImagesToDataBase.Checked == false)
             {
-                txtModel.Focus();
+                txtModelDir.Focus();
                 MessageBox.Show("Nothing is checked");
                 return;
             }
-
-            caffe.Classify(txtOldImageDirectory.Text, txtNewImageDirectory.Text, txtModel.Text, modelDirectory, chkClassify.Checked, chkAddImagesToDataBase.Checked,chkMoveImages.Checked, chkIncludeSubDirectories.Checked);
+            caffe.Classify(txtOldImageDirectory.Text, txtNewImageDirectory.Text, txtModelDir.Text, chkClassify.Checked, chkAddImagesToDataBase.Checked, chkMoveImages.Checked, chkIncludeSubDirectories.Checked);
         }
-
     }
 }

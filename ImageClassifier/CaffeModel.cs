@@ -12,21 +12,16 @@ namespace ImageClassifier
     class CaffeModel
     {
         [DllImport("E:\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll")]
-        private static extern IntPtr ClassifyImage(String model_file, String trained_file, String mean_file, String label_file, String image_file, bool resize);
+        private static extern IntPtr ClassifyImage(String modelDir, String image_file);
 
         [DllImport("E:\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int ReleaseMemory(IntPtr ptr);
 
-        public void Classify(String oldImageDirectory, String newImageDirectory, String model, String modelDirectory, bool toClassify, bool addImagesToDataBase, bool moveImage, bool includeSubDir)
+        public void Classify(String oldImageDirectory, String newImageDirectory, String modelDir, bool toClassify, bool addImagesToDataBase, bool moveImage, bool includeSubDir)
         {
-            String model_file = modelDirectory +"/" + "deploy.prototxt";
-            String trained_file = modelDirectory +"/" + "snapshot.caffemodel";
-            String mean_file = modelDirectory +"/" + "mean.binaryproto";
-            String label_file = modelDirectory + "/" + "labels.txt";
-          
             SQLiteDB.Open();
 
-            List<String> labels = LabelsDB.GetLabels(label_file);
+            List<String> labels = LabelsDB.GetLabels(modelDir + "/labels.txt");
 
             int resultCount = labels.Count;
             if (resultCount > 5) {
@@ -36,7 +31,7 @@ namespace ImageClassifier
             string[] files;
             if (includeSubDir)
             {
-                files = Directory.GetFiles(oldImageDirectory, "*.*", SearchOption.AllDirectories);
+                files = Directory.GetFiles(oldImageDirectory, "*.jpg*", SearchOption.AllDirectories);
             }
             else
             {
@@ -49,7 +44,7 @@ namespace ImageClassifier
                 
                 if (toClassify)
                 {
-                    IntPtr ptr = ClassifyImage(model_file, trained_file, mean_file, label_file, image_file,true);
+                    IntPtr ptr = ClassifyImage(modelDir, image_file);
                     double[] result = new double[resultCount * 2];
                     Marshal.Copy(ptr, result, 0, resultCount * 2);
                     ReleaseMemory(ptr);

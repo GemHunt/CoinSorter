@@ -17,12 +17,13 @@ using std::cout;
 using std::endl;
 ///for web cam
 
-extern "C" __declspec(dllexport) int captureFromWebCam(int imageID, int showImages);
+extern "C" __declspec(dllexport) int captureFromWebCam(int imageID, bool showImages, bool classify, const char *modelDir);
 void deskew(cv::Mat& src, cv::Mat& dst);
-Point CoinCenter(Mat input, int showImages);
+Point CoinCenter(Mat input, bool showImages);
 Mat CropToCenter(Mat input, Point coinCenter);
+double* ClassifyImage(const char *modelDir, cv::Mat img);
 
-int captureFromWebCam(int imageID, int showImages)
+int captureFromWebCam(int imageID, bool showImages, bool classify, const char *modelDir)
 {
 	//cout << "01" << endl;
 	static bool setup = false;
@@ -44,7 +45,7 @@ int captureFromWebCam(int imageID, int showImages)
 
 		cout << "Frame size : " << dWidth << " x " << dHeight << endl;
 
-		if (showImages == 1){
+		if (showImages){
 			namedWindow("MyVideo", CV_WINDOW_AUTOSIZE); //create a window called "MyVideo"
 		}
 		cap.set(CV_CAP_PROP_BRIGHTNESS, 0);
@@ -73,7 +74,7 @@ int captureFromWebCam(int imageID, int showImages)
 	deskew(frame, deskewedFrame);
 	//cout << "05" << endl;
 
-	imwrite("F:/OpenCV/" + std::to_string(imageID) + "raw.jpg", deskewedFrame);
+	imwrite("F:/OpenCV/Raw/" + std::to_string(imageID) + "raw.jpg", deskewedFrame);
 	Point coinCenter = CoinCenter(deskewedFrame, showImages);
 	//cout << "06" << endl;
 	
@@ -84,18 +85,24 @@ int captureFromWebCam(int imageID, int showImages)
 	
 	cv::Mat crop = CropToCenter(deskewedFrame, coinCenter);
 	imwrite("F:/OpenCV/" + std::to_string(imageID) + ".jpg", crop);
-
-	if (showImages == 1){
+	
+	if (showImages){
 		imshow("MyVideo", crop);
 
 		if (waitKey(1) == 27) //wait for 'esc' key press for 30ms. If 'esc' key is pressed, break loop
 		{
 			cout << "esc key is pressed by user" << endl;
 			destroyWindow("MyVideo");
-			return 0;
+			return -1;
 		}
 	}
 
-	return 0;
+	double* result;
+	if (classify) {
+		result = ClassifyImage(modelDir, crop);
+		return (int)result[0];
+	}
+
+	return -1;
 }
 

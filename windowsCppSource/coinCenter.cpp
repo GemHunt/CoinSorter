@@ -31,13 +31,13 @@ int max_thresh = 255;
 
 void startCoinCenterGUI(Mat input);
 void thresh_callback(int, void*);
-Point CoinCenter(Mat input, int showImages);
+Point CoinCenter(Mat input, bool showImages);
 
 
-extern "C" __declspec(dllexport) int FindCoinCenter(int imageID, int showImages) {
+extern "C" __declspec(dllexport) int FindCoinCenter(int imageID, bool showImages) {
 	Mat input;
 	input = imread("F:/OpenCV/" + std::to_string(imageID) + "raw.jpg");
-	if (showImages == 1){
+	if (showImages){
 		startCoinCenterGUI(input);
 	}
 
@@ -72,7 +72,7 @@ void thresh_callback(int, void*){
 }
 
 
-Point CoinCenter(Mat input, int showImages)
+Point CoinCenter(Mat input, bool showImages)
 {
 	//cout << "101" << endl;
 	Point coinCenter;
@@ -100,7 +100,7 @@ Point CoinCenter(Mat input, int showImages)
 	erode(threshold, threshold, erodeElement);
 	dilate(threshold, threshold, dilateElement);
 	//cout << "104" << endl;
-	if (showImages == 1){
+	if (showImages){
 		namedWindow("threshold", CV_WINDOW_AUTOSIZE);
 		imshow("threshold", threshold);
 	}
@@ -143,7 +143,10 @@ Point CoinCenter(Mat input, int showImages)
 	//return nothing if nothing found:
 	if (contourIndex == -1){
 		cout << "No contour Found" << endl;
-		return Point(0, 0);
+		return Point(0,0);
+		//return Point(320,240);
+		//srand(static_cast<unsigned int>(time(0)));
+		//return Point(260 + (rand() % 60), 180 + (rand() % 60));
 	}
 
 	Scalar color = Scalar(0, 255, 0);
