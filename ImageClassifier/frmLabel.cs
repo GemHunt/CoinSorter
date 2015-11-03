@@ -85,19 +85,21 @@ namespace ImageClassifier
                 String[] files = Directory.GetFiles(workingDirectory);
                 fileList.AddRange(files);
             }
-            
-            
-            List<int> MislabeledImageIDs = ImagesDB.GetMislabeledImageIDs();
-            List<String> weakFileList = new List<String>();
-            foreach (String fileName in fileList)
+
+            if (chkOnlyShowWeek.Checked)
             {
-                int imageID = Convert.ToInt32(fileName.Substring(fileName.Length - 12, 8)) - 10000000;
-                if (MislabeledImageIDs.Contains(imageID + 10000000))
+                List<int> MislabeledImageIDs = ImagesDB.GetMislabeledImageIDs();
+                List<String> weakFileList = new List<String>();
+                foreach (String fileName in fileList)
                 {
-                    weakFileList.Add(fileName);
+                    int imageID = Convert.ToInt32(fileName.Substring(fileName.Length - 12, 8)) - 10000000;
+                    if (MislabeledImageIDs.Contains(imageID + 10000000))
+                    {
+                        weakFileList.Add(fileName);
+                    }
                 }
+                fileList = weakFileList;
             }
-            fileList = weakFileList;
 
             groupBoxImages.Controls.Clear();
             int imageSize = 120;

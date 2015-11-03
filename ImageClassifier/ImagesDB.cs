@@ -23,7 +23,7 @@ namespace ImageClassifier
             SQL.AppendLine("From Images");
             SQL.AppendLine("Inner Join Results");
             SQL.AppendLine("On Images.ImageID = Results.ImageID");
-            SQL.AppendLine("And Results.Score < .5");
+            SQL.AppendLine("And Results.Score < .999");
             SQL.AppendLine("And Images.LabelID = Results.LabelID");
             SQL.AppendLine("Order by 1;");
             Open();
