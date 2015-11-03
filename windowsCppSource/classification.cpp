@@ -58,7 +58,6 @@ private:
 Classifier::Classifier() {
 }
 
-
 void Classifier::Setup(const string& modelDir) {
 
 	const string& model_file = modelDir + "/deploy.prototxt";

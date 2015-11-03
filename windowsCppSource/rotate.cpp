@@ -52,8 +52,8 @@ void cropCircle(cv::Mat& src, int sqSize, cv::Mat& dst)
 	
 	//dst = dst(cv::Rect(285, 151, 100,100));
 	cv::Size size(sqSize, sqSize);
-	cv::resize(src, dst, size, 0, 0, 1);
-	cv::cvtColor(src, src, CV_BGR2GRAY);
+	cv::resize(dst, dst, size, 0, 0, 1);
+	cv::cvtColor(dst, dst, CV_BGR2GRAY);
 	//imwrite("F:/output.png", dst);
 }
 
