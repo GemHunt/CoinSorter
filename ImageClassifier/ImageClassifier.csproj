@@ -82,6 +82,12 @@
     <Compile Include="frmLabel.Designer.cs">
       <DependentUpon>frmLabel.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmLabelRotation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLabelRotation.Designer.cs">
+      <DependentUpon>frmLabelRotation.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,6 +109,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmLabel.resx">
       <DependentUpon>frmLabel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLabelRotation.resx">
+      <DependentUpon>frmLabelRotation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>

@@ -182,5 +182,11 @@ namespace ImageClassifier
             frm.Show();
         }
 
+        private void cmdLabelRotation_Click(object sender, EventArgs e)
+        {
+            frmLabelRotation frm = new frmLabelRotation();
+            frm.Show();
+        }
+
     }
 }

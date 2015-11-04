@@ -47,6 +47,7 @@
             this.cmdClassifyImages = new System.Windows.Forms.Button();
             this.cmdAugmentImages = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.cmdLabelRotation = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSensorDelay)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarToggleDelay)).BeginInit();
@@ -207,7 +208,7 @@
             // 
             // cmdClassifyImages
             // 
-            this.cmdClassifyImages.Location = new System.Drawing.Point(56, 153);
+            this.cmdClassifyImages.Location = new System.Drawing.Point(56, 194);
             this.cmdClassifyImages.Name = "cmdClassifyImages";
             this.cmdClassifyImages.Size = new System.Drawing.Size(153, 35);
             this.cmdClassifyImages.TabIndex = 15;
@@ -217,7 +218,7 @@
             // 
             // cmdAugmentImages
             // 
-            this.cmdAugmentImages.Location = new System.Drawing.Point(56, 112);
+            this.cmdAugmentImages.Location = new System.Drawing.Point(56, 153);
             this.cmdAugmentImages.Name = "cmdAugmentImages";
             this.cmdAugmentImages.Size = new System.Drawing.Size(153, 35);
             this.cmdAugmentImages.TabIndex = 16;
@@ -227,6 +228,7 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.cmdLabelRotation);
             this.groupBox5.Controls.Add(this.cmdAugmentImages);
             this.groupBox5.Controls.Add(this.cmdClassifyImages);
             this.groupBox5.Controls.Add(this.cmdImageLabelingWizard);
@@ -237,6 +239,16 @@
             this.groupBox5.TabIndex = 17;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Image File Processes";
+            // 
+            // cmdLabelRotation
+            // 
+            this.cmdLabelRotation.Location = new System.Drawing.Point(56, 112);
+            this.cmdLabelRotation.Name = "cmdLabelRotation";
+            this.cmdLabelRotation.Size = new System.Drawing.Size(153, 35);
+            this.cmdLabelRotation.TabIndex = 17;
+            this.cmdLabelRotation.Text = "Label Rotation";
+            this.cmdLabelRotation.UseVisualStyleBackColor = true;
+            this.cmdLabelRotation.Click += new System.EventHandler(this.cmdLabelRotation_Click);
             // 
             // frmMain
             // 
@@ -287,6 +299,7 @@
         private System.Windows.Forms.Button cmdClassifyImages;
         private System.Windows.Forms.Button cmdAugmentImages;
         private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Button cmdLabelRotation;
     }
 }
 
