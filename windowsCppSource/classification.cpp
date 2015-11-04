@@ -257,16 +257,11 @@ double* ClassifyImage(const char *modelDir, cv::Mat img) {
 		mask = cv::imread("F:/CircleMask406.png");
 	}
 
-	cropCircle(img, 60, img);
-	//img = img & mask;
-	////imwrite("F:/mask.png", mask);
-	////imwrite("F:/masked.png", img);
-	//cv::Size size(40, 40);
-	//cv::Mat img40;
-	//cv::resize(img, img40, size);
-	//cv::cvtColor(img40, img, CV_BGR2GRAY);
-	//imwrite("F:/output.png", img);
-
+	if (img.rows == 406){
+		cropCircle(img, 60, img);
+	}
+	
+	
 	std::vector<Prediction> predictions = classifier.Classify(img);
 
 	double * result = new double[predictions.size() * 2];
@@ -331,7 +326,10 @@ double* ClassifyImage(const char *modelDir, cv::Mat img) {
 }
 
 int GetLabelID(std::string label){
-	if (label == "canadaOther"){
+	if (isdigit(label[0])){
+		return std::stoi(label);
+	}
+if (label == "canadaOther"){
 		return 0;
 	}
 	if (label == "heads"){

@@ -48,7 +48,7 @@
             this.txtModelDir.Name = "txtModelDir";
             this.txtModelDir.Size = new System.Drawing.Size(516, 26);
             this.txtModelDir.TabIndex = 0;
-            this.txtModelDir.Text = "F:/Models/20151102-164707-4dfa_epoch_3.0";
+            this.txtModelDir.Text = "F:/Models/20151104-002059-03d7_epoch_10.0";
             // 
             // label1
             // 
@@ -88,7 +88,7 @@
             this.txtOldImageDirectory.Name = "txtOldImageDirectory";
             this.txtOldImageDirectory.Size = new System.Drawing.Size(516, 26);
             this.txtOldImageDirectory.TabIndex = 3;
-            this.txtOldImageDirectory.Text = "F:/OpenCV";
+            this.txtOldImageDirectory.Text = "F:/NewRot/HeadsWithRotation/000";
             // 
             // chkClassify
             // 
@@ -147,8 +147,6 @@
             // chkMoveImages
             // 
             this.chkMoveImages.AutoSize = true;
-            this.chkMoveImages.Checked = true;
-            this.chkMoveImages.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkMoveImages.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkMoveImages.Location = new System.Drawing.Point(17, 245);
             this.chkMoveImages.Name = "chkMoveImages";

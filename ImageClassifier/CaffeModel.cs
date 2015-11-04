@@ -19,8 +19,6 @@ namespace ImageClassifier
 
         public void Classify(String oldImageDirectory, String newImageDirectory, String modelDir, bool toClassify, bool addImagesToDataBase, bool moveImage, bool includeSubDir)
         {
-            SQLiteDB.Open();
-
             List<String> labels = LabelsDB.GetLabels(modelDir + "/labels.txt");
 
             int resultCount = labels.Count;
@@ -37,7 +35,9 @@ namespace ImageClassifier
             {
                 files = Directory.GetFiles(oldImageDirectory);
             }
-                        
+
+            List<Result> results = new List<Result>();            
+            
             foreach (string image_file in files)
             {
                 int imageID = Convert.ToInt32(image_file.Substring(image_file.Length-12, 8));
@@ -50,7 +50,8 @@ namespace ImageClassifier
                     ReleaseMemory(ptr);
                     for (int count = 0; count < 2;count++ )
                     {
-                        ResultsDB.AddResult(2, imageID, (int)result[count], result[count + 2]);
+                        results.Add(new Result(327, imageID, (int)result[count], result[count + 2]));
+                        //ResultsDB.AddResult(152, imageID, (int)result[count], result[count + 2]);
                     }
 
                     if (moveImage) {
@@ -64,7 +65,7 @@ namespace ImageClassifier
                     ImagesDB.AddImage(imageID, LabelsDB.GetLabelID(image_file));
                 }
             }
-            SQLiteDB.Close();
+            ResultsDB.AddResults(results);
         }
     }
 }

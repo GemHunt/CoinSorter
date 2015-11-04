@@ -23,7 +23,23 @@ namespace ImageClassifier
             ExecuteQuery(SQL.ToString());
             //sql_con.Close();
         }
-
+        static public void AddResults(List<Result> results)
+        {
+            StringBuilder SQL = new StringBuilder();
+            SQL.AppendLine("BEGIN;");
+            
+            foreach (Result result in results){
+                SQL.Append("Insert into Results (ModelID,ImageID,LabelID,Score) values (");
+                SQL.Append(result.ModelID + ",");
+                SQL.Append(result.ImageID + ",");
+                SQL.Append(result.LabelID + ",");
+                SQL.AppendLine(result.Score + ");");
+            }
+            SQL.AppendLine("COMMIT;");
+            Open();
+            ExecuteQuery(SQL.ToString());
+            Close();
+        }
 
     }
 }

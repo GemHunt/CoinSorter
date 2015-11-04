@@ -66,10 +66,13 @@ namespace ImageClassifier
         {
             Dictionary<int, float> imageAngles = new Dictionary<int, float>();
             StringBuilder SQL = new StringBuilder();
-            SQL.AppendLine("Select Images.ImageID");
-            SQL.AppendLine(", angle");
-            SQL.AppendLine("From Images");
-            SQL.AppendLine("Where angle is not null;");
+            SQL.AppendLine("Select Angles3.ImageID");
+            SQL.AppendLine(", NewAngle");
+            SQL.AppendLine("From Angles3");
+            //SQL.AppendLine("Select Images.ImageID");
+            //SQL.AppendLine(", angle");
+            //SQL.AppendLine("From Images");
+            //SQL.AppendLine("Where angle is not null;");
             Open();
             SQLiteDataReader reader = GetNewReader(SQL.ToString());
             while (reader.Read())
