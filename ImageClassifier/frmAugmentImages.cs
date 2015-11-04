@@ -19,7 +19,7 @@ namespace ImageClassifier
 
         private void cmdAugment_Click(object sender, EventArgs e)
         {
-            ImagesDB.AugmentImages(txtImageDirectory.Text);
+            ImagesDB.AugmentImages(txtImageDirectory.Text, Int32.Parse(txtNumberOfRotations.Text));
         }
     }
 }

@@ -21,7 +21,6 @@ namespace ImageClassifier
         private DirectoryInfo dirInfo = new DirectoryInfo(ImageDir);
         private FileInfo[] imageFiles;
         private Image coinImage;
-        private float coinAngle;
         
         public frmLabelRotation()
         {
@@ -48,7 +47,8 @@ namespace ImageClassifier
             float offsetY = Convert.ToInt32(PictureBoxCoin.Height / 2);
             float clickX = clickArg.X - offsetX;
             float clickY = (PictureBoxCoin.Height - clickArg.Y) - offsetY;
-
+            float coinAngle;
+        
             coinAngle = (Convert.ToSingle(Math.Atan2(clickY, clickX) / Math.PI) * 180);
 
             if (clickArg.Button == System.Windows.Forms.MouseButtons.Left)
@@ -71,8 +71,9 @@ namespace ImageClassifier
                 coinAngle = coinAngle + 360;
             }
 
-            saveAngle();
-
+            int imageID = Convert.ToInt32(CoinFileName.Substring(CoinFileName.Length - 12, 8));
+            ImagesDB.UpdateAngle(imageID, coinAngle);
+            LoadNextPicture();
         }
 
         public static Bitmap RotateImage(Image image, PointF offset, float angle)
@@ -104,23 +105,21 @@ namespace ImageClassifier
             return rotatedBmp;
         }
 
-        private void saveAngle()
-        {
-            dynamic coinfileinfo = new FileInfo(CoinFileName);
-            Int32 coinAngleInt = Convert.ToInt32(Math.Round(coinAngle));
-            if (coinAngleInt < 0)
-            {
-                coinAngleInt = coinAngleInt + 360;
-            }
-            if (coinAngleInt >= 360)
-            {
-                coinAngleInt = coinAngleInt - 360;
-            }
-
-            File.Copy(CoinFileName, "F:\\NewRot\\HeadsWithRotation\\" + coinfileinfo.Name.Replace(".jpg", coinAngleInt.ToString().PadLeft(3,'0') + ".jpg"), true);
-
-            LoadNextPicture();
-        }
+        //private void saveAngle()
+        //{
+            //dynamic coinfileinfo = new FileInfo(CoinFileName);
+            //Int32 coinAngleInt = Convert.ToInt32(Math.Round(coinAngle));
+            //if (coinAngleInt < 0)
+            //{
+            //    coinAngleInt = coinAngleInt + 360;
+            //}
+            //if (coinAngleInt >= 360)
+            //{
+            //    coinAngleInt = coinAngleInt - 360;
+            //}
+            //File.Copy(CoinFileName, "F:\\NewRot\\HeadsWithRotation\\" + coinfileinfo.Name.Replace(".jpg", coinAngleInt.ToString().PadLeft(3,'0') + ".jpg"), true);
+            //LoadNextPicture();
+        //}
 
 
 

@@ -3,6 +3,7 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <iosfwd>
+#include <iomanip>
 #include <memory>
 #include <string>
 #include <utility>
@@ -17,12 +18,30 @@ using std::endl;
 void rotate(cv::Mat& src, double angle, cv::Mat& dst);
 void cropCircle(cv::Mat& src, int sqSize, cv::Mat& dst);
 
-extern "C" __declspec(dllexport) int Augment(const char *image_file, const char *output_file,int angle) {
-	cv::Mat src = cv::imread(image_file);
+//extern "C" __declspec(dllexport) int Augment(const char *image_file, const char *output_file,int angle) {
+//	cv::Mat src = cv::imread(image_file);
+//	cv::Mat dst;
+//	rotate(src, angle, dst);
+//	cropCircle(dst, 60, dst);
+//	cv::imwrite(output_file, dst);
+//	return 1;
+//}
+
+
+extern "C" __declspec(dllexport) int Augment(const char *fileDir,  const char *outputRootDir, int imageID, float angle) {
+	cv::Mat src = cv::imread(fileDir + std::to_string(imageID) + ".jpg");
 	cv::Mat dst;
-	rotate(src, angle, dst);
-	cropCircle(dst, 60, dst);
-	cv::imwrite(output_file, dst);
+	cropCircle(src, 100, src);
+	cv::Size size(60, 60);
+
+	for (int a=0; a < 360; a++){
+		rotate(src, a + (360-angle), dst);
+		cv::resize(dst, dst, size, 0, 0, 1);
+		std::stringstream dir;
+		dir << std::setfill('0') << std::setw(3) << a << "/";
+		std::string outputfile = outputRootDir + dir.str() + std::to_string(imageID) + ".jpg";
+		cv::imwrite(outputfile, dst);
+	}
 	return 1;
 }
 
