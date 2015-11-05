@@ -66,9 +66,9 @@ namespace ImageClassifier
         {
             Dictionary<int, float> imageAngles = new Dictionary<int, float>();
             StringBuilder SQL = new StringBuilder();
-            SQL.AppendLine("Select Angles3.ImageID");
+            SQL.AppendLine("Select Angles5.ImageID");
             SQL.AppendLine(", NewAngle");
-            SQL.AppendLine("From Angles3");
+            SQL.AppendLine("From Angles5");
             //SQL.AppendLine("Select Images.ImageID");
             //SQL.AppendLine(", angle");
             //SQL.AppendLine("From Images");

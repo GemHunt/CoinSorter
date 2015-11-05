@@ -48,7 +48,7 @@
             this.txtModelDir.Name = "txtModelDir";
             this.txtModelDir.Size = new System.Drawing.Size(516, 26);
             this.txtModelDir.TabIndex = 0;
-            this.txtModelDir.Text = "F:/Models/20151104-002059-03d7_epoch_10.0";
+            this.txtModelDir.Text = "F:/Models/20151104-162316-0a98_epoch_10.0";
             // 
             // label1
             // 

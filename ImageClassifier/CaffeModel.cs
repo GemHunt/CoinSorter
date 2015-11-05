@@ -50,7 +50,7 @@ namespace ImageClassifier
                     ReleaseMemory(ptr);
                     for (int count = 0; count < 2;count++ )
                     {
-                        results.Add(new Result(327, imageID, (int)result[count], result[count + 2]));
+                        results.Add(new Result(334, imageID, (int)result[count], result[count + 2]));
                         //ResultsDB.AddResult(152, imageID, (int)result[count], result[count + 2]);
                     }
 
