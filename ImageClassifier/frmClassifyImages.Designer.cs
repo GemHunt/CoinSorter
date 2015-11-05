@@ -48,7 +48,7 @@
             this.txtModelDir.Name = "txtModelDir";
             this.txtModelDir.Size = new System.Drawing.Size(516, 26);
             this.txtModelDir.TabIndex = 0;
-            this.txtModelDir.Text = "F:/Models/20151104-162316-0a98_epoch_10.0";
+            this.txtModelDir.Text = "F:/Models/F:/Models/20151104-162316-0a98_epoch_10.0";
             // 
             // label1
             // 
@@ -88,7 +88,7 @@
             this.txtOldImageDirectory.Name = "txtOldImageDirectory";
             this.txtOldImageDirectory.Size = new System.Drawing.Size(516, 26);
             this.txtOldImageDirectory.TabIndex = 3;
-            this.txtOldImageDirectory.Text = "F:/NewRot/HeadsWithRotation/000";
+            this.txtOldImageDirectory.Text = "F:/New8/Crops/heads";
             // 
             // chkClassify
             // 
@@ -159,7 +159,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(724, 306);
+            this.ClientSize = new System.Drawing.Size(724, 388);
             this.Controls.Add(this.chkMoveImages);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtNewImageDirectory);

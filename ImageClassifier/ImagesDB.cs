@@ -13,6 +13,8 @@ namespace ImageClassifier
     {
         [DllImport("E:\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll")]
         private static extern int Augment(String fileDir, String augmentDirectory, int imageID, float angle);
+        [DllImport("E:\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll")]
+        private static extern int CropForDate(String fileDir, String dateCropDirectory, int imageID, float angle);
 
         static public List<int> GetMislabeledImageIDs()
         {
@@ -34,7 +36,6 @@ namespace ImageClassifier
             Close();
             return mislabeledImageIDs;
         }
-
         
         static public void AddImage(int imageID, int labelID)
         {
@@ -46,7 +47,24 @@ namespace ImageClassifier
             SQL.AppendLine(labelID + ");");
             SQL.AppendLine("COMMIT;");
             ExecuteQuery(SQL.ToString());
-           
+        }
+
+        static public void AddImages(Dictionary<int, int> images)
+        {
+            StringBuilder SQL = new StringBuilder();
+            SQL.AppendLine("BEGIN;");
+
+            foreach (KeyValuePair<int,int> img in images)
+            {
+                SQL.Append("Insert into Images (ImageID,LabelID) values (");
+                SQL.Append(img.Key + ",");
+                SQL.AppendLine(img.Value + ");");
+            }
+
+            SQL.AppendLine("COMMIT;");
+            Open();
+            ExecuteQuery(SQL.ToString());
+            Close();
         }
 
         static public void UpdateAngle(int imageID, float angle)
@@ -66,9 +84,10 @@ namespace ImageClassifier
         {
             Dictionary<int, float> imageAngles = new Dictionary<int, float>();
             StringBuilder SQL = new StringBuilder();
-            SQL.AppendLine("Select Angles5.ImageID");
-            SQL.AppendLine(", NewAngle");
-            SQL.AppendLine("From Angles5");
+            SQL.AppendLine("Select ImageID");
+            SQL.AppendLine(", Angle");
+            SQL.AppendLine("From Angles7;");
+            
             //SQL.AppendLine("Select Images.ImageID");
             //SQL.AppendLine(", angle");
             //SQL.AppendLine("From Images");
@@ -147,5 +166,23 @@ namespace ImageClassifier
         //    }
         //}
 
+        static public void CropForDates(String directory)
+        {
+            String cropDirectory = directory + "/Heads/";
+            String dateCropDirectory = directory + "/Dates/";
+
+            if (!Directory.Exists(dateCropDirectory))
+            {
+                Directory.CreateDirectory(dateCropDirectory);
+            }
+
+            Dictionary<int, float> imageAngles = GetImageAngles();
+
+            foreach (KeyValuePair<int, float> imageAngle in imageAngles)
+            {
+                String fileName = cropDirectory + imageAngle.Key + ".jpg";
+                CropForDate(cropDirectory, dateCropDirectory, imageAngle.Key, imageAngle.Value);
+            }
+        }
     }
 }

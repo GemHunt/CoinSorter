@@ -21,5 +21,25 @@ namespace ImageClassifier
         {
             ImagesDB.AugmentImages(txtImageDirectory.Text, Int32.Parse(txtNumberOfRotations.Text));
         }
+
+        private void txtNumberOfRotations_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtImageDirectory_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

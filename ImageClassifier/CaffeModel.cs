@@ -37,7 +37,7 @@ namespace ImageClassifier
             }
 
             List<Result> results = new List<Result>();            
-            
+            Dictionary<int,int> images = new Dictionary<int,int>();
             foreach (string image_file in files)
             {
                 int imageID = Convert.ToInt32(image_file.Substring(image_file.Length-12, 8));
@@ -62,10 +62,15 @@ namespace ImageClassifier
                 }
                 if (addImagesToDataBase)
                 {
-                    ImagesDB.AddImage(imageID, LabelsDB.GetLabelID(image_file));
+                 images.Add(imageID, LabelsDB.GetLabelID(image_file));
                 }
             }
             ResultsDB.AddResults(results);
+            if (addImagesToDataBase)
+            {
+                ImagesDB.AddImages(images);
+            }
+            
         }
     }
 }

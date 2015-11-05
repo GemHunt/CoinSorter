@@ -64,6 +64,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CaffeModel.cs" />
+    <Compile Include="frmCropDates.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCropDates.Designer.cs">
+      <DependentUpon>frmCropDates.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmAugmentImages.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,6 +108,9 @@
     <Compile Include="ResultsDB.cs" />
     <Compile Include="SerialPortManager.cs" />
     <Compile Include="SQLiteDB.cs" />
+    <EmbeddedResource Include="frmCropDates.resx">
+      <DependentUpon>frmCropDates.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmAugmentImages.resx">
       <DependentUpon>frmAugmentImages.cs</DependentUpon>
     </EmbeddedResource>

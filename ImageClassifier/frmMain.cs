@@ -188,5 +188,12 @@ namespace ImageClassifier
             frm.Show();
         }
 
+        private void cmdCropForDates_Click(object sender, EventArgs e)
+        {
+
+            frmCropDates frm = new frmCropDates();
+            frm.Show();
+        }
+
     }
 }

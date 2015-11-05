@@ -102,7 +102,7 @@ namespace ImageClassifier
             }
 
             groupBoxImages.Controls.Clear();
-            int imageSize = 120;
+            int imageSize = 124;
             for (int y = 0; y < 800; y = y + imageSize + 10)
             {
                 for (int x = 0; x < 800; x = x + imageSize + 10)

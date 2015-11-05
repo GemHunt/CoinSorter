@@ -44,6 +44,7 @@
             this.label4.Size = new System.Drawing.Size(125, 20);
             this.label4.TabIndex = 11;
             this.label4.Text = "Image Directory:";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // txtImageDirectory
             // 
@@ -53,6 +54,7 @@
             this.txtImageDirectory.Size = new System.Drawing.Size(453, 26);
             this.txtImageDirectory.TabIndex = 10;
             this.txtImageDirectory.Text = "F:\\NewRot";
+            this.txtImageDirectory.TextChanged += new System.EventHandler(this.txtImageDirectory_TextChanged);
             // 
             // cmdAugment
             // 
@@ -73,6 +75,7 @@
             this.label1.Size = new System.Drawing.Size(160, 20);
             this.label1.TabIndex = 14;
             this.label1.Text = "Number of Rotations:";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // txtNumberOfRotations
             // 
@@ -82,6 +85,7 @@
             this.txtNumberOfRotations.Size = new System.Drawing.Size(453, 26);
             this.txtNumberOfRotations.TabIndex = 13;
             this.txtNumberOfRotations.Text = "360";
+            this.txtNumberOfRotations.TextChanged += new System.EventHandler(this.txtNumberOfRotations_TextChanged);
             // 
             // frmAugmentImages
             // 

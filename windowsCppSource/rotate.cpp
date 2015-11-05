@@ -46,6 +46,21 @@ extern "C" __declspec(dllexport) int Augment(const char *fileDir,  const char *o
 }
 
 
+extern "C" __declspec(dllexport) int CropForDate(const char *fileDir, const char *outputRootDir, int imageID, float angle) {
+	cv::Mat src = cv::imread(fileDir + std::to_string(imageID) + ".jpg");
+	cv::Mat rot;
+	rotate(src, (360 - angle), rot);
+	cv::Rect dateROI(257, 226, 124,124);
+	cv::Mat cropped;
+	cropped = rot(dateROI);
+	//cv::Size size(60, 60);
+	//cv::resize(cropped, dst, size, 0, 0, 1);
+	std::string outputfile = outputRootDir + std::to_string(imageID) + ".jpg";
+	cv::imwrite(outputfile, cropped);
+	return 1;
+}
+
+
 void rotate(cv::Mat& src, double angle, cv::Mat& dst)
 {
 	int len = std::max(src.cols, src.rows);

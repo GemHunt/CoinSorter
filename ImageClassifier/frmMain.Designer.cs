@@ -48,6 +48,7 @@
             this.cmdAugmentImages = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.cmdLabelRotation = new System.Windows.Forms.Button();
+            this.cmdCropForDates = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSensorDelay)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarToggleDelay)).BeginInit();
@@ -208,7 +209,7 @@
             // 
             // cmdClassifyImages
             // 
-            this.cmdClassifyImages.Location = new System.Drawing.Point(56, 194);
+            this.cmdClassifyImages.Location = new System.Drawing.Point(56, 235);
             this.cmdClassifyImages.Name = "cmdClassifyImages";
             this.cmdClassifyImages.Size = new System.Drawing.Size(153, 35);
             this.cmdClassifyImages.TabIndex = 15;
@@ -228,6 +229,7 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.cmdCropForDates);
             this.groupBox5.Controls.Add(this.cmdLabelRotation);
             this.groupBox5.Controls.Add(this.cmdAugmentImages);
             this.groupBox5.Controls.Add(this.cmdClassifyImages);
@@ -249,6 +251,16 @@
             this.cmdLabelRotation.Text = "Label Rotation";
             this.cmdLabelRotation.UseVisualStyleBackColor = true;
             this.cmdLabelRotation.Click += new System.EventHandler(this.cmdLabelRotation_Click);
+            // 
+            // cmdCropForDates
+            // 
+            this.cmdCropForDates.Location = new System.Drawing.Point(56, 194);
+            this.cmdCropForDates.Name = "cmdCropForDates";
+            this.cmdCropForDates.Size = new System.Drawing.Size(153, 35);
+            this.cmdCropForDates.TabIndex = 18;
+            this.cmdCropForDates.Text = "Crop For Dates";
+            this.cmdCropForDates.UseVisualStyleBackColor = true;
+            this.cmdCropForDates.Click += new System.EventHandler(this.cmdCropForDates_Click);
             // 
             // frmMain
             // 
@@ -300,6 +312,7 @@
         private System.Windows.Forms.Button cmdAugmentImages;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Button cmdLabelRotation;
+        private System.Windows.Forms.Button cmdCropForDates;
     }
 }
 
