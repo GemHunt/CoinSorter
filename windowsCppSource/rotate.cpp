@@ -17,6 +17,8 @@ using std::endl;
 
 void rotate(cv::Mat& src, double angle, cv::Mat& dst);
 void cropCircle(cv::Mat& src, int sqSize, cv::Mat& dst);
+int CropForDate(cv::Mat src, std::string outputFileName, float angle);
+
 
 //extern "C" __declspec(dllexport) int Augment(const char *image_file, const char *output_file,int angle) {
 //	cv::Mat src = cv::imread(image_file);
@@ -46,19 +48,41 @@ extern "C" __declspec(dllexport) int Augment(const char *fileDir,  const char *o
 }
 
 
-extern "C" __declspec(dllexport) int CropForDate(const char *fileDir, const char *outputRootDir, int imageID, float angle) {
+extern "C" __declspec(dllexport) int CropForDate(const char *fileDir, const char *outputRootDir, int imageID, float angle,bool augment) {
 	cv::Mat src = cv::imread(fileDir + std::to_string(imageID) + ".jpg");
+	if (augment) {
+		int a = 1, x = 1, y = 1;
+
+		for (int a = 0; a < 10; a++)
+		{
+			int augAngle;
+			augAngle = (360 - angle) + (a - 5);
+			std::string outputfile = outputRootDir + std::to_string(imageID) + std::to_string(a) + ".jpg";
+			CropForDate(src, outputfile, augAngle);
+		}
+	}
+	else{
+		std::string outputfile = outputRootDir + std::to_string(imageID) + ".jpg";
+		CropForDate(src, outputfile, 360 - angle);
+	}
+	return 1;
+}
+
+
+int CropForDate(cv::Mat src, std::string outputFileName, float angle) {
 	cv::Mat rot;
-	rotate(src, (360 - angle), rot);
-	cv::Rect dateROI(257, 226, 124,124);
+	rotate(src, angle, rot);
+	cv::Rect dateROI(307, 250, 64, 64);
+	//cv::Rect dateROI(257, 226, 124, 124);
 	cv::Mat cropped;
 	cropped = rot(dateROI);
 	//cv::Size size(60, 60);
 	//cv::resize(cropped, dst, size, 0, 0, 1);
-	std::string outputfile = outputRootDir + std::to_string(imageID) + ".jpg";
-	cv::imwrite(outputfile, cropped);
+	cv::imwrite(outputFileName, cropped);
 	return 1;
 }
+
+
 
 
 void rotate(cv::Mat& src, double angle, cv::Mat& dst)

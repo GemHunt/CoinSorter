@@ -60,7 +60,7 @@
             this.txtMainImageDirectory.Name = "txtMainImageDirectory";
             this.txtMainImageDirectory.Size = new System.Drawing.Size(562, 20);
             this.txtMainImageDirectory.TabIndex = 1;
-            this.txtMainImageDirectory.Text = "F:\\new7\\crops";
+            this.txtMainImageDirectory.Text = "F:\\NewRot\\Dates";
             // 
             // label1
             // 
@@ -162,6 +162,7 @@
             this.cmdGetMore.Text = "Get More";
             this.cmdGetMore.UseVisualStyleBackColor = true;
             this.cmdGetMore.Click += new System.EventHandler(this.cmdGetMore_Click);
+            this.cmdGetMore.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmdGetMore_KeyPress);
             // 
             // chkOnlyShowWeek
             // 

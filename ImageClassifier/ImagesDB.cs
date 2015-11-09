@@ -14,11 +14,11 @@ namespace ImageClassifier
         [DllImport("E:\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll")]
         private static extern int Augment(String fileDir, String augmentDirectory, int imageID, float angle);
         [DllImport("E:\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll")]
-        private static extern int CropForDate(String fileDir, String dateCropDirectory, int imageID, float angle);
+        private static extern int CropForDate(String fileDir, String dateCropDirectory, int imageID, float angle, bool augment);
 
         static public List<int> GetMislabeledImageIDs()
         {
-             List<int> mislabeledImageIDs = new List<int>();
+            List<int> mislabeledImageIDs = new List<int>();
             StringBuilder SQL = new StringBuilder();
             SQL.AppendLine("Select Images.ImageID");
             SQL.AppendLine("From Images");
@@ -29,17 +29,18 @@ namespace ImageClassifier
             SQL.AppendLine("Order by 1;");
             Open();
             SQLiteDataReader reader = GetNewReader(SQL.ToString());
-            while (reader.Read()){
+            while (reader.Read())
+            {
                 mislabeledImageIDs.Add(reader.GetInt32(0));
             }
             reader.Close();
             Close();
             return mislabeledImageIDs;
         }
-        
+
         static public void AddImage(int imageID, int labelID)
         {
-           
+
             StringBuilder SQL = new StringBuilder();
             SQL.AppendLine("BEGIN;");
             SQL.Append("Insert into Images (ImageID,LabelID) values (");
@@ -54,7 +55,7 @@ namespace ImageClassifier
             StringBuilder SQL = new StringBuilder();
             SQL.AppendLine("BEGIN;");
 
-            foreach (KeyValuePair<int,int> img in images)
+            foreach (KeyValuePair<int, int> img in images)
             {
                 SQL.Append("Insert into Images (ImageID,LabelID) values (");
                 SQL.Append(img.Key + ",");
@@ -74,24 +75,20 @@ namespace ImageClassifier
             SQL.AppendLine("BEGIN;");
             SQL.AppendLine("Update Images");
             SQL.AppendLine("Set angle = " + angle);
-            SQL.AppendLine("Where ImageID = " + imageID +";");
+            SQL.AppendLine("Where ImageID = " + imageID + ";");
             SQL.AppendLine("COMMIT;");
             ExecuteQuery(SQL.ToString());
             Close();
         }
 
-        static public Dictionary<int,float> GetImageAngles()
+        static public Dictionary<int, float> GetImageAngles()
         {
             Dictionary<int, float> imageAngles = new Dictionary<int, float>();
             StringBuilder SQL = new StringBuilder();
-            SQL.AppendLine("Select ImageID");
-            SQL.AppendLine(", Angle");
-            SQL.AppendLine("From Angles7;");
-            
-            //SQL.AppendLine("Select Images.ImageID");
-            //SQL.AppendLine(", angle");
-            //SQL.AppendLine("From Images");
-            //SQL.AppendLine("Where angle is not null;");
+            SQL.AppendLine("Select Images.ImageID");
+            SQL.AppendLine(", angle");
+            SQL.AppendLine("From Images");
+            SQL.AppendLine("Where angle is not null;");
             Open();
             SQLiteDataReader reader = GetNewReader(SQL.ToString());
             while (reader.Read())
@@ -102,17 +99,18 @@ namespace ImageClassifier
             Close();
             return imageAngles;
         }
-        
+
         static public int GetImageIDFromFileName(String fileName)
         {
-            if (fileName.Contains("raw")){
-                 return Convert.ToInt32(fileName.Substring(0, 8)) - 10000000;
+            if (fileName.Contains("raw"))
+            {
+                return Convert.ToInt32(fileName.Substring(0, 8)) - 10000000;
             }
             return Convert.ToInt32(fileName.Substring(fileName.Length - 12, 8)) - 10000000;
         }
 
-        
-        static public void AugmentImages(String directory,int numberOfRotations)
+
+        static public void AugmentImages(String directory, int numberOfRotations)
         {
             String cropDirectory = directory + "/Heads/";
             String augmentDirectory = directory + "/HeadsWithRotation/";
@@ -125,16 +123,16 @@ namespace ImageClassifier
             {
                 if (!Directory.Exists(augmentDirectory + a))
                 {
-                    Directory.CreateDirectory(augmentDirectory + a.ToString().PadLeft(3,'0'));
+                    Directory.CreateDirectory(augmentDirectory + a.ToString().PadLeft(3, '0'));
                 }
             }
 
             Dictionary<int, float> imageAngles = GetImageAngles();
 
-            foreach (KeyValuePair<int,float> imageAngle in imageAngles)
+            foreach (KeyValuePair<int, float> imageAngle in imageAngles)
             {
                 String fileName = cropDirectory + imageAngle.Key + ".jpg";
-                Augment(cropDirectory, augmentDirectory,imageAngle.Key, imageAngle.Value);
+                Augment(cropDirectory, augmentDirectory, imageAngle.Key, imageAngle.Value);
             }
         }
 
@@ -166,10 +164,11 @@ namespace ImageClassifier
         //    }
         //}
 
-        static public void CropForDates(String directory)
+        static public void CropForDates(String directory, bool augment)
         {
             String cropDirectory = directory + "/Heads/";
             String dateCropDirectory = directory + "/Dates/";
+            String dateCropDirectoryAugmented = directory + "/DatesAugmented/";
 
             if (!Directory.Exists(dateCropDirectory))
             {
@@ -177,11 +176,28 @@ namespace ImageClassifier
             }
 
             Dictionary<int, float> imageAngles = GetImageAngles();
-
-            foreach (KeyValuePair<int, float> imageAngle in imageAngles)
+            
+            if (augment)
             {
-                String fileName = cropDirectory + imageAngle.Key + ".jpg";
-                CropForDate(cropDirectory, dateCropDirectory, imageAngle.Key, imageAngle.Value);
+                foreach (string fileName in Directory.GetFiles(dateCropDirectory, "*.*", SearchOption.AllDirectories))
+                {
+                    int imageID;
+                    int.TryParse(fileName.Substring(fileName.Length - 12, 8), out imageID);
+                    if (imageAngles.Keys.Contains(imageID))
+                    {
+                        String newDateCropDirectory = fileName.Substring(0, fileName.Length - 12);
+                        newDateCropDirectory = newDateCropDirectory.Replace("Dates", "DatesAugmented");
+                        CropForDate(cropDirectory, newDateCropDirectory, imageID, imageAngles[imageID], false);
+                    }
+                }
+            }
+            else
+            {
+                foreach (KeyValuePair<int, float> imageAngle in imageAngles)
+                {
+                    String fileName = cropDirectory + imageAngle.Key + ".jpg";
+                    //CropForDate(cropDirectory, dateCropDirectory, imageAngle.Key, imageAngle.Value, augment);
+                }
             }
         }
     }

@@ -263,5 +263,23 @@ namespace ImageClassifier
             }
         }
 
+        private void cmdGetMore_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (groupBoxImages.Controls.Count == 0)
+            {
+                return;
+            }
+
+            int result;
+            if (int.TryParse(e.KeyChar.ToString(), out result))
+            {
+                listBoxClickList.SelectedItem = (1960 + result).ToString();
+                PictureBox pictureBox = (PictureBox)groupBoxImages.Controls[0];
+                HandlePictureBoxClick(pictureBox, false, false);
+            }
+
+        
+        }
+
     }
 }

@@ -19,7 +19,7 @@ namespace ImageClassifier
 
         private void cmdCropDates_Click(object sender, EventArgs e)
         {
-            ImagesDB.CropForDates(txtImageDirectory.Text);
+            ImagesDB.CropForDates(txtImageDirectory.Text, chkAugment.Checked);
         }
     }
 }
