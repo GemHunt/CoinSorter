@@ -62,7 +62,13 @@ namespace ImageClassifier
                 }
                 if (addImagesToDataBase)
                 {
-                 images.Add(imageID, LabelsDB.GetLabelID(image_file));
+                 if (images.Keys.Contains(imageID)){
+                     Console.WriteLine(imageID);
+                 }
+                 else{
+                        images.Add(imageID, LabelsDB.GetDesignID(image_file));
+                 }
+                 
                 }
             }
             ResultsDB.AddResults(results);

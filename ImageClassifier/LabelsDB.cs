@@ -24,10 +24,10 @@ namespace ImageClassifier
             return labels;
         }
 
-        public static String GetLabel(int labelID)
+        public static String GetLabel(int DesignID)
         {
             //cheating: This should be from the database:
-            switch (labelID)
+            switch (DesignID)
             {
                 case 0:
                     return ("canadaOther");
@@ -43,7 +43,7 @@ namespace ImageClassifier
                     return ("unknown");
             }
         }
-        public static int GetLabelID(String dir)
+        public static int GetDesignID(String dir)
         {
             //cheating: This should be from the database:
             if (dir.Contains("canadaOther")) { return 0; }

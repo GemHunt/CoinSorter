@@ -8,7 +8,7 @@ Check out the [starting point issues](https://github.com/GemHunt/CoinSorter/labe
 
 The first version of this system used a C# project to capture images from a Canon Rebel camera and called MATLAB to preprocess them. A VB project was used to call DIGITS to classify the images and call a HP Power supply to drive a solenoid. These two projects have now been replaced. 
 
-The second verion is almost running. It uses C#, OpenCV, a webcam, Arduino solinoid control, and local classification with Caffe on Windows 10. 
+The second verion is almost running. It uses C#, OpenCV, a webcam, Arduino solenoid control, and local classification with Caffe on Windows 10. 
 
 This group of programs and scripts is just a quick proof of concept to show physical coin sorting. It "was" sorting about 2 pennies a second, continuously. One solenoid and 2 physical bins are currently set up. Using Caffe it’s easy to distinguish between designs of coins. For example you can train a convolutional neural network (CNN, what Caffe uses) to determine if a coin image is heads vs tails or say recognize the state on a random US state quarter image. Using the "copper" image set out on [GemHunt.com](http://www.gemHunt.com) Caffe can tell heads vs tails between US copper pennies 99.9% of the time. This can be done using using [DIGITS](https://github.com/NVIDIA/DIGITS) with default setting of AlexNet with no programming involved!  
 

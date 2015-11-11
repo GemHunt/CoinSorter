@@ -9,15 +9,15 @@ namespace ImageClassifier
 {
     class ResultsDB:SQLiteDB
     {
-        static public void AddResult(int modelID, int imageID, int labelID, double score)
+        static public void AddResult(int modelID, int imageID, int DesignID, double score)
         {
             StringBuilder SQL = new StringBuilder();
 
             SQL.AppendLine("BEGIN;");
-            SQL.Append("Insert into Results (ModelID,ImageID,LabelID,Score) values (");
+            SQL.Append("Insert into Results (ModelID,ImageID,DesignID,Score) values (");
             SQL.Append(modelID + ",");
             SQL.Append(imageID + ",");
-            SQL.Append(labelID + ",");
+            SQL.Append(DesignID + ",");
             SQL.AppendLine(score + ");");
             SQL.AppendLine("COMMIT;");
             ExecuteQuery(SQL.ToString());
@@ -29,10 +29,10 @@ namespace ImageClassifier
             SQL.AppendLine("BEGIN;");
             
             foreach (Result result in results){
-                SQL.Append("Insert into Results (ModelID,ImageID,LabelID,Score) values (");
+                SQL.Append("Insert into Results (ModelID,ImageID,DesignID,Score) values (");
                 SQL.Append(result.ModelID + ",");
                 SQL.Append(result.ImageID + ",");
-                SQL.Append(result.LabelID + ",");
+                SQL.Append(result.DesignID + ",");
                 SQL.AppendLine(result.Score + ");");
             }
             SQL.AppendLine("COMMIT;");

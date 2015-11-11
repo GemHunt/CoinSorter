@@ -25,7 +25,7 @@ namespace ImageClassifier
             SQL.AppendLine("Inner Join Results");
             SQL.AppendLine("On Images.ImageID = Results.ImageID");
             SQL.AppendLine("And Results.Score < .999");
-            SQL.AppendLine("And Images.LabelID = Results.LabelID");
+            SQL.AppendLine("And Images.DesignID = Results.DesignID");
             SQL.AppendLine("Order by 1;");
             Open();
             SQLiteDataReader reader = GetNewReader(SQL.ToString());
@@ -38,14 +38,14 @@ namespace ImageClassifier
             return mislabeledImageIDs;
         }
 
-        static public void AddImage(int imageID, int labelID)
+        static public void AddImage(int imageID, int DesignID)
         {
 
             StringBuilder SQL = new StringBuilder();
             SQL.AppendLine("BEGIN;");
-            SQL.Append("Insert into Images (ImageID,LabelID) values (");
+            SQL.Append("Insert into Images (ImageID,DesignID) values (");
             SQL.Append(imageID + ",");
-            SQL.AppendLine(labelID + ");");
+            SQL.AppendLine(DesignID + ");");
             SQL.AppendLine("COMMIT;");
             ExecuteQuery(SQL.ToString());
         }
@@ -57,7 +57,7 @@ namespace ImageClassifier
 
             foreach (KeyValuePair<int, int> img in images)
             {
-                SQL.Append("Insert into Images (ImageID,LabelID) values (");
+                SQL.Append("Insert into Images (ImageID,DesignID) values (");
                 SQL.Append(img.Key + ",");
                 SQL.AppendLine(img.Value + ");");
             }
