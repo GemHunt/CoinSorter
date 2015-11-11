@@ -19,7 +19,12 @@ This group of programs and scripts is just a quick proof of concept to show phys
 
 For a long term project direction [check out the issues for future milestones.](https://github.com/GemHunt/CoinSorter/milestones/Future%20Milestones) 
 
+Feel free to contact me if you have questions about this project. 
+
 Thanks!  
+
 Paul Krush
+
 pkrush@Gemhunt.com
-630-830-6640
+
+1-630-830-6640
