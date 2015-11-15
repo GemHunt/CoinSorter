@@ -1,3 +1,5 @@
+//This is for testing out new webcams and lighting setups. 
+
 #include <caffe/caffe.hpp>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>

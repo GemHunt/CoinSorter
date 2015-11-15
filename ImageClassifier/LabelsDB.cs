@@ -57,11 +57,7 @@ namespace ImageClassifier
                 int year = 0;
                 int.TryParse(dir.Substring(17,4),out year);
                 return year;
-
             }
-
-
-
             return -1;
         }
     }

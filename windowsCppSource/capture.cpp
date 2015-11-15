@@ -17,15 +17,17 @@ using std::cout;
 using std::endl;
 ///for web cam
 
-extern "C" __declspec(dllexport) int captureFromWebCam(int imageID, bool showImages, bool classify, const char *modelDir);
+extern "C" __declspec(dllexport) double* captureFromWebCam(int imageID, bool showImages, bool classify, char *modelDir);
 void deskew(cv::Mat& src, cv::Mat& dst);
 Point CoinCenter(Mat input, bool showImages);
 Mat CropToCenter(Mat input, Point coinCenter);
-double* ClassifyImage(const char *modelDir, cv::Mat img);
+double* ClassifyImage(char *modelDir, cv::Mat img);
 
-int captureFromWebCam(int imageID, bool showImages, bool classify, const char *modelDir)
+double* captureFromWebCam(int imageID, bool showImages, bool classify, char *modelDir)
 {
+
 	//cout << "01" << endl;
+	double* result;
 	static bool setup = false;
 	double dWidth, dHeight;
 	static VideoCapture cap;
@@ -37,7 +39,7 @@ int captureFromWebCam(int imageID, bool showImages, bool classify, const char *m
 		if (!cap.isOpened())  // if not success, exit program
 		{
 			cout << "Cannot open the video cam" << endl;
-			return -1;
+			return result;
 		}
 
 		dWidth = cap.get(CV_CAP_PROP_FRAME_WIDTH); //get the width of frames of the video
@@ -93,16 +95,16 @@ int captureFromWebCam(int imageID, bool showImages, bool classify, const char *m
 		{
 			cout << "esc key is pressed by user" << endl;
 			destroyWindow("MyVideo");
-			return -1;
+			return result;
 		}
 	}
 
-	double* result;
+	
 	if (classify) {
 		result = ClassifyImage(modelDir, crop);
-		return (int)result[0];
+		return result;
 	}
 
-	return -1;
+	return result;
 }
 

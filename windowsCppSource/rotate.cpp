@@ -17,7 +17,8 @@ using std::endl;
 
 void rotate(cv::Mat& src, double angle, cv::Mat& dst);
 void cropCircle(cv::Mat& src, int sqSize, cv::Mat& dst);
-int CropForDate(cv::Mat src, std::string outputFileName, float angle);
+void CropForDate(cv::Mat src, std::string outputFileName, float angle);
+void CropForDate(cv::Mat src, cv::Mat dst, float angle);
 
 
 //extern "C" __declspec(dllexport) int Augment(const char *image_file, const char *output_file,int angle) {
@@ -69,20 +70,21 @@ extern "C" __declspec(dllexport) int CropForDate(const char *fileDir, const char
 }
 
 
-int CropForDate(cv::Mat src, std::string outputFileName, float angle) {
-	cv::Mat rot;
-	rotate(src, angle, rot);
+void CropForDate(cv::Mat src, std::string outputFileName, float angle) {
+	cv::Mat cropped;
+	CropForDate(src, cropped, angle);
+	cv::imwrite(outputFileName, cropped);
+}
+
+void CropForDate(cv::Mat src, cv::Mat dst, float angle) {
+	rotate(src, angle, dst);
 	cv::Rect dateROI(307, 250, 64, 64);
 	//cv::Rect dateROI(257, 226, 124, 124);
 	cv::Mat cropped;
-	cropped = rot(dateROI);
-	//cv::Size size(60, 60);
-	//cv::resize(cropped, dst, size, 0, 0, 1);
-	cv::imwrite(outputFileName, cropped);
-	return 1;
+	dst = dst(dateROI);
+	cv::Size size(32, 32);
+	cv::resize(dst, dst, size, 0, 0, 1);
 }
-
-
 
 
 void rotate(cv::Mat& src, double angle, cv::Mat& dst)
@@ -101,7 +103,7 @@ void cropCircle(cv::Mat& src, int sqSize, cv::Mat& dst)
 	counter += 1;
 
 	if (counter == 1) {
-		mask = cv::imread("F:/CircleMask406.png");
+		mask = cv::imread("C:/Users/pkrush/Documents/GemHunt/CoinSorter/models/centered/circleMask406.png");
 	}
 	//imwrite("F:/src.png", src);
 	dst = src & mask;

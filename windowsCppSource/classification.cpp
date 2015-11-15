@@ -20,9 +20,10 @@ typedef std::pair<string, float> Prediction;
 
 extern "C" __declspec(dllexport) double* ClassifyImage(const char *modelDir, const char *image_file);
 
-double* ClassifyImage(const char *modelDir, cv::Mat img);
+double* ClassifyImage(char *modelDir, cv::Mat img);
 void cropCircle(cv::Mat& src, int sqSize, cv::Mat& dst);
 int GetLabelID(std::string label);
+void CropForDate(cv::Mat src, cv::Mat dst, float angle);
 
 extern "C" __declspec(dllexport) int ReleaseMemory(double* pArray)
 {
@@ -237,43 +238,72 @@ void Classifier::Preprocess(const cv::Mat& img,
 }
 
 
-double* ClassifyImage(const char *modelDir, const char *image_file) {
+double* ClassifyImage(char *modelDir, const char *image_file) {
 	cv::Mat img = cv::imread(image_file);
 	CHECK(!img.empty()) << "Unable to decode image " << image_file;
 	return ClassifyImage(modelDir, img);
 }
 
 
-double* ClassifyImage(const char *modelDir, cv::Mat img) {
-	//::google::InitGoogleLogging("classification-d.dll");
-
-	static cv::Mat mask;
+double* ClassifyImage(char *modelDir, cv::Mat img) {
+	//this function should be returning a structure! 
+	double* result = new double[8];
+	static cv::Mat center32;
+	static cv::Mat design60;
+	static cv::Mat date32;
 	static int counter;
 	counter += 1;
-	static Classifier classifier;
+	static Classifier centerClassifier;
+	static Classifier designClassifier;
+	static Classifier angleClassifier;
+	static Classifier dateClassifier;
 
 	if (counter == 1) {
-		classifier.Setup(modelDir);
-		mask = cv::imread("F:/CircleMask406.png");
+		centerClassifier.Setup(strcat(modelDir, "/centered"));
+		designClassifier.Setup(strcat(modelDir, "/designs"));
+		angleClassifier.Setup(strcat(modelDir, "/angles"));
+		dateClassifier.Setup(strcat(modelDir, "/dates"));
 	}
 
+	std::vector<Prediction> predictions;
+	Prediction p;
+	cv::Size size;
+	
+	size = cv::Size(32, 32);
+	cv::resize(img, center32, size, 0, 0, 1);
+	predictions = designClassifier.Classify(center32);
+	p = predictions[0];
+	result[0] = GetLabelID(p.first);
+	result[1] = p.second;
+	
 	if (img.rows == 406){
-		cropCircle(img, 60, img);
+		cropCircle(img, 60, design60);
 	}
+	predictions = designClassifier.Classify(design60);
+	p = predictions[0];
+	result[2] = GetLabelID(p.first);
+	result[3] = p.second;
 	
+	predictions = angleClassifier.Classify(design60);
+	p = predictions[0];
+	result[4] = GetLabelID(p.first);
+	result[5] = p.second;
 	
-	std::vector<Prediction> predictions = classifier.Classify(img);
+	CropForDate(img, center32, 360 - result[4]);
+	predictions = designClassifier.Classify(center32);
+	p = predictions[0];
+	result[6] = GetLabelID(p.first);
+	result[7] = p.second;
 
-	double * result = new double[predictions.size() * 2];
-	cout << "Number of Predictions" << predictions.size() << endl;
+	//cout << "Number of Predictions" << predictions.size() << endl;
+	//for (size_t i = 0; i < predictions.size(); ++i) {
+	//	Prediction p = predictions[i];
+	//	cout << p.first << endl;
+	//	result[i] = GetLabelID(p.first);
+	//	result[i + predictions.size()] = p.second;
+	//}
 
-	for (size_t i = 0; i < predictions.size(); ++i) {
-		Prediction p = predictions[i];
-		cout << p.first << endl;
-		result[i] = GetLabelID(p.first);
-		result[i + predictions.size()] = p.second;
-	}
-
+	
 	///* Print the top N predictions. */
 	//double * result = new double[3];
 	////cout << "11" << endl;
