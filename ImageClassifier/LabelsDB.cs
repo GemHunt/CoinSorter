@@ -52,6 +52,16 @@ namespace ImageClassifier
             if (dir.Contains("tails")) { return 3; }
             if (dir.Contains("wheat")) { return 4; }
             if (dir.Contains("bad")) { return 4; }
+            if (dir.Contains("Dates4\\19"))
+            {
+                int year = 0;
+                int.TryParse(dir.Substring(17,4),out year);
+                return year;
+
+            }
+
+
+
             return -1;
         }
     }

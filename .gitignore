@@ -1,11 +1,8 @@
-## I am not sure if I can publish these or not:
-/CanonSDKTutorial-noexe/EDSDKLib/DPPDLL.dll
-/CanonSDKTutorial-noexe/EDSDKLib/DPPLibCom.dll
-/CanonSDKTutorial-noexe/EDSDKLib/DPPRSC.dll
-/CanonSDKTutorial-noexe/EDSDKLib/EdsImage.dll
-/CanonSDKTutorial-noexe/EDSDKLib/Mlib.dll
-/CanonSDKTutorial-noexe/EDSDKLib/EDSDK.dll
-/CanonSDKTutorial-noexe/EDSDKLib/Ucs32P.dll
+## Don't save large model files:
+*.gz
+*.tar
+*.zip
+*.caffemodel
 
 
 ## Ignore Visual Studio temporary files, build results, and
