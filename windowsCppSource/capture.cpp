@@ -17,13 +17,15 @@ using std::cout;
 using std::endl;
 ///for web cam
 
-extern "C" __declspec(dllexport) double* ClassifyFromWebCam(int imageID, bool showImages, bool classify, const char *modelDir);
+extern "C" __declspec(dllexport) double* ClassifyFromWebCam(int imageID, bool showImages, bool classify, bool deskewImage, bool autorotate, const char *modelDir);
 void deskew(cv::Mat& src, cv::Mat& dst);
 Point CoinCenter(Mat input, bool showImages);
 Mat CropToCenter(Mat input, Point coinCenter);
 double* ClassifyImage(char *modelDir, cv::Mat img);
+void rotate(cv::Mat& src, double angle, cv::Mat& dst);
 
-double* ClassifyFromWebCam(int imageID, bool showImages, bool classify, const char *modelDir)
+
+double* ClassifyFromWebCam(int imageID, bool showImages, bool classify, bool deskewImage, bool autorotate, const char *modelDir)
 {
 
 	//cout << "01" << endl;
@@ -70,10 +72,11 @@ double* ClassifyFromWebCam(int imageID, bool showImages, bool classify, const ch
 		cout << "Cannot read a frame from video stream" << endl;
 		return 0;
 	}
-	cout << "03" << endl;
-	//cv::Mat deskewedFrame = Mat::zeros(frame.rows, frame.cols, frame.type());
-	//cout << "04" << endl;
-	//deskew(frame, frame);
+	//cout << "03" << endl;
+	if (deskewImage) {
+		deskew(frame, frame);
+	}
+
 	//cout << "05" << endl;
 
 	imwrite("F:/OpenCV/Raw/" + std::to_string(imageID) + "raw.jpg", frame);
@@ -88,6 +91,15 @@ double* ClassifyFromWebCam(int imageID, bool showImages, bool classify, const ch
 	cv::Mat crop = CropToCenter(frame, coinCenter);
 	imwrite("F:/OpenCV/" + std::to_string(imageID) + ".jpg", crop);
 	
+	if (classify) {
+		char* dir = (char*)modelDir;
+		result = ClassifyImage(dir, crop);
+	}
+
+	if (autorotate && (int)result[2] == 1){
+		rotate(crop, 360-result[4], crop);
+	}
+
 	if (showImages){
 		imshow("MyVideo", crop);
 
@@ -99,12 +111,8 @@ double* ClassifyFromWebCam(int imageID, bool showImages, bool classify, const ch
 		}
 	}
 
-	
-	if (classify) {
-		char* dir = (char*)modelDir;
-		result = ClassifyImage(dir, crop);
-		return result;
-	}
+
+
 	return result;
 }
 

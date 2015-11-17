@@ -58,6 +58,8 @@
             this.lblDate = new System.Windows.Forms.Label();
             this.lblDesign = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.chkDeskew = new System.Windows.Forms.CheckBox();
+            this.chkAutoRotate = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSensorDelay)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarToggleDelay)).BeginInit();
@@ -184,6 +186,7 @@
             // 
             this.groupBox4.Controls.Add(this.chkFakeCamera);
             this.groupBox4.Controls.Add(this.textBox1);
+            this.groupBox4.Enabled = false;
             this.groupBox4.Location = new System.Drawing.Point(6, 143);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(238, 67);
@@ -363,11 +366,35 @@
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Capture Output";
             // 
+            // chkDeskew
+            // 
+            this.chkDeskew.AutoSize = true;
+            this.chkDeskew.Checked = true;
+            this.chkDeskew.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkDeskew.Location = new System.Drawing.Point(542, 320);
+            this.chkDeskew.Name = "chkDeskew";
+            this.chkDeskew.Size = new System.Drawing.Size(65, 17);
+            this.chkDeskew.TabIndex = 19;
+            this.chkDeskew.Text = "Deskew";
+            this.chkDeskew.UseVisualStyleBackColor = true;
+            // 
+            // chkAutoRotate
+            // 
+            this.chkAutoRotate.AutoSize = true;
+            this.chkAutoRotate.Location = new System.Drawing.Point(542, 346);
+            this.chkAutoRotate.Name = "chkAutoRotate";
+            this.chkAutoRotate.Size = new System.Drawing.Size(83, 17);
+            this.chkAutoRotate.TabIndex = 20;
+            this.chkAutoRotate.Text = "Auto Rotate";
+            this.chkAutoRotate.UseVisualStyleBackColor = true;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(999, 393);
+            this.Controls.Add(this.chkAutoRotate);
+            this.Controls.Add(this.chkDeskew);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBoxLiveCapture);
@@ -428,6 +455,8 @@
         private System.Windows.Forms.Label lblDate;
         private System.Windows.Forms.Label lblDesign;
         private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.CheckBox chkDeskew;
+        private System.Windows.Forms.CheckBox chkAutoRotate;
     }
 }
 

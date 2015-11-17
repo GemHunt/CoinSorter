@@ -25,6 +25,7 @@ void cropCircle(cv::Mat& src, int sqSize, cv::Mat& dst);
 int GetLabelID(std::string label);
 void CropForDate(cv::Mat src, cv::Mat& dst, float angle);
 
+
 extern "C" __declspec(dllexport) int ReleaseMemory(double* pArray)
 {
 	delete[] pArray;
@@ -237,14 +238,12 @@ void Classifier::Preprocess(const cv::Mat& img,
 		<< "Input channels are not wrapping the input layer of the network.";
 }
 
-
 double* ClassifyImage(const char *modelDir, const char *image_file) {
 	cv::Mat img = cv::imread(image_file);
 	CHECK(!img.empty()) << "Unable to decode image " << image_file;
 	char* dir = (char*)modelDir;
 	return ClassifyImage(dir, img);
 }
-
 
 double* ClassifyImage(char *modelDir, cv::Mat img) {
 	//this function should be returning a structure! 

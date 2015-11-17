@@ -150,7 +150,7 @@ namespace ImageClassifier
             {
                 int date = 0;
                 String design = "null";
-                Camera.ClassifyFromWebCam(IRSensorCount + 10000000, true, true,ref date,ref design);
+                Camera.ClassifyFromWebCam(IRSensorCount + 10000000, true, true,chkDeskew.Checked,chkAutoRotate.Checked, ref date,ref design);
                 lblDate.Text = date.ToString();
                 lblDesign.Text = design;
                 //if (date > 1979){
