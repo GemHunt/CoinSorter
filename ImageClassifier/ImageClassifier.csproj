@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CaffeModel.cs" />
+    <Compile Include="Capture.cs" />
     <Compile Include="frmCropDates.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +101,7 @@
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImageResult.cs" />
     <Compile Include="ImagesDB.cs" />
     <Compile Include="LabelsDB.cs" />
     <Compile Include="Program.cs" />

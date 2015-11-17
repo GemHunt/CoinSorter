@@ -23,7 +23,7 @@ extern "C" __declspec(dllexport) double* ClassifyImage(const char *modelDir, con
 double* ClassifyImage(char *modelDir, cv::Mat img);
 void cropCircle(cv::Mat& src, int sqSize, cv::Mat& dst);
 int GetLabelID(std::string label);
-void CropForDate(cv::Mat src, cv::Mat dst, float angle);
+void CropForDate(cv::Mat src, cv::Mat& dst, float angle);
 
 extern "C" __declspec(dllexport) int ReleaseMemory(double* pArray)
 {
@@ -238,10 +238,11 @@ void Classifier::Preprocess(const cv::Mat& img,
 }
 
 
-double* ClassifyImage(char *modelDir, const char *image_file) {
+double* ClassifyImage(const char *modelDir, const char *image_file) {
 	cv::Mat img = cv::imread(image_file);
 	CHECK(!img.empty()) << "Unable to decode image " << image_file;
-	return ClassifyImage(modelDir, img);
+	char* dir = (char*)modelDir;
+	return ClassifyImage(dir, img);
 }
 
 
@@ -257,12 +258,13 @@ double* ClassifyImage(char *modelDir, cv::Mat img) {
 	static Classifier designClassifier;
 	static Classifier angleClassifier;
 	static Classifier dateClassifier;
-
+	std::string modelDirClone = string(modelDir);
+	
 	if (counter == 1) {
-		centerClassifier.Setup(strcat(modelDir, "/centered"));
-		designClassifier.Setup(strcat(modelDir, "/designs"));
-		angleClassifier.Setup(strcat(modelDir, "/angles"));
-		dateClassifier.Setup(strcat(modelDir, "/dates"));
+		centerClassifier.Setup(modelDirClone + "/centered");
+		designClassifier.Setup(modelDirClone + "/designs");
+		angleClassifier.Setup(modelDirClone + "/angles");
+		dateClassifier.Setup(modelDirClone + "/dates");
 	}
 
 	std::vector<Prediction> predictions;
@@ -275,6 +277,10 @@ double* ClassifyImage(char *modelDir, cv::Mat img) {
 	p = predictions[0];
 	result[0] = GetLabelID(p.first);
 	result[1] = p.second;
+	if ((int)result[0] == 0) {
+		//if it's not centered return:
+		return result;
+	}
 	
 	if (img.rows == 406){
 		cropCircle(img, 60, design60);
@@ -283,14 +289,18 @@ double* ClassifyImage(char *modelDir, cv::Mat img) {
 	p = predictions[0];
 	result[2] = GetLabelID(p.first);
 	result[3] = p.second;
+	if ((int)result[2] != 1) {
+		//if it's not heads return:
+		return result;
+	}
 	
 	predictions = angleClassifier.Classify(design60);
 	p = predictions[0];
 	result[4] = GetLabelID(p.first);
 	result[5] = p.second;
 	
-	CropForDate(img, center32, 360 - result[4]);
-	predictions = designClassifier.Classify(center32);
+	CropForDate(img, date32, 360 - result[4]);
+	predictions = dateClassifier.Classify(date32);
 	p = predictions[0];
 	result[6] = GetLabelID(p.first);
 	result[7] = p.second;

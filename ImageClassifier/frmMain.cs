@@ -16,9 +16,6 @@ namespace ImageClassifier
     public partial class frmMain : Form
     {
         [DllImport("E:\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int captureFromWebCam(int imageID, bool show, bool classify, String modelDir);
-
-        [DllImport("E:\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int FindCoinCenter(int imageID, bool show);
 
         SerialPortManager _spManager;
@@ -79,6 +76,13 @@ namespace ImageClassifier
         // Handles the "Start Listening"-buttom click event
         private void cmdOpenSerialPort_Click(object sender, EventArgs e)
         {
+            int date;
+            bool goodDate = int.TryParse(txtTargetDate.Text, out date);            
+            if (!goodDate) {
+                MessageBox.Show("Bad Date");
+                return;
+            }
+            
             if (AutomaticCaptureOn) {
                 cmdOpenSerialPort.BackColor = SystemColors.ButtonFace;
                 cmdOpenSerialPort.Text = "Start Automatic Capture From IR Sensor";
@@ -98,10 +102,10 @@ namespace ImageClassifier
             timerIRSensorDelay.Enabled = false;
             System.Diagnostics.Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
-            int result = captureFromWebCam();
+            bool result = captureFromWebCam();
             stopWatch.Stop();
             Debug.WriteLine("cc took" + stopWatch.ElapsedMilliseconds);
-            if ((result == 1) || (result == 3) )
+            if (result)
             {
                 Timer timerToggleDelay = new Timer();
                 int totalDelay = trackBarToggleDelay.Value - (int)stopWatch.ElapsedMilliseconds;
@@ -138,9 +142,22 @@ namespace ImageClassifier
             captureFromWebCam();
         }
 
-        private int captureFromWebCam()
+        private bool captureFromWebCam()
         {
-            return captureFromWebCam(IRSensorCount + 10000000, true, true,"F:/models/20151102-164707-4dfa_epoch_3.0");
+            int targetDate;
+            bool goodDate = int.TryParse(txtTargetDate.Text, out targetDate);
+            if (goodDate)
+            {
+                int date = 0;
+                String design = "null";
+                Camera.ClassifyFromWebCam(IRSensorCount + 10000000, true, true,ref date,ref design);
+                lblDate.Text = date.ToString();
+                lblDesign.Text = design;
+                //if (date > 1979){
+                    return true;
+                //}
+            }
+            return false;
         }
 
         private void cmdTestFindCoinCenter_Click(object sender, EventArgs e)
@@ -195,5 +212,6 @@ namespace ImageClassifier
             frm.Show();
         }
 
+       
     }
 }

@@ -154,7 +154,6 @@ make pycaffe
 make test
 make runtest
 
-
 echo -e "\nexport CAFFE_HOME=/home/ubuntu/caffe" >> ~/.bashrc
 # load the new environmental variables
 bash
@@ -167,17 +166,17 @@ sudo apt-get install graphviz gunicorn
 
 for req in $(cat requirements.txt); do sudo pip install $req; done
 
-###I added this line because the pycaffe module was not being found in Digits:
-###OK, I took this out and added:  make pycaffe
-###echo 'export PYTHONPATH=/home/ubuntu/caffe/python' >> ~/.bashrc 
-###bash 
+####I added this line because the pycaffe module was not being found in Digits:
+####OK, I took this out and added:  make pycaffe above
+####echo 'export PYTHONPATH=/home/ubuntu/caffe/python' >> ~/.bashrc 
+####bash 
 
 cd ~
 
 # You might want to consider locating your job-directory ( jobs_dir) on an EBS 
 # See https://github.com/NVIDIA/DIGITS/blob/master/docs/GettingStarted.md for details. 
 # I set the the jobs_dir at /data/digits/jobs by using the --config option:
-#./digits-devserver --config
+#./digits/digits-devserver --config
 
 # start the server
 ./digits/digits-devserver

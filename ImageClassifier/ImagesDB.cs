@@ -68,6 +68,37 @@ namespace ImageClassifier
             Close();
         }
 
+        static public void AddImages(List<ImageResult> imageResults)
+        {
+            StringBuilder SQL = new StringBuilder();
+            SQL.AppendLine("BEGIN;");
+
+            foreach (ImageResult imageResult in imageResults)
+            {
+                SQL.Append(GetInsertSQL(imageResult));
+            }
+            SQL.AppendLine("COMMIT;");
+            Open();
+            ExecuteQuery(SQL.ToString());
+            Close();
+        }
+
+        static public String GetInsertSQL(ImageResult imageResult)
+        {
+            StringBuilder SQL = new StringBuilder();
+            SQL.AppendLine("Insert into Images (ImageID,Centered,CenterResult,DesignID,DesignResult,Angle,AngleResult,Date,DateResult) values (");
+            SQL.Append(imageResult.ImageID + ",");
+            SQL.Append(imageResult.Centered + ",");
+            SQL.Append(imageResult.CenterResult + ",");
+            SQL.Append(imageResult.DesignID + ",");
+            SQL.Append(imageResult.DesignResult + ",");
+            SQL.Append(imageResult.Angle + ",");
+            SQL.Append(imageResult.AngleResult + ",");
+            SQL.Append(imageResult.Date + ",");
+            SQL.AppendLine(imageResult.DateResult + ");");
+            return SQL.ToString();
+        }
+
         static public void UpdateAngle(int imageID, float angle)
         {
             Open();
@@ -176,7 +207,7 @@ namespace ImageClassifier
             }
 
             Dictionary<int, float> imageAngles = GetImageAngles();
-            
+
             if (augment)
             {
                 foreach (string fileName in Directory.GetFiles(dateCropDirectory, "*.*", SearchOption.AllDirectories))

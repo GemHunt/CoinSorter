@@ -17,17 +17,17 @@ using std::cout;
 using std::endl;
 ///for web cam
 
-extern "C" __declspec(dllexport) double* captureFromWebCam(int imageID, bool showImages, bool classify, char *modelDir);
+extern "C" __declspec(dllexport) double* ClassifyFromWebCam(int imageID, bool showImages, bool classify, const char *modelDir);
 void deskew(cv::Mat& src, cv::Mat& dst);
 Point CoinCenter(Mat input, bool showImages);
 Mat CropToCenter(Mat input, Point coinCenter);
 double* ClassifyImage(char *modelDir, cv::Mat img);
 
-double* captureFromWebCam(int imageID, bool showImages, bool classify, char *modelDir)
+double* ClassifyFromWebCam(int imageID, bool showImages, bool classify, const char *modelDir)
 {
 
 	//cout << "01" << endl;
-	double* result;
+	double* result = new double[8];
 	static bool setup = false;
 	double dWidth, dHeight;
 	static VideoCapture cap;
@@ -71,13 +71,13 @@ double* captureFromWebCam(int imageID, bool showImages, bool classify, char *mod
 		return 0;
 	}
 	cout << "03" << endl;
-	cv::Mat deskewedFrame = Mat::zeros(frame.rows, frame.cols, frame.type());
+	//cv::Mat deskewedFrame = Mat::zeros(frame.rows, frame.cols, frame.type());
 	//cout << "04" << endl;
-	deskew(frame, deskewedFrame);
+	//deskew(frame, frame);
 	//cout << "05" << endl;
 
-	imwrite("F:/OpenCV/Raw/" + std::to_string(imageID) + "raw.jpg", deskewedFrame);
-	Point coinCenter = CoinCenter(deskewedFrame, showImages);
+	imwrite("F:/OpenCV/Raw/" + std::to_string(imageID) + "raw.jpg", frame);
+	Point coinCenter = CoinCenter(frame, showImages);
 	//cout << "06" << endl;
 	
 	if (coinCenter.x == 0) {
@@ -85,7 +85,7 @@ double* captureFromWebCam(int imageID, bool showImages, bool classify, char *mod
 		return 0;
 	}
 	
-	cv::Mat crop = CropToCenter(deskewedFrame, coinCenter);
+	cv::Mat crop = CropToCenter(frame, coinCenter);
 	imwrite("F:/OpenCV/" + std::to_string(imageID) + ".jpg", crop);
 	
 	if (showImages){
@@ -101,10 +101,10 @@ double* captureFromWebCam(int imageID, bool showImages, bool classify, char *mod
 
 	
 	if (classify) {
-		result = ClassifyImage(modelDir, crop);
+		char* dir = (char*)modelDir;
+		result = ClassifyImage(dir, crop);
 		return result;
 	}
-
 	return result;
 }
 

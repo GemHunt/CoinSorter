@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtModelDir = new System.Windows.Forms.TextBox();
+            this.txtModelsDir = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cmdClassify = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -41,14 +41,14 @@
             this.chkMoveImages = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
-            // txtModelDir
+            // txtModelsDir
             // 
-            this.txtModelDir.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtModelDir.Location = new System.Drawing.Point(184, 118);
-            this.txtModelDir.Name = "txtModelDir";
-            this.txtModelDir.Size = new System.Drawing.Size(516, 26);
-            this.txtModelDir.TabIndex = 0;
-            this.txtModelDir.Text = "F:/Models/F:/Models/20151104-162316-0a98_epoch_10.0";
+            this.txtModelsDir.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtModelsDir.Location = new System.Drawing.Point(184, 118);
+            this.txtModelsDir.Name = "txtModelsDir";
+            this.txtModelsDir.Size = new System.Drawing.Size(516, 26);
+            this.txtModelsDir.TabIndex = 0;
+            this.txtModelsDir.Text = "C:/Users/pkrush/Documents/GemHunt/CoinSorter/models";
             // 
             // label1
             // 
@@ -56,9 +56,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(13, 121);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(123, 20);
+            this.label1.Size = new System.Drawing.Size(131, 20);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Model Directory:";
+            this.label1.Text = "Models Directory:";
             // 
             // cmdClassify
             // 
@@ -88,7 +88,7 @@
             this.txtOldImageDirectory.Name = "txtOldImageDirectory";
             this.txtOldImageDirectory.Size = new System.Drawing.Size(516, 26);
             this.txtOldImageDirectory.TabIndex = 3;
-            this.txtOldImageDirectory.Text = "F:/New8/Crops/heads";
+            this.txtOldImageDirectory.Text = "F:/";
             // 
             // chkClassify
             // 
@@ -142,7 +142,7 @@
             this.txtNewImageDirectory.Name = "txtNewImageDirectory";
             this.txtNewImageDirectory.Size = new System.Drawing.Size(516, 26);
             this.txtNewImageDirectory.TabIndex = 8;
-            this.txtNewImageDirectory.Text = "F:/New7/Crops";
+            this.txtNewImageDirectory.Text = "F:/";
             // 
             // chkMoveImages
             // 
@@ -170,7 +170,7 @@
             this.Controls.Add(this.txtOldImageDirectory);
             this.Controls.Add(this.cmdClassify);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.txtModelDir);
+            this.Controls.Add(this.txtModelsDir);
             this.Name = "frmClassifyImages";
             this.Text = "Classify Images";
             this.ResumeLayout(false);
@@ -180,7 +180,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox txtModelDir;
+        private System.Windows.Forms.TextBox txtModelsDir;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button cmdClassify;
         private System.Windows.Forms.Label label2;

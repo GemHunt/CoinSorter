@@ -13,11 +13,11 @@ namespace ImageClassifier
         public int DesignID;
         public double Score;
 
-        public Result(int modelID, int imageID, int DesignID, double score)
+        public Result(int modelID, int imageID, int designID, double score)
         {
             ModelID = modelID;
             ImageID = imageID;
-            DesignID = DesignID;
+            DesignID = designID;
             Score = score;
         }
     }

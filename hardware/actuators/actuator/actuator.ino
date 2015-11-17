@@ -9,7 +9,6 @@ int sensorPin = A0;    // select the input pin for the potentiometer
 int sensorValue = 0;  // variable to store the value coming from the sensor
 int offCount = 0;
 
-
 void setup() {
   Serial.begin(250000);           
   motor1.setSpeed(255);     // set the speed to 200/255

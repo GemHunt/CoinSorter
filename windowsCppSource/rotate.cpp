@@ -18,7 +18,7 @@ using std::endl;
 void rotate(cv::Mat& src, double angle, cv::Mat& dst);
 void cropCircle(cv::Mat& src, int sqSize, cv::Mat& dst);
 void CropForDate(cv::Mat src, std::string outputFileName, float angle);
-void CropForDate(cv::Mat src, cv::Mat dst, float angle);
+void CropForDate(cv::Mat src, cv::Mat& dst, float angle);
 
 
 //extern "C" __declspec(dllexport) int Augment(const char *image_file, const char *output_file,int angle) {
@@ -76,14 +76,13 @@ void CropForDate(cv::Mat src, std::string outputFileName, float angle) {
 	cv::imwrite(outputFileName, cropped);
 }
 
-void CropForDate(cv::Mat src, cv::Mat dst, float angle) {
+void CropForDate(cv::Mat src, cv::Mat& dst, float angle) {
 	rotate(src, angle, dst);
 	cv::Rect dateROI(307, 250, 64, 64);
 	//cv::Rect dateROI(257, 226, 124, 124);
-	cv::Mat cropped;
 	dst = dst(dateROI);
 	cv::Size size(32, 32);
-	cv::resize(dst, dst, size, 0, 0, 1);
+	cv::resize(dst, dst, size,0, 0, 1);
 }
 
 

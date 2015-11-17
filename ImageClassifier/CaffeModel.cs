@@ -17,15 +17,8 @@ namespace ImageClassifier
         [DllImport("E:\\build\\Caffe-prefix\\src\\Caffe-build\\examples\\cpp_classification\\Debug\\classification-d.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int ReleaseMemory(IntPtr ptr);
 
-        public void Classify(String oldImageDirectory, String newImageDirectory, String modelDir, bool toClassify, bool addImagesToDataBase, bool moveImage, bool includeSubDir)
+        public void ClassifyFiles(String oldImageDirectory, String newImageDirectory, String modelDir, bool toClassify, bool addImagesToDataBase, bool moveImage, bool includeSubDir)
         {
-            List<String> labels = LabelsDB.GetLabels(modelDir + "/labels.txt");
-
-            int resultCount = labels.Count;
-            if (resultCount > 5) {
-                resultCount = 5;
-            }
-
             string[] files;
             if (includeSubDir)
             {
@@ -33,10 +26,10 @@ namespace ImageClassifier
             }
             else
             {
-                files = Directory.GetFiles(oldImageDirectory);
+                files = Directory.GetFiles(oldImageDirectory, "*.jpg*");
             }
 
-            List<Result> results = new List<Result>();            
+            List<ImageResult> imageResults = new List<ImageResult>();            
             Dictionary<int,int> images = new Dictionary<int,int>();
             foreach (string image_file in files)
             {
@@ -45,36 +38,22 @@ namespace ImageClassifier
                 if (toClassify)
                 {
                     IntPtr ptr = ClassifyImage(modelDir, image_file);
-                    double[] result = new double[resultCount * 2];
-                    Marshal.Copy(ptr, result, 0, resultCount * 2);
+                    //the output result should be a structure, it's hard coded for now:
+                    double[] result = new double[8];
+                    Marshal.Copy(ptr, result, 0, 8);
                     ReleaseMemory(ptr);
-                    for (int count = 0; count < 2;count++ )
-                    {
-                        results.Add(new Result(334, imageID, (int)result[count], result[count + 2]));
-                        //ResultsDB.AddResult(152, imageID, (int)result[count], result[count + 2]);
-                    }
-
+                    imageResults.Add(new ImageResult(imageID, result));
+                    
                     if (moveImage) {
                         FileInfo fi = new FileInfo(image_file);
                         String imageFileDestination = newImageDirectory + "/" + LabelsDB.GetLabel((int)result[0]) + "/" + fi.Name;
                         File.Move(image_file, imageFileDestination);
                     }
                 }
-                if (addImagesToDataBase)
-                {
-                 if (images.Keys.Contains(imageID)){
-                     Console.WriteLine(imageID);
-                 }
-                 else{
-                        images.Add(imageID, LabelsDB.GetDesignID(image_file));
-                 }
-                 
-                }
             }
-            ResultsDB.AddResults(results);
             if (addImagesToDataBase)
             {
-                ImagesDB.AddImages(images);
+                ImagesDB.AddImages(imageResults);
             }
             
         }

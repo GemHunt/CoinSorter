@@ -31,30 +31,31 @@ namespace ImageClassifier
                 return;
             }
 
-            if (!Directory.Exists(txtNewImageDirectory.Text))
+            if (chkMoveImages.Checked && !Directory.Exists(txtNewImageDirectory.Text))
             {
                 txtNewImageDirectory.Focus();
-                MessageBox.Show("New mage Directory Does Not Exist");
+                MessageBox.Show("New image Directory Does Not Exist");
                 return;
             }
 
-            if (!Directory.Exists(txtModelDir.Text))
+            if (!Directory.Exists(txtModelsDir.Text))
             {
-                txtModelDir.Focus();
+                txtModelsDir.Focus();
                 MessageBox.Show("Root Model Directory Does Not Exist");
                 return;
             }
 
             DirectoryInfo imageDirectory = new DirectoryInfo(txtOldImageDirectory.Text);
-            DirectoryInfo modelDir = new DirectoryInfo(txtModelDir.Text);
+            DirectoryInfo modelDir = new DirectoryInfo(txtModelsDir.Text);
 
             if (chkClassify.Checked == false && chkAddImagesToDataBase.Checked == false)
             {
-                txtModelDir.Focus();
+                txtModelsDir.Focus();
                 MessageBox.Show("Nothing is checked");
                 return;
             }
-            caffe.Classify(txtOldImageDirectory.Text, txtNewImageDirectory.Text, txtModelDir.Text, chkClassify.Checked, chkAddImagesToDataBase.Checked, chkMoveImages.Checked, chkIncludeSubDirectories.Checked);
+            caffe.ClassifyFiles(txtOldImageDirectory.Text, txtNewImageDirectory.Text, txtModelsDir.Text, chkClassify.Checked, chkAddImagesToDataBase.Checked, chkMoveImages.Checked, chkIncludeSubDirectories.Checked);
         }
+
     }
 }
