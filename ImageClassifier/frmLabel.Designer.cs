@@ -29,18 +29,17 @@
         private void InitializeComponent()
         {
             this.listBoxLabelAllShown = new System.Windows.Forms.ListBox();
-            this.txtMainImageDirectory = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.cmdLabelAll = new System.Windows.Forms.Button();
             this.listBoxWorkingLabel = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.listBoxClickList = new System.Windows.Forms.ListBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.cmdReadDirectoryAndRefresh = new System.Windows.Forms.Button();
+            this.cmdGetImages = new System.Windows.Forms.Button();
             this.groupBoxImages = new System.Windows.Forms.GroupBox();
             this.cmdGetMore = new System.Windows.Forms.Button();
-            this.chkOnlyShowWeek = new System.Windows.Forms.CheckBox();
+            this.radioLabelDesigns = new System.Windows.Forms.RadioButton();
+            this.radioDates = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // listBoxLabelAllShown
@@ -53,23 +52,6 @@
             this.listBoxLabelAllShown.Name = "listBoxLabelAllShown";
             this.listBoxLabelAllShown.Size = new System.Drawing.Size(134, 264);
             this.listBoxLabelAllShown.TabIndex = 0;
-            // 
-            // txtMainImageDirectory
-            // 
-            this.txtMainImageDirectory.Location = new System.Drawing.Point(268, 15);
-            this.txtMainImageDirectory.Name = "txtMainImageDirectory";
-            this.txtMainImageDirectory.Size = new System.Drawing.Size(562, 20);
-            this.txtMainImageDirectory.TabIndex = 1;
-            this.txtMainImageDirectory.Text = "F:\\NewRot\\Dates";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(152, 18);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(110, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Main Image Directory:";
             // 
             // cmdLabelAll
             // 
@@ -135,15 +117,15 @@
             this.label4.TabIndex = 6;
             this.label4.Text = "Click to Label As:";
             // 
-            // cmdReadDirectoryAndRefresh
+            // cmdGetImages
             // 
-            this.cmdReadDirectoryAndRefresh.Location = new System.Drawing.Point(951, 6);
-            this.cmdReadDirectoryAndRefresh.Name = "cmdReadDirectoryAndRefresh";
-            this.cmdReadDirectoryAndRefresh.Size = new System.Drawing.Size(111, 36);
-            this.cmdReadDirectoryAndRefresh.TabIndex = 7;
-            this.cmdReadDirectoryAndRefresh.Text = "Read Directory And Refresh Labels";
-            this.cmdReadDirectoryAndRefresh.UseVisualStyleBackColor = true;
-            this.cmdReadDirectoryAndRefresh.Click += new System.EventHandler(this.cmdReadDirectoryAndRefresh_Click);
+            this.cmdGetImages.Location = new System.Drawing.Point(951, 6);
+            this.cmdGetImages.Name = "cmdGetImages";
+            this.cmdGetImages.Size = new System.Drawing.Size(111, 36);
+            this.cmdGetImages.TabIndex = 7;
+            this.cmdGetImages.Text = "Get Images";
+            this.cmdGetImages.UseVisualStyleBackColor = true;
+            this.cmdGetImages.Click += new System.EventHandler(this.cmdGetImages_Click);
             // 
             // groupBoxImages
             // 
@@ -164,33 +146,44 @@
             this.cmdGetMore.Click += new System.EventHandler(this.cmdGetMore_Click);
             this.cmdGetMore.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmdGetMore_KeyPress);
             // 
-            // chkOnlyShowWeek
+            // radioLabelDesigns
             // 
-            this.chkOnlyShowWeek.AutoSize = true;
-            this.chkOnlyShowWeek.Location = new System.Drawing.Point(836, 17);
-            this.chkOnlyShowWeek.Name = "chkOnlyShowWeek";
-            this.chkOnlyShowWeek.Size = new System.Drawing.Size(109, 17);
-            this.chkOnlyShowWeek.TabIndex = 10;
-            this.chkOnlyShowWeek.Text = "Only Show Weak";
-            this.chkOnlyShowWeek.UseVisualStyleBackColor = true;
+            this.radioLabelDesigns.AutoSize = true;
+            this.radioLabelDesigns.Location = new System.Drawing.Point(218, 17);
+            this.radioLabelDesigns.Name = "radioLabelDesigns";
+            this.radioLabelDesigns.Size = new System.Drawing.Size(92, 17);
+            this.radioLabelDesigns.TabIndex = 11;
+            this.radioLabelDesigns.Text = "Label Designs";
+            this.radioLabelDesigns.UseVisualStyleBackColor = true;
+            // 
+            // radioDates
+            // 
+            this.radioDates.AutoSize = true;
+            this.radioDates.Checked = true;
+            this.radioDates.Location = new System.Drawing.Point(316, 17);
+            this.radioDates.Name = "radioDates";
+            this.radioDates.Size = new System.Drawing.Size(82, 17);
+            this.radioDates.TabIndex = 12;
+            this.radioDates.TabStop = true;
+            this.radioDates.Text = "Label Dates";
+            this.radioDates.UseVisualStyleBackColor = true;
             // 
             // frmLabel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1280, 961);
-            this.Controls.Add(this.chkOnlyShowWeek);
+            this.Controls.Add(this.radioDates);
+            this.Controls.Add(this.radioLabelDesigns);
             this.Controls.Add(this.cmdGetMore);
             this.Controls.Add(this.listBoxWorkingLabel);
             this.Controls.Add(this.groupBoxImages);
-            this.Controls.Add(this.cmdReadDirectoryAndRefresh);
+            this.Controls.Add(this.cmdGetImages);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.listBoxClickList);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cmdLabelAll);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.txtMainImageDirectory);
             this.Controls.Add(this.listBoxLabelAllShown);
             this.Name = "frmLabel";
             this.Text = "Image Labeling Wizard";
@@ -203,18 +196,17 @@
         #endregion
 
         private System.Windows.Forms.ListBox listBoxLabelAllShown;
-        private System.Windows.Forms.TextBox txtMainImageDirectory;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button cmdLabelAll;
         private System.Windows.Forms.ListBox listBoxWorkingLabel;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ListBox listBoxClickList;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button cmdReadDirectoryAndRefresh;
+        private System.Windows.Forms.Button cmdGetImages;
         private System.Windows.Forms.GroupBox groupBoxImages;
         private System.Windows.Forms.Button cmdGetMore;
-        private System.Windows.Forms.CheckBox chkOnlyShowWeek;
+        private System.Windows.Forms.RadioButton radioLabelDesigns;
+        private System.Windows.Forms.RadioButton radioDates;
 
     }
 }

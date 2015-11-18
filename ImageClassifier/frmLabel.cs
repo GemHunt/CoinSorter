@@ -13,7 +13,7 @@ namespace ImageClassifier
 {
     public partial class frmLabel : Form
     {
-        List<String> fileList = new List<String>();
+        List<int> imageIDs = new List<int>();
         int LastListBoxWorkingLabelSelectedIndex = -1;
         public frmLabel()
         {
@@ -21,37 +21,29 @@ namespace ImageClassifier
         }
 
 
-        private String getMainImageDirectory()
+       private void cmdGetImages_Click(object sender, EventArgs e)
         {
-            String mainImageDirectory = txtMainImageDirectory.Text;
-            if (!Directory.Exists(mainImageDirectory))
-            {
-                txtMainImageDirectory.Focus();
-                MessageBox.Show("Directory Does Not Exist");
-                return null;
-            }
-            return mainImageDirectory;
-        }
-
-        private void cmdReadDirectoryAndRefresh_Click(object sender, EventArgs e)
-        {
-
-            if (getMainImageDirectory() == null)
-            {
-                return;
-            }
-
 
             listBoxWorkingLabel.Items.Clear();
             listBoxClickList.Items.Clear();
             listBoxLabelAllShown.Items.Clear();
 
             listBoxWorkingLabel.Items.Add("No Label");
-            String[] directorys = Directory.GetDirectories(getMainImageDirectory());
-            foreach (String dir in directorys)
+            List<String> labels = new List<String>();
+           
+           if (radioDates.Checked) {
+               labels = LabelsDB.GetDateLabels();
+            }
+           if (radioLabelDesigns.Checked)
+           {
+               labels = LabelsDB.GetDesignLabels();
+            }
+
+
+
+           foreach (String label in labels)
             {
-                String dirName = dir.Replace(getMainImageDirectory() + "\\", "");
-                listBoxWorkingLabel.Items.Add(dirName);
+                listBoxWorkingLabel.Items.Add(label);
             }
             listBoxClickList.Items.AddRange(listBoxWorkingLabel.Items);
             listBoxClickList.Items.Add("Delete");
@@ -66,54 +58,31 @@ namespace ImageClassifier
         }
 
 
-        private void ImageRefresh(bool newFileList)
+        private void ImageRefresh(bool newimageIDs)
         {
-            String workingDirectory = getMainImageDirectory();
-            if (workingDirectory == null)
+            int date = 0;
+            int.TryParse(listBoxWorkingLabel.SelectedItem.ToString(), out date);
+            
+            if (newimageIDs)
             {
-                return;
+                imageIDs = ImagesDB.GetDateUnLabeledImageIDs(16, date);
             }
 
-            if (listBoxWorkingLabel.SelectedIndex != 0)
-            {
-                workingDirectory = workingDirectory + "//" + listBoxWorkingLabel.SelectedItem;
-            }
 
-            if (newFileList)
-            {
-                fileList.Clear();
-                String[] files = Directory.GetFiles(workingDirectory);
-                fileList.AddRange(files);
-            }
-
-            if (chkOnlyShowWeek.Checked)
-            {
-                List<int> MislabeledImageIDs = ImagesDB.GetMislabeledImageIDs();
-                List<String> weakFileList = new List<String>();
-                foreach (String fileName in fileList)
-                {
-                    int imageID = Convert.ToInt32(fileName.Substring(fileName.Length - 12, 8)) - 10000000;
-                    if (MislabeledImageIDs.Contains(imageID + 10000000))
-                    {
-                        weakFileList.Add(fileName);
-                    }
-                }
-                fileList = weakFileList;
-            }
 
             groupBoxImages.Controls.Clear();
-            int imageSize = 124;
+            int imageSize = 200;
             for (int y = 0; y < 800; y = y + imageSize + 10)
             {
                 for (int x = 0; x < 800; x = x + imageSize + 10)
                 {
-                    if (fileList.Count == 0)
+                    if (imageIDs.Count == 0)
                     {
                         return;
                     }
-                    String fileName = fileList[0];
+                    String fileName = "F:/OpenCV/Crops/good/" + imageIDs[0].ToString() + ".jpg";
                     int imageID = Convert.ToInt32(fileName.Substring(fileName.Length - 12, 8)) - 10000000;
-                    fileList.RemoveAt(0);
+                    imageIDs.RemoveAt(0);
                     PictureBox pictureBox = new PictureBox();
                     pictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
                     pictureBox.Tag = fileName;
@@ -163,13 +132,11 @@ namespace ImageClassifier
 
         private void HandlePictureBoxClick(PictureBox pictureBox, bool allShown, bool skipCommand)
         {
-            String imageName = pictureBox.Tag.ToString();
-            String workingDirectory = getMainImageDirectory();
-            if (workingDirectory == null)
-            {
-                return;
-            }
-
+            int imageID;
+            String tag = pictureBox.Tag.ToString();
+            int.TryParse(tag.Substring(tag.Length - 12, 8), out imageID);
+            
+            
             groupBoxImages.Controls.Remove(pictureBox);
             if (skipCommand)
             {
@@ -189,17 +156,18 @@ namespace ImageClassifier
 
             if (selectedCommand == "Delete")
             {
-                File.Delete(imageName);
+                //File.Delete(label);
             }
             else
             {
-                String newDirectory = workingDirectory + "\\";
-                if (listBoxClickList.SelectedIndex != 0)
+                if (radioDates.Checked)
                 {
-                    newDirectory += selectedCommand + "\\";
+                    int date;
+                    int.TryParse(selectedCommand, out date);
+                    ImagesDB.UpdateDate(imageID, date);
                 }
-                FileInfo fi = new FileInfo(imageName);
-                File.Move(imageName, newDirectory + fi.Name);
+
+                
             }
         }
 
@@ -253,7 +221,7 @@ namespace ImageClassifier
 
         private void OnlyGetMore()
         {
-            if (fileList.Count == 0)
+            if (imageIDs.Count == 0)
             {
                 ImageRefresh(true);
             }

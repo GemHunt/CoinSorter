@@ -43,6 +43,33 @@ namespace ImageClassifier
                     return ("unknown");
             }
         }
+
+        public static List<String> GetDateLabels()
+        {
+            List<String> dateLables = new List<String>();
+            dateLables.Add("1900");
+            for (int y = 1900; y < 1959; y = y + 10)
+            {
+                dateLables.Add(y.ToString());
+            }
+            for (int y = 1959; y < 1983; y++)
+            {
+                dateLables.Add(y.ToString());
+            }
+            return dateLables;
+        }
+
+        public static List<String> GetDesignLabels()
+        {
+            List<String> designLables = new List<String>();
+            designLables.Add("canadaOther");
+            designLables.Add("heads");
+            designLables.Add("maple");
+            designLables.Add("tails");
+            designLables.Add("wheat");
+            return designLables;
+        }
+
         public static int GetDesignID(String dir)
         {
             //cheating: This should be from the database:
@@ -55,7 +82,7 @@ namespace ImageClassifier
             if (dir.Contains("Dates4\\19"))
             {
                 int year = 0;
-                int.TryParse(dir.Substring(17,4),out year);
+                int.TryParse(dir.Substring(17, 4), out year);
                 return year;
             }
             return -1;

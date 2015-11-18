@@ -38,6 +38,36 @@ namespace ImageClassifier
             return mislabeledImageIDs;
         }
 
+        static public List<int> GetDateUnLabeledImageIDs(int top, int Date)
+        {
+            List<int> mislabeledImageIDs = new List<int>();
+            StringBuilder SQL = new StringBuilder();
+            SQL.AppendLine("Select Images.ImageID");
+            SQL.AppendLine("From Images");
+            SQL.AppendLine("Where DateGT is null");
+            SQL.AppendLine("and Centered = 1");
+            SQL.AppendLine("and DesignID = 1");
+            SQL.AppendLine("And Date=" + Date);
+            SQL.AppendLine("Order by DateResult Desc;");
+            Open();
+            SQLiteDataReader reader = GetNewReader(SQL.ToString());
+
+            for (int x = 0; x < top; x++)
+            {
+                if (reader.Read()){
+                    mislabeledImageIDs.Add(reader.GetInt32(0));
+                }
+                else
+                {
+                    break;
+                }
+
+            }
+            reader.Close();
+            Close();
+            return mislabeledImageIDs;
+        }
+
         static public void AddImage(int imageID, int DesignID)
         {
 
@@ -105,7 +135,20 @@ namespace ImageClassifier
             StringBuilder SQL = new StringBuilder();
             SQL.AppendLine("BEGIN;");
             SQL.AppendLine("Update Images");
-            SQL.AppendLine("Set angle = " + angle);
+            SQL.AppendLine("Set angleGT = " + angle);
+            SQL.AppendLine("Where ImageID = " + imageID + ";");
+            SQL.AppendLine("COMMIT;");
+            ExecuteQuery(SQL.ToString());
+            Close();
+        }
+
+        static public void UpdateDate(int imageID, int date)
+        {
+            Open();
+            StringBuilder SQL = new StringBuilder();
+            SQL.AppendLine("BEGIN;");
+            SQL.AppendLine("Update Images");
+            SQL.AppendLine("Set dateGT = " + date);
             SQL.AppendLine("Where ImageID = " + imageID + ";");
             SQL.AppendLine("COMMIT;");
             ExecuteQuery(SQL.ToString());
