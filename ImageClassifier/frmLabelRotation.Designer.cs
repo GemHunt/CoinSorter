@@ -61,6 +61,7 @@
             this.Controls.Add(this.PictureBoxCoin);
             this.Name = "frmLabelRotation";
             this.Text = "Label Rotation";
+            this.Shown += new System.EventHandler(this.frmLabelRotation_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxCoin)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

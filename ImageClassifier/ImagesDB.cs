@@ -38,30 +38,42 @@ namespace ImageClassifier
             return mislabeledImageIDs;
         }
 
-        static public List<int> GetDateUnLabeledImageIDs(int top, int Date)
+        static public Dictionary<int,double> GetDateImages(int date, bool labeled, bool decades)
         {
-            List<int> mislabeledImageIDs = new List<int>();
+            int dateFilter = date;
+            if (decades && date !=-1)
+            {
+                dateFilter = date - 1900;
+            }
+            else
+            {
+                dateFilter = date;
+            }
+
+            
+            Dictionary<int, double> mislabeledImageIDs = new Dictionary<int, double>();
             StringBuilder SQL = new StringBuilder();
-            SQL.AppendLine("Select Images.ImageID");
+            SQL.AppendLine("Select ImageID");
+            SQL.AppendLine(", angleGT");
             SQL.AppendLine("From Images");
-            SQL.AppendLine("Where DateGT is null");
-            SQL.AppendLine("and Centered = 1");
+            SQL.AppendLine("Where  Centered = 1");
+            if (labeled)
+            {
+                SQL.AppendLine("and DateGT = " + dateFilter);
+            }
+            else
+            {
+                SQL.AppendLine("and DateGT is null");
+                //SQL.AppendLine("And Date=" + dateFilter);
+            }
+
             SQL.AppendLine("and DesignID = 1");
-            SQL.AppendLine("And Date=" + Date);
-            SQL.AppendLine("Order by DateResult Desc;");
+            SQL.AppendLine("Order by DateResult;");
             Open();
             SQLiteDataReader reader = GetNewReader(SQL.ToString());
 
-            for (int x = 0; x < top; x++)
-            {
-                if (reader.Read()){
-                    mislabeledImageIDs.Add(reader.GetInt32(0));
-                }
-                else
-                {
-                    break;
-                }
-
+            while (reader.Read()) {
+                    mislabeledImageIDs.Add(reader.GetInt32(0), reader.GetDouble(1));
             }
             reader.Close();
             Close();

@@ -13,7 +13,7 @@ namespace ImageClassifier
 {
     public partial class frmLabel : Form
     {
-        List<int> imageIDs = new List<int>();
+        Dictionary<int, double> images = new Dictionary<int, double>();
         int LastListBoxWorkingLabelSelectedIndex = -1;
         public frmLabel()
         {
@@ -21,27 +21,25 @@ namespace ImageClassifier
         }
 
 
-       private void cmdGetImages_Click(object sender, EventArgs e)
+        private void cmdGetImages_Click(object sender, EventArgs e)
         {
-
             listBoxWorkingLabel.Items.Clear();
             listBoxClickList.Items.Clear();
             listBoxLabelAllShown.Items.Clear();
 
             listBoxWorkingLabel.Items.Add("No Label");
             List<String> labels = new List<String>();
-           
-           if (radioDates.Checked) {
-               labels = LabelsDB.GetDateLabels();
+
+            if (radioDates.Checked)
+            {
+                labels = LabelsDB.GetDateLabels(radioDecades.Checked);
             }
-           if (radioLabelDesigns.Checked)
-           {
-               labels = LabelsDB.GetDesignLabels();
+            if (radioLabelDesigns.Checked)
+            {
+                labels = LabelsDB.GetDesignLabels();
             }
 
-
-
-           foreach (String label in labels)
+            foreach (String label in labels)
             {
                 listBoxWorkingLabel.Items.Add(label);
             }
@@ -57,36 +55,49 @@ namespace ImageClassifier
             ImageRefresh(true);
         }
 
+        private int GetDateFromLabel(String label)
+        {
+            if (label == "No Label")
+            {
+                return -1;
+            }
+            int date;
+            int.TryParse(listBoxWorkingLabel.SelectedItem.ToString(), out date);
+            return date;
+        }
 
         private void ImageRefresh(bool newimageIDs)
         {
-            int date = 0;
-            int.TryParse(listBoxWorkingLabel.SelectedItem.ToString(), out date);
-            
+            int date = GetDateFromLabel(listBoxWorkingLabel.SelectedItem.ToString());
+
             if (newimageIDs)
             {
-                imageIDs = ImagesDB.GetDateUnLabeledImageIDs(16, date);
+                images = ImagesDB.GetDateImages(date, chkLabeled.Checked, radioDecades.Checked);
             }
 
 
 
             groupBoxImages.Controls.Clear();
-            int imageSize = 200;
+            int imageSize = 64;
             for (int y = 0; y < 800; y = y + imageSize + 10)
             {
                 for (int x = 0; x < 800; x = x + imageSize + 10)
                 {
-                    if (imageIDs.Count == 0)
+                    if (images.Count == 0)
                     {
                         return;
                     }
-                    String fileName = "F:/OpenCV/Crops/good/" + imageIDs[0].ToString() + ".jpg";
-                    int imageID = Convert.ToInt32(fileName.Substring(fileName.Length - 12, 8)) - 10000000;
-                    imageIDs.RemoveAt(0);
+                    int imageID = images.Keys.First();
+                    double angle = images.Values.First();
+                    String fileName = "F:/OpenCV/Crops/good/" + imageID + ".jpg";
+                    images.Remove(imageID);
                     PictureBox pictureBox = new PictureBox();
                     pictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
                     pictureBox.Tag = fileName;
-                    pictureBox.BackgroundImage = (Image)CloneImage(fileName);
+                    Bitmap rotated = CloneImage(fileName, angle);
+                    Rectangle cropRect = new Rectangle(307, 250, imageSize, imageSize);
+                    rotated = rotated.Clone(cropRect, rotated.PixelFormat);
+                    pictureBox.BackgroundImage = rotated;
                     pictureBox.Height = imageSize;
                     pictureBox.Width = imageSize;
                     pictureBox.Left = x;
@@ -105,12 +116,13 @@ namespace ImageClassifier
         }
 
 
-        private Bitmap CloneImage(string aImagePath)
+        private Bitmap CloneImage(string aImagePath, double angle)
         {
             // create original image
             Image originalImage = new Bitmap(aImagePath);
 
             // create an empty clone of the same size of original
+            //Bitmap clone = new Bitmap(originalImage.Width, originalImage.Height);
             Bitmap clone = new Bitmap(originalImage.Width, originalImage.Height);
 
             // get the object representing clone's currently empty drawing surface
@@ -120,23 +132,22 @@ namespace ImageClassifier
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;
 
-            // copy the original image onto this surface
+            PointF offset = new PointF(203, 203);
+            g.TranslateTransform(offset.X, offset.Y);
+            g.RotateTransform(Convert.ToSingle(angle));
+            //move the image back
+            g.TranslateTransform(-offset.X, -offset.Y);
             g.DrawImage(originalImage, 0, 0, originalImage.Width, originalImage.Height);
-
-            // free graphics and original image
-            g.Dispose();
-            originalImage.Dispose();
-
+            // copy the original image onto this surface
             return clone;
         }
 
-        private void HandlePictureBoxClick(PictureBox pictureBox, bool allShown, bool skipCommand)
+        private void HandlePictureBoxLeftClick(PictureBox pictureBox, bool allShown, bool skipCommand)
         {
             int imageID;
             String tag = pictureBox.Tag.ToString();
             int.TryParse(tag.Substring(tag.Length - 12, 8), out imageID);
-            
-            
+
             groupBoxImages.Controls.Remove(pictureBox);
             if (skipCommand)
             {
@@ -164,17 +175,45 @@ namespace ImageClassifier
                 {
                     int date;
                     int.TryParse(selectedCommand, out date);
+                    if (radioDecades.Checked)
+                    {
+                        date = date - 1900;
+                    }
+                    if (selectedCommand == "No Label")
+                    {
+                        date = -1;
+                    }
                     ImagesDB.UpdateDate(imageID, date);
                 }
 
-                
+
             }
+        }
+
+
+        private void HandlePictureBoxRightClick(PictureBox pictureBox)
+        {
+            //int imageID;
+            //String tag = pictureBox.Tag.ToString();
+            //int.TryParse(tag.Substring(tag.Length - 12, 8), out imageID);
+            groupBoxImages.Controls.Remove(pictureBox);
+            frmLabelRotation frm = new frmLabelRotation();
+            frm.SingleImageFileName = pictureBox.Tag.ToString();
+            frm.Show();
         }
 
         private void pictureBox_Click(object sender, EventArgs e)
         {
             PictureBox pictureBox = (PictureBox)sender;
-            HandlePictureBoxClick(pictureBox, false, false);
+            MouseEventArgs me = (MouseEventArgs)e;
+            if (me.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                HandlePictureBoxRightClick(pictureBox);
+            }
+            else
+            {
+                HandlePictureBoxLeftClick(pictureBox, false, false);
+            }
         }
 
         private void listBoxWorkingLabel_SelectedIndexChanged(object sender, EventArgs e)
@@ -209,7 +248,7 @@ namespace ImageClassifier
 
             foreach (PictureBox pictureBox in pictureBoxes)
             {
-                HandlePictureBoxClick(pictureBox, true, skipCommand);
+                HandlePictureBoxLeftClick(pictureBox, true, skipCommand);
             }
             ImageRefresh(false);
         }
@@ -221,7 +260,7 @@ namespace ImageClassifier
 
         private void OnlyGetMore()
         {
-            if (imageIDs.Count == 0)
+            if (images.Count == 0)
             {
                 ImageRefresh(true);
             }
@@ -233,21 +272,88 @@ namespace ImageClassifier
 
         private void cmdGetMore_KeyPress(object sender, KeyPressEventArgs e)
         {
+            //I think this only makes sence to use in Decades mode. 
+            if (radioYears.Checked)
+            {
+                return;
+            }
+
+            if (!radioDates.Checked)
+            {
+                return;
+            }
+
+
             if (groupBoxImages.Controls.Count == 0)
             {
                 return;
             }
 
-            int result;
-            if (int.TryParse(e.KeyChar.ToString(), out result))
+            int numberKeyed;
+
+
+            if (!int.TryParse(e.KeyChar.ToString(), out numberKeyed))
             {
-                listBoxClickList.SelectedItem = (1960 + result).ToString();
-                PictureBox pictureBox = (PictureBox)groupBoxImages.Controls[0];
-                HandlePictureBoxClick(pictureBox, false, false);
+                if (e.KeyChar.ToString() == ".")
+                {
+                    numberKeyed = -1;
+                }
+                else
+                {
+                    return;
+                }
+
             }
 
-        
-        }
+            int date;
+            if (listBoxWorkingLabel.SelectedItem.ToString() == "No Label")
+            {
+                date = numberKeyed * 10;
+            }
+            else
+            {
+                int selectedDate;
+                int.TryParse(listBoxWorkingLabel.SelectedItem.ToString(), out selectedDate);
+                date = selectedDate + numberKeyed;
+            }
 
+            if (numberKeyed == -1)
+            {
+                date = 0;
+            }
+
+            PictureBox pictureBox = (PictureBox)groupBoxImages.Controls[0];
+            int imageID;
+            String tag = pictureBox.Tag.ToString();
+            int.TryParse(tag.Substring(tag.Length - 12, 8), out imageID);
+            groupBoxImages.Controls.Remove(pictureBox);
+            ImagesDB.UpdateDate(imageID, date);
+        }
+        public static Bitmap RotateImage(Image image, PointF offset, float angle)
+        {
+            if (image == null)
+                throw new ArgumentNullException("image");
+
+            //create a new empty bitmap to hold rotated image
+            Bitmap rotatedBmp = new Bitmap(image.Width, image.Height);
+            rotatedBmp.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+
+            //make a graphics object from the empty bitmap
+            Graphics g = Graphics.FromImage(rotatedBmp);
+
+            //Put the rotation point in the center of the image
+            g.TranslateTransform(offset.X, offset.Y);
+
+            //rotate the image
+            g.RotateTransform(angle);
+
+            //move the image back
+            g.TranslateTransform(-offset.X, -offset.Y);
+
+            //draw passed in image onto graphics object
+            g.DrawImage(image, new PointF(0, 0));
+
+            return rotatedBmp;
+        }
     }
 }

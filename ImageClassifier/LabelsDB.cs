@@ -44,18 +44,24 @@ namespace ImageClassifier
             }
         }
 
-        public static List<String> GetDateLabels()
+        public static List<String> GetDateLabels(bool decades)
         {
             List<String> dateLables = new List<String>();
-            dateLables.Add("1900");
-            for (int y = 1900; y < 1959; y = y + 10)
+            if (decades)
             {
-                dateLables.Add(y.ToString());
+                for (int y = 1900; y < 2020; y = y + 10)
+                {
+                    dateLables.Add((y).ToString());
+                }
             }
-            for (int y = 1959; y < 1983; y++)
+            else
             {
-                dateLables.Add(y.ToString());
+                for (int y = 1950; y < 1983; y++)
+                {
+                    dateLables.Add(y.ToString());
+                }
             }
+
             return dateLables;
         }
 

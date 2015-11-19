@@ -15,28 +15,45 @@ namespace ImageClassifier
 {
     public partial class frmLabelRotation : Form
     {
+        public String SingleImageFileName;
         private string CoinFileName;
         private Int32 NextCoinIndex = 0;
-        const string ImageDir = "F:\\NewRot\\heads";
-        private DirectoryInfo dirInfo = new DirectoryInfo(ImageDir);
         private FileInfo[] imageFiles;
-        private Image coinImage;
-        
+       
         public frmLabelRotation()
         {
             InitializeComponent();
-            dirInfo = new DirectoryInfo(ImageDir);
-            imageFiles = dirInfo.GetFiles();
-            LoadNextPicture();
+        }
+
+        private void frmLabelRotation_Shown(object sender, EventArgs e)
+        {
+            if (SingleImageFileName == null)
+            {
+                const string ImageDir = "F:\\NewRot\\heads";
+                DirectoryInfo dirInfo = new DirectoryInfo(ImageDir);
+                dirInfo = new DirectoryInfo(ImageDir);
+                imageFiles = dirInfo.GetFiles();
+            }
+            else
+            {
+                imageFiles = new FileInfo[1];
+                imageFiles[0] = new FileInfo(SingleImageFileName);
+            }
+            LoadNextPicture();         
         }
 
         private void LoadNextPicture()
         {
+            if (NextCoinIndex == imageFiles.Length)
+            {
+                this.Close();
+                return;
+            }
+            
             FileInfo fi = imageFiles[NextCoinIndex];
             CoinFileName = fi.FullName;
             NextCoinIndex += 1;
-
-            coinImage = Bitmap.FromFile(CoinFileName);
+            Image coinImage = Bitmap.FromFile(CoinFileName);
             PictureBoxCoin.Image = coinImage;
         }
 

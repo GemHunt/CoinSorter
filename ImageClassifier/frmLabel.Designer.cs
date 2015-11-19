@@ -40,6 +40,13 @@
             this.cmdGetMore = new System.Windows.Forms.Button();
             this.radioLabelDesigns = new System.Windows.Forms.RadioButton();
             this.radioDates = new System.Windows.Forms.RadioButton();
+            this.chkLabeled = new System.Windows.Forms.CheckBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.radioYears = new System.Windows.Forms.RadioButton();
+            this.radioDecades = new System.Windows.Forms.RadioButton();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // listBoxLabelAllShown
@@ -149,7 +156,7 @@
             // radioLabelDesigns
             // 
             this.radioLabelDesigns.AutoSize = true;
-            this.radioLabelDesigns.Location = new System.Drawing.Point(218, 17);
+            this.radioLabelDesigns.Location = new System.Drawing.Point(37, 13);
             this.radioLabelDesigns.Name = "radioLabelDesigns";
             this.radioLabelDesigns.Size = new System.Drawing.Size(92, 17);
             this.radioLabelDesigns.TabIndex = 11;
@@ -160,7 +167,7 @@
             // 
             this.radioDates.AutoSize = true;
             this.radioDates.Checked = true;
-            this.radioDates.Location = new System.Drawing.Point(316, 17);
+            this.radioDates.Location = new System.Drawing.Point(135, 13);
             this.radioDates.Name = "radioDates";
             this.radioDates.Size = new System.Drawing.Size(82, 17);
             this.radioDates.TabIndex = 12;
@@ -168,13 +175,69 @@
             this.radioDates.Text = "Label Dates";
             this.radioDates.UseVisualStyleBackColor = true;
             // 
+            // chkLabeled
+            // 
+            this.chkLabeled.AutoSize = true;
+            this.chkLabeled.Checked = true;
+            this.chkLabeled.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkLabeled.Location = new System.Drawing.Point(831, 17);
+            this.chkLabeled.Name = "chkLabeled";
+            this.chkLabeled.Size = new System.Drawing.Size(64, 17);
+            this.chkLabeled.TabIndex = 13;
+            this.chkLabeled.Text = "Labeled";
+            this.chkLabeled.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.radioDates);
+            this.groupBox1.Controls.Add(this.radioLabelDesigns);
+            this.groupBox1.Location = new System.Drawing.Point(181, 4);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(278, 37);
+            this.groupBox1.TabIndex = 14;
+            this.groupBox1.TabStop = false;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.radioYears);
+            this.groupBox2.Controls.Add(this.radioDecades);
+            this.groupBox2.Location = new System.Drawing.Point(475, 4);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(278, 37);
+            this.groupBox2.TabIndex = 15;
+            this.groupBox2.TabStop = false;
+            // 
+            // radioYears
+            // 
+            this.radioYears.AutoSize = true;
+            this.radioYears.Location = new System.Drawing.Point(135, 13);
+            this.radioYears.Name = "radioYears";
+            this.radioYears.Size = new System.Drawing.Size(52, 17);
+            this.radioYears.TabIndex = 12;
+            this.radioYears.Text = "Years";
+            this.radioYears.UseVisualStyleBackColor = true;
+            // 
+            // radioDecades
+            // 
+            this.radioDecades.AutoSize = true;
+            this.radioDecades.Checked = true;
+            this.radioDecades.Location = new System.Drawing.Point(37, 13);
+            this.radioDecades.Name = "radioDecades";
+            this.radioDecades.Size = new System.Drawing.Size(68, 17);
+            this.radioDecades.TabIndex = 11;
+            this.radioDecades.TabStop = true;
+            this.radioDecades.Tag = "";
+            this.radioDecades.Text = "Decades";
+            this.radioDecades.UseVisualStyleBackColor = true;
+            // 
             // frmLabel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1280, 961);
-            this.Controls.Add(this.radioDates);
-            this.Controls.Add(this.radioLabelDesigns);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.chkLabeled);
             this.Controls.Add(this.cmdGetMore);
             this.Controls.Add(this.listBoxWorkingLabel);
             this.Controls.Add(this.groupBoxImages);
@@ -188,6 +251,10 @@
             this.Name = "frmLabel";
             this.Text = "Image Labeling Wizard";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -207,6 +274,11 @@
         private System.Windows.Forms.Button cmdGetMore;
         private System.Windows.Forms.RadioButton radioLabelDesigns;
         private System.Windows.Forms.RadioButton radioDates;
+        private System.Windows.Forms.CheckBox chkLabeled;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.RadioButton radioYears;
+        private System.Windows.Forms.RadioButton radioDecades;
 
     }
 }
