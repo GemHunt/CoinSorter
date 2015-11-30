@@ -58,7 +58,7 @@ namespace ImageClassifier
                     _serialPort.Close();
 
             // Setting serial port settings
-            _serialPort = new SerialPort("COM5", 250000);
+            _serialPort = new SerialPort("COM4", 250000);
                 
             // Subscribe to event and open serial port for data
             _serialPort.DataReceived += new SerialDataReceivedEventHandler(_serialPort_DataReceived);

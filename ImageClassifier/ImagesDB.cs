@@ -167,19 +167,20 @@ namespace ImageClassifier
             Close();
         }
 
-        static public Dictionary<int, float> GetImageAngles()
+        static public List<ImageGroundTruth> GetImageAngles()
         {
-            Dictionary<int, float> imageAngles = new Dictionary<int, float>();
+            List<ImageGroundTruth> imageAngles = new List<ImageGroundTruth>();
             StringBuilder SQL = new StringBuilder();
             SQL.AppendLine("Select Images.ImageID");
-            SQL.AppendLine(", angle");
+            SQL.AppendLine(", AngleGT");
+            SQL.AppendLine(", DateGT");
             SQL.AppendLine("From Images");
-            SQL.AppendLine("Where angle is not null;");
+            SQL.AppendLine("Where DateGT is not null;");
             Open();
             SQLiteDataReader reader = GetNewReader(SQL.ToString());
             while (reader.Read())
             {
-                imageAngles.Add(reader.GetInt32(0), reader.GetFloat(1));
+                imageAngles.Add(new ImageGroundTruth(reader.GetInt32(0), 0, 0, reader.GetDouble(1), reader.GetInt32(2)));
             }
             reader.Close();
             Close();
@@ -213,12 +214,12 @@ namespace ImageClassifier
                 }
             }
 
-            Dictionary<int, float> imageAngles = GetImageAngles();
+            List<ImageGroundTruth> imageAngles = GetImageAngles();
 
-            foreach (KeyValuePair<int, float> imageAngle in imageAngles)
+            foreach (ImageGroundTruth imageAngle in imageAngles)
             {
-                String fileName = cropDirectory + imageAngle.Key + ".jpg";
-                Augment(cropDirectory, augmentDirectory, imageAngle.Key, imageAngle.Value);
+                String fileName = cropDirectory + imageAngle.ImageID + ".jpg";
+                Augment(cropDirectory, augmentDirectory, imageAngle.ImageID, (float)imageAngle.AngleGT);
             }
         }
 
@@ -250,41 +251,25 @@ namespace ImageClassifier
         //    }
         //}
 
-        static public void CropForDates(String directory, bool augment)
+        static public void CropForDates(String cropDirectory, String dateDirectory, bool augment)
         {
-            String cropDirectory = directory + "/Heads/";
-            String dateCropDirectory = directory + "/Dates/";
-            String dateCropDirectoryAugmented = directory + "/DatesAugmented/";
 
-            if (!Directory.Exists(dateCropDirectory))
+            if (!Directory.Exists(dateDirectory))
             {
-                Directory.CreateDirectory(dateCropDirectory);
+                Directory.CreateDirectory(dateDirectory);
             }
 
-            Dictionary<int, float> imageAngles = GetImageAngles();
+            List<ImageGroundTruth> imageAngles = imageAngles = GetImageAngles();
+            List<int> dateGTs = new List<int>();
 
-            if (augment)
-            {
-                foreach (string fileName in Directory.GetFiles(dateCropDirectory, "*.*", SearchOption.AllDirectories))
-                {
-                    int imageID;
-                    int.TryParse(fileName.Substring(fileName.Length - 12, 8), out imageID);
-                    if (imageAngles.Keys.Contains(imageID))
-                    {
-                        String newDateCropDirectory = fileName.Substring(0, fileName.Length - 12);
-                        newDateCropDirectory = newDateCropDirectory.Replace("Dates", "DatesAugmented");
-                        CropForDate(cropDirectory, newDateCropDirectory, imageID, imageAngles[imageID], false);
-                    }
+            foreach (ImageGroundTruth imageAngle in imageAngles) { 
+                String dateGTDirectory = dateDirectory + "/" + imageAngle.DateGT.ToString() + "/";
+                if (!dateGTs.Contains(imageAngle.DateGT)){
+                    Directory.CreateDirectory(dateGTDirectory);
                 }
+                CropForDate(cropDirectory + "/", dateGTDirectory, imageAngle.ImageID, (float)imageAngle.AngleGT, augment);
             }
-            else
-            {
-                foreach (KeyValuePair<int, float> imageAngle in imageAngles)
-                {
-                    String fileName = cropDirectory + imageAngle.Key + ".jpg";
-                    //CropForDate(cropDirectory, dateCropDirectory, imageAngle.Key, imageAngle.Value, augment);
-                }
-            }
+            
         }
     }
 }

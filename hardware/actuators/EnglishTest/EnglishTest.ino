@@ -18,26 +18,11 @@ void setup() {
  
 void loop() {
    readIRSensor();
-   serialEvent(); 
- if (stringComplete) {
-    toggle(true);
-    toggleCountdown = 2000;
-    inputString = "";
-    stringComplete = false;
-  }
-  if (toggleCountdown != 0) {
-    if (toggleCountdown == 1) {
-      toggleCountdown = 0;
-      toggle(false);
-    }
-  else {toggleCountdown--;}
-  }
 }
 
 void readIRSensor() {
-  //Serial.println(analogRead(sensorPin));
-  
-  int irSensorVoltageCutoff = 800;
+   Serial.println(analogRead(sensorPin));
+  int irSensorVoltageCutoff = 750;
   // the average power of the sensor through an ever more dirty belt. 
   // Heck this is the dirty belt sensor!
   //irSensorVoltageCutoff needs to adjust, maybe it should be set on the PC side?
@@ -50,37 +35,22 @@ void readIRSensor() {
       //if it's under 50 it's just a bounce.
       //if it's over 1800 pennies are stacked
       if ((offCount > 50) && (offCount < 2000)) {
-        Serial.println(offCount );
+         toggle();
       }
       offCount = 0;
       }
   } 
 } 
 
-void serialEvent() {
-  while (Serial.available()) {
-    // get the new byte:
-    char inChar = (char)Serial.read();
-    // add it to the inputString:
-    inputString += inChar;
-    // if the incoming character is a newline, set a flag
-    // so the main loop can do something about it:
-    if (inChar == '\n') {
-      stringComplete = true;
-    }
-  }
-}
-
-void toggle(boolean on) {
-  if (on) {
+void toggle() {
+     delay(125); 
     motor1.run(FORWARD);      // turn it on going forward
     motor2.run(FORWARD);      // turn it on going forward
-  }
-  else {
+    delay(30);  
     motor1.run(RELEASE);      // stopped
     motor2.run(RELEASE);      // stopped  
-   }
 }
+
 
 
 
