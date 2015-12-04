@@ -1,3 +1,4 @@
+name: "CIFAR10_full"
 layer {
   name: "cifar"
   type: "Data"
@@ -5,16 +6,6 @@ layer {
   top: "label"
   include {
     phase: TRAIN
-  }
-  transform_param {
-    mean_value: 107.483398438
-    mean_value: 135.115234375
-    mean_value: 201.241210938
-  }
-  data_param {
-    source: "/home/pkrush/digits/digits/jobs/20151201-151007-bd31/train_db"
-    batch_size: 16
-    backend: LMDB
   }
 }
 layer {
@@ -24,16 +15,6 @@ layer {
   top: "label"
   include {
     phase: TEST
-  }
-  transform_param {
-    mean_value: 107.483398438
-    mean_value: 135.115234375
-    mean_value: 201.241210938
-  }
-  data_param {
-    source: "/home/pkrush/digits/digits/jobs/20151201-151007-bd31/val_db"
-    batch_size: 16
-    backend: LMDB
   }
 }
 layer {
@@ -48,7 +29,7 @@ layer {
     lr_mult: 2.0
   }
   convolution_param {
-    num_output: 128
+    num_output: 32
     pad: 2
     kernel_size: 5
     stride: 1
@@ -102,7 +83,7 @@ layer {
     lr_mult: 2.0
   }
   convolution_param {
-    num_output: 128
+    num_output: 32
     pad: 2
     kernel_size: 5
     stride: 1
@@ -150,7 +131,7 @@ layer {
   bottom: "norm2"
   top: "conv3"
   convolution_param {
-    num_output: 256
+    num_output: 64
     pad: 2
     kernel_size: 5
     stride: 1
@@ -194,7 +175,7 @@ layer {
     decay_mult: 0.0
   }
   inner_product_param {
-    num_output: 15
+    num_output: 10
     weight_filler {
       type: "gaussian"
       std: 0.00999999977648
@@ -205,13 +186,6 @@ layer {
   }
 }
 layer {
-  name: "loss"
-  type: "SoftmaxWithLoss"
-  bottom: "ip1"
-  bottom: "label"
-  top: "loss"
-}
-layer {
   name: "accuracy"
   type: "Accuracy"
   bottom: "ip1"
@@ -220,4 +194,11 @@ layer {
   include {
     phase: TEST
   }
+}
+layer {
+  name: "loss"
+  type: "SoftmaxWithLoss"
+  bottom: "ip1"
+  bottom: "label"
+  top: "loss"
 }

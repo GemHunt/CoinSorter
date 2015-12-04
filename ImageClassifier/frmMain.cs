@@ -19,7 +19,7 @@ namespace ImageClassifier
         public static extern int FindCoinCenter(int imageID, bool show);
 
         SerialPortManager _spManager;
-        int coinCenterImageID = 10098;
+        int coinCenterImageID = 10015681;
         int IRSensorCount = 0;
         bool AutomaticCaptureOn = false;
         
@@ -174,7 +174,7 @@ namespace ImageClassifier
 
         private void TestFindCoinCenter()
         {
-            if (File.Exists("F:/OpenCV/" + coinCenterImageID + "raw.jpg"))
+            if (File.Exists("F:/OpenCV/raw/" + coinCenterImageID + "raw.jpg"))
             {
                 FindCoinCenter(coinCenterImageID, true);
             }

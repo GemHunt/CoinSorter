@@ -150,7 +150,7 @@ layer {
   }
 }
 layer {
-  name: "ip1_retrain_retrain_retrain_retrain"
+  name: "ip1_retrain_retrain_retrain_retrain_retrain_retrain"
   type: "InnerProduct"
   bottom: "pool3"
   top: "ip1"
@@ -163,7 +163,7 @@ layer {
     decay_mult: 0.0
   }
   inner_product_param {
-    num_output: 24
+    num_output: 15
     weight_filler {
       type: "gaussian"
       std: 0.00999999977648
