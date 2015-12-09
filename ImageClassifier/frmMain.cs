@@ -19,7 +19,7 @@ namespace ImageClassifier
         public static extern int FindCoinCenter(int imageID, bool show);
 
         SerialPortManager _spManager;
-        int coinCenterImageID = 10015681;
+        int coinCenterImageID = 10011669;
         int IRSensorCount = 0;
         bool AutomaticCaptureOn = false;
         
@@ -150,7 +150,7 @@ namespace ImageClassifier
             {
                 int date = 0;
                 String design = "null";
-                Camera.ClassifyFromWebCam(IRSensorCount + 10000000, true, true,chkDeskew.Checked,chkAutoRotate.Checked, ref date,ref design);
+                Camera.ClassifyFromWebCam(IRSensorCount + 10000000, true, true,chkDeskew.Checked,chkAutoRotate.Checked, chkSaveImages.Checked,ref date,ref design);
                 lblDate.Text = date.ToString();
                 lblDesign.Text = design;
                 //if (date > 1979){

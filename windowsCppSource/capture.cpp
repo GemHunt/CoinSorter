@@ -17,7 +17,7 @@ using std::cout;
 using std::endl;
 ///for web cam
 
-extern "C" __declspec(dllexport) double* ClassifyFromWebCam(int imageID, bool showImages, bool classify, bool deskewImage, bool autorotate, const char *modelDir);
+extern "C" __declspec(dllexport) double* ClassifyFromWebCam(int imageID, bool showImages, bool classify, bool deskewImage, bool autorotate, bool saveImages, const char *modelDir);
 void deskew(cv::Mat& src, cv::Mat& dst);
 Point CoinCenter(Mat input, bool showImages);
 Mat CropToCenter(Mat input, Point coinCenter);
@@ -25,7 +25,7 @@ double* ClassifyImage(char *modelDir, cv::Mat img);
 void rotate(cv::Mat& src, double angle, cv::Mat& dst);
 
 
-double* ClassifyFromWebCam(int imageID, bool showImages, bool classify, bool deskewImage, bool autorotate, const char *modelDir)
+double* ClassifyFromWebCam(int imageID, bool showImages, bool classify, bool deskewImage, bool autorotate, bool saveImages, const char *modelDir)
 {
 
 	//cout << "01" << endl;
@@ -50,12 +50,23 @@ double* ClassifyFromWebCam(int imageID, bool showImages, bool classify, bool des
 		cout << "Frame size : " << dWidth << " x " << dHeight << endl;
 
 		if (showImages){
-			namedWindow("MyVideo", CV_WINDOW_AUTOSIZE); //create a window called "MyVideo"
+			namedWindow("Cropped Coin", CV_WINDOW_AUTOSIZE); 
 		}
+
+		if (showImages){
+			namedWindow("Capture", CV_WINDOW_AUTOSIZE); 
+		}
+
+		//50-500X:
 		cap.set(CV_CAP_PROP_BRIGHTNESS, 0);
 		cap.set(CV_CAP_PROP_CONTRAST, 47);
 		cap.set(CV_CAP_PROP_SATURATION, 32);
 		cap.set(CV_CAP_PROP_GAIN, 24);
+
+		//cap.set(CV_CAP_PROP_BRIGHTNESS, 30);
+		//cap.set(CV_CAP_PROP_CONTRAST, 47);
+		//cap.set(CV_CAP_PROP_SATURATION, 500);
+		//cap.set(CV_CAP_PROP_GAIN, 24);
 
 		setup = true;
 	}
@@ -70,8 +81,13 @@ double* ClassifyFromWebCam(int imageID, bool showImages, bool classify, bool des
 	if (!bSuccess) //if not success, break loop
 	{
 		cout << "Cannot read a frame from video stream" << endl;
-		return 0;
+		return result;
 	}
+	
+	if (showImages){
+		imshow("Capture", frame);
+	}
+	
 	//cout << "03" << endl;
 	if (deskewImage) {
 		deskew(frame, frame);
@@ -79,17 +95,22 @@ double* ClassifyFromWebCam(int imageID, bool showImages, bool classify, bool des
 
 	//cout << "05" << endl;
 
-	imwrite("F:/OpenCV/Raw/" + std::to_string(imageID) + "raw.jpg", frame);
+	if (saveImages){
+		imwrite("F:/OpenCV/Raw/" + std::to_string(imageID) + "raw.jpg", frame);
+	}
 	Point coinCenter = CoinCenter(frame, showImages);
 	//cout << "06" << endl;
 	
 	if (coinCenter.x == 0) {
 		cout << "Coin Not found" << endl;
-		return 0;
+		return result;
 	}
 	
 	cv::Mat crop = CropToCenter(frame, coinCenter);
-	imwrite("F:/OpenCV/" + std::to_string(imageID) + ".jpg", crop);
+	if (saveImages){
+		imwrite("F:/OpenCV/" + std::to_string(imageID) + ".jpg", crop);
+	}
+	
 	
 	if (classify) {
 		char* dir = (char*)modelDir;
@@ -101,12 +122,12 @@ double* ClassifyFromWebCam(int imageID, bool showImages, bool classify, bool des
 	}
 
 	if (showImages){
-		imshow("MyVideo", crop);
+		imshow("Cropped Coin", crop);
 
 		if (waitKey(1) == 27) //wait for 'esc' key press for 30ms. If 'esc' key is pressed, break loop
 		{
 			cout << "esc key is pressed by user" << endl;
-			destroyWindow("MyVideo");
+			destroyWindow("406x406 Crop");
 			return result;
 		}
 	}

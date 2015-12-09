@@ -20,14 +20,19 @@ int findContour(Mat);
 
 //*******  Contour finding sample *****
 Mat src;
-int CrMin = 158;
+//For 50-500X:
+//int CrMin = 158;
+//int XOffset = 2;
+//int YOffset = 132;
+
+int CrMin = 160;
 int CrMax = 255;
 int erodeSquare = 5;
-int dilateSquare = 30;
+int dilateSquare = 20;
 int coinRadius = 203;
 int YCrop = 180;
-int XOffset = 2;
-int YOffset = 132;
+int XOffset = 3;
+int YOffset = 118;
 
 int max_thresh = 255;
 
@@ -38,7 +43,7 @@ Point CoinCenter(Mat input, bool showImages);
 
 extern "C" __declspec(dllexport) int FindCoinCenter(int imageID, bool showImages) {
 	Mat input;
-	input = imread("F:/OpenCV/" + std::to_string(imageID) + "raw.jpg");
+	input = imread("F:/OpenCV/raw/" + std::to_string(imageID) + "raw.jpg");
 	if (showImages){
 		startCoinCenterGUI(input);
 	}
@@ -103,8 +108,8 @@ Point CoinCenter(Mat input, bool showImages)
 	dilate(threshold, threshold, dilateElement);
 	//cout << "104" << endl;
 	if (showImages){
-		namedWindow("threshold", CV_WINDOW_AUTOSIZE);
-		imshow("threshold", threshold);
+		namedWindow("Threshold", CV_WINDOW_AUTOSIZE);
+		imshow("Threshold", threshold);
 	}
 
 	//cv::resize(threshold, threshold, cv::Size(360, 286));

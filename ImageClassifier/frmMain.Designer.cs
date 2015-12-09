@@ -40,6 +40,8 @@
             this.trackBarToggleDelay = new System.Windows.Forms.TrackBar();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBoxLiveCapture = new System.Windows.Forms.GroupBox();
+            this.lblTargetDate = new System.Windows.Forms.Label();
+            this.txtTargetDate = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.chkFakeCamera = new System.Windows.Forms.CheckBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -53,13 +55,12 @@
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.cmdCropForDates = new System.Windows.Forms.Button();
             this.cmdLabelRotation = new System.Windows.Forms.Button();
-            this.txtTargetDate = new System.Windows.Forms.TextBox();
-            this.lblTargetDate = new System.Windows.Forms.Label();
             this.lblDate = new System.Windows.Forms.Label();
             this.lblDesign = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.chkDeskew = new System.Windows.Forms.CheckBox();
             this.chkAutoRotate = new System.Windows.Forms.CheckBox();
+            this.chkSaveImages = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSensorDelay)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarToggleDelay)).BeginInit();
@@ -134,7 +135,7 @@
             // 
             // timerWebcam
             // 
-            this.timerWebcam.Interval = 500;
+            this.timerWebcam.Interval = 250;
             this.timerWebcam.Tick += new System.EventHandler(this.timerWebcam_Tick);
             // 
             // groupBox1
@@ -181,6 +182,23 @@
             this.groupBoxLiveCapture.TabIndex = 14;
             this.groupBoxLiveCapture.TabStop = false;
             this.groupBoxLiveCapture.Text = "Auto Capture";
+            // 
+            // lblTargetDate
+            // 
+            this.lblTargetDate.AutoSize = true;
+            this.lblTargetDate.Location = new System.Drawing.Point(179, 47);
+            this.lblTargetDate.Name = "lblTargetDate";
+            this.lblTargetDate.Size = new System.Drawing.Size(33, 13);
+            this.lblTargetDate.TabIndex = 10;
+            this.lblTargetDate.Text = "Date:";
+            // 
+            // txtTargetDate
+            // 
+            this.txtTargetDate.Location = new System.Drawing.Point(180, 62);
+            this.txtTargetDate.Name = "txtTargetDate";
+            this.txtTargetDate.Size = new System.Drawing.Size(64, 20);
+            this.txtTargetDate.TabIndex = 9;
+            this.txtTargetDate.Text = "1981";
             // 
             // groupBox4
             // 
@@ -317,40 +335,23 @@
             this.cmdLabelRotation.UseVisualStyleBackColor = true;
             this.cmdLabelRotation.Click += new System.EventHandler(this.cmdLabelRotation_Click);
             // 
-            // txtTargetDate
-            // 
-            this.txtTargetDate.Location = new System.Drawing.Point(180, 62);
-            this.txtTargetDate.Name = "txtTargetDate";
-            this.txtTargetDate.Size = new System.Drawing.Size(64, 20);
-            this.txtTargetDate.TabIndex = 9;
-            this.txtTargetDate.Text = "1981";
-            // 
-            // lblTargetDate
-            // 
-            this.lblTargetDate.AutoSize = true;
-            this.lblTargetDate.Location = new System.Drawing.Point(179, 47);
-            this.lblTargetDate.Name = "lblTargetDate";
-            this.lblTargetDate.Size = new System.Drawing.Size(33, 13);
-            this.lblTargetDate.TabIndex = 10;
-            this.lblTargetDate.Text = "Date:";
-            // 
             // lblDate
             // 
             this.lblDate.AutoSize = true;
-            this.lblDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDate.Location = new System.Drawing.Point(0, 76);
+            this.lblDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 60F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDate.Location = new System.Drawing.Point(21, 91);
             this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(79, 33);
+            this.lblDate.Size = new System.Drawing.Size(215, 91);
             this.lblDate.TabIndex = 11;
             this.lblDate.Text = "0000";
             // 
             // lblDesign
             // 
             this.lblDesign.AutoSize = true;
-            this.lblDesign.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDesign.Location = new System.Drawing.Point(0, 43);
+            this.lblDesign.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDesign.Location = new System.Drawing.Point(14, 43);
             this.lblDesign.Name = "lblDesign";
-            this.lblDesign.Size = new System.Drawing.Size(174, 33);
+            this.lblDesign.Size = new System.Drawing.Size(222, 42);
             this.lblDesign.TabIndex = 12;
             this.lblDesign.Text = "Coin Design";
             // 
@@ -361,7 +362,7 @@
             this.groupBox6.Controls.Add(this.lblIRSensorCount);
             this.groupBox6.Location = new System.Drawing.Point(281, 16);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(206, 217);
+            this.groupBox6.Size = new System.Drawing.Size(255, 217);
             this.groupBox6.TabIndex = 18;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Capture Output";
@@ -388,11 +389,22 @@
             this.chkAutoRotate.Text = "Auto Rotate";
             this.chkAutoRotate.UseVisualStyleBackColor = true;
             // 
+            // chkSaveImages
+            // 
+            this.chkSaveImages.AutoSize = true;
+            this.chkSaveImages.Location = new System.Drawing.Point(542, 369);
+            this.chkSaveImages.Name = "chkSaveImages";
+            this.chkSaveImages.Size = new System.Drawing.Size(88, 17);
+            this.chkSaveImages.TabIndex = 20;
+            this.chkSaveImages.Text = "Save Images";
+            this.chkSaveImages.UseVisualStyleBackColor = true;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(999, 393);
+            this.Controls.Add(this.chkSaveImages);
             this.Controls.Add(this.chkAutoRotate);
             this.Controls.Add(this.chkDeskew);
             this.Controls.Add(this.groupBox6);
@@ -457,6 +469,7 @@
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.CheckBox chkDeskew;
         private System.Windows.Forms.CheckBox chkAutoRotate;
+        private System.Windows.Forms.CheckBox chkSaveImages;
     }
 }
 
