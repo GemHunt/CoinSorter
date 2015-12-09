@@ -8,7 +8,8 @@ To understand where this system is heading in the short term see [Prototype Coin
 
 Check out the [starting point issues](https://github.com/GemHunt/CoinSorter/labels/starting%20point) to see what is currently being worked on.
 
-
+[Click to watch a video of it in action:](http://www.youtube.com/watch?v=mU1LRAQGpiU)
+<a href="http://www.youtube.com/watch?v=mU1LRAQGpiU" target="_blank"><img src="https://github.com/GemHunt/CoinSorter/blob/master/docs/ReadingCoinDateswithMachineVision.jpg" width="240" height="180" border="10" /></a>
 
 The first proof of concept of this system used a C# project to capture images from a Canon Rebel camera and called MATLAB to preprocess them. A VB project was used to call DIGITS to classify the images and call a HP Power supply to drive a solenoid. These two projects have now been replaced. 
 
