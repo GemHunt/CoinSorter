@@ -4,7 +4,7 @@ High Speed Sorting of Pennies by Type and Date
 
 Sorts coins by solenoid on a conveyor by classifying images with [Caffe](https://github.com/NVIDIA/caffe) &amp;  [DIGITS](https://github.com/NVIDIA/DIGITS)
 
-To understand where this system is heading in the short term see [Prototype Coinsorter Issues](https://github.com/GemHunt/CoinSorter/milestones/Portable%20Prototype%20Coin%20Sorter)
+To understand where this system is heading in the short term see [Hardware Proof of Concept Issues](https://github.com/GemHunt/CoinSorter/milestones/Hardware%20Proof%20of%20Concept)
 
 Check out the [starting point issues](https://github.com/GemHunt/CoinSorter/labels/starting%20point) to see what is currently being worked on.
 
