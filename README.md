@@ -24,6 +24,10 @@ This first two groups of programs and scripts were just a quick proof of concept
 
 For a long term project direction [check out the issues for future milestones.](https://github.com/GemHunt/CoinSorter/milestones/Future%20Milestones) 
 
+On the surface this system may look toy like and have a very narrow focus, but this is not true at all. You can take the basics of this system and use it for all sorts of very practical industrial uses. It’s not just sorting a handful of coins. It scales very quickly to tons of coins (or any parts for that matter). I have no doubt the system will get to the thousands of users range and be used for uses I could never envision. 
+
+Nothing remotely like it exists that is very low cost or open source. There are undocumented one off builds for all kinds of part handling. Probably the closest thing would be the open source pick and place machines. I have yet to see any personal or open source part handling systems that use the current crop of deep learning tools. MakerBot did have a conveyor on one of their machines, but this was a blind setup. 
+
 Feel free to contact me if you have questions about this project. 
 
 Thanks!  
