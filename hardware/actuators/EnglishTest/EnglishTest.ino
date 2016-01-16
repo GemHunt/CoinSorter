@@ -14,6 +14,14 @@ void setup() {
   motor1.setSpeed(255);     // set the speed to 200/255
   motor2.setSpeed(255);     // set the speed to 200/255
   inputString.reserve(10);
+  pinMode(A1, OUTPUT);
+  digitalWrite(A1, HIGH);
+  pinMode(A2, OUTPUT);
+  digitalWrite(A2, HIGH);
+  pinMode(A3, OUTPUT);
+  digitalWrite(A3, HIGH);
+  pinMode(A4, OUTPUT);
+  digitalWrite(A4, HIGH);
 }
  
 void loop() {
@@ -22,7 +30,7 @@ void loop() {
 
 void readIRSensor() {
    Serial.println(analogRead(sensorPin));
-  int irSensorVoltageCutoff = 750;
+  int irSensorVoltageCutoff = 50;
   // the average power of the sensor through an ever more dirty belt. 
   // Heck this is the dirty belt sensor!
   //irSensorVoltageCutoff needs to adjust, maybe it should be set on the PC side?
@@ -43,12 +51,10 @@ void readIRSensor() {
 } 
 
 void toggle() {
-     delay(125); 
-    motor1.run(FORWARD);      // turn it on going forward
-    motor2.run(FORWARD);      // turn it on going forward
+     delay(70); 
+     digitalWrite(A1, LOW);
     delay(30);  
-    motor1.run(RELEASE);      // stopped
-    motor2.run(RELEASE);      // stopped  
+     digitalWrite(A1, HIGH);
 }
 
 
