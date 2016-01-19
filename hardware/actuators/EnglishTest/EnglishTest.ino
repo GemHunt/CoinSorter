@@ -6,13 +6,13 @@ String inputString = "";         // a string to hold incoming data
 boolean stringComplete = false;  // whether the string is complete
 int toggleCountdown = 0;
 int sensorPin = A0;    // select the input pin for the potentiometer
+int CoinPin = A5;    // select the input pin for the potentiometer
 int sensorValue = 0;  // variable to store the value coming from the sensor
 int offCount = 0;
 
 void setup() {
   Serial.begin(250000);           
-  motor1.setSpeed(255);     // set the speed to 200/255
-  motor2.setSpeed(255);     // set the speed to 200/255
+ 
   inputString.reserve(10);
   pinMode(A1, OUTPUT);
   digitalWrite(A1, HIGH);
@@ -22,14 +22,19 @@ void setup() {
   digitalWrite(A3, HIGH);
   pinMode(A4, OUTPUT);
   digitalWrite(A4, HIGH);
+   
 }
  
 void loop() {
    readIRSensor();
+    motor1.setSpeed(50);     // set the speed to 200/255
+  motor2.setSpeed(50);     // set the speed to 200/255
+   motor1.run(FORWARD);      // turn it on going forward
+    motor2.run(FORWARD);      // turn it on going forward
 }
 
 void readIRSensor() {
-   Serial.println(analogRead(sensorPin));
+   Serial.println(analogRead(CoinPin));
   int irSensorVoltageCutoff = 50;
   // the average power of the sensor through an ever more dirty belt. 
   // Heck this is the dirty belt sensor!
