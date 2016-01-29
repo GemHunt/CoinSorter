@@ -5,7 +5,7 @@
 *.caffemodel
 
 ## Ignore autosaves:
-*autosave.3dm
+*_autosave.3dm
 
 
 ## Ignore Visual Studio temporary files, build results, and
