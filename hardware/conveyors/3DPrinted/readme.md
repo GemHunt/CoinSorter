@@ -1,4 +1,7 @@
-﻿**Three types of conveyor ends have been used successfully:**
+﻿I don't think I will use this 3D Printed style again. The laser cut version is simpler and quicker to make. 
+
+
+**Three types of conveyor ends have been used successfully:**
 * Motor end in ¾” MDF
 * Pulley end in ¾ MDF
 * Pulley end in ¼ MDF
