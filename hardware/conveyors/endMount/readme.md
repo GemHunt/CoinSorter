@@ -24,27 +24,31 @@ Only snug screws until everything it together, then finish tightening.
 
 Make a Belt:
 The glossy side should be the inside on the belt. The mat side is stickier. 
-Cut 30mm wide belt 8 5/8 inches long
+Cut 30mm wide belt 8 5/8” (17 5/8”) inches long
 Heat seal (bond) smooth side in:
-Scotch tape 3mm overlap. 
+I use an 8" $25 heat sealer for poly bags with a 2mm element.(3mm would be better)(A custom bonding rig would be nicer).
+Scotch tape a 2-3mm overlap. 
 Turn it inside out so the tape side is opposite the heating element before heat sealing. 
 Heat seal 2 times to get the both side of the 3mm whole seam. 
 Remove Tape
 Try not to heat seal a single layer area as this will thin it out. 
 
 Assembly Instructions:
-Add the 17mm tubing coupling to the motor shaft. 
+	Put the 58mm shaft on the motor:
+	Add the 17mm tubing coupling to the motor shaft. 
 	Press 7mm on the motor (most of the way) 
-	Add the 58mm 2mm shaft to the tubing, pressing about 7mm on. 
+	Add the 58mm 2mm shaft to this tubing, pressing about 7mm on. 
 	There should be about a 2mm of tubing in the middle. 
 Mount the motor:
 To the Motor Rail 
 With M3x.5 x 8mm long screws.
 Cleaner side to the motor face. 
-With red dot in back. (It doesn’t matter) 
 Screw on top plate to motor rail
 Add solenoid plate to motor rail with one 5/8” screw
 Add Middle Rail to top plate with 2 screws
+
+Change this: it’s easier to then put on shafts, then belt, then side rail. 
+
 If using guides:	
 Add them with three 5/8” screws instead of two ½” screws
 Guides need shim washers between the top plate and the guide
