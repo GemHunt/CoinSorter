@@ -24,11 +24,11 @@ void loop() {
     delay(50); 
     //motor1.run(BACKWARD);      // turn it on going forward
     //motor2.run(BACKWARD);      // turn it on going forward
+    //motor1.run(RELEASE);      // turn it on going forward
+    //delay(30); 
     motor1.run(RELEASE);      // turn it on going forward
-    delay(15); 
-    motor2.run(RELEASE);      // turn it on going forward
-   //motor3.run(RELEASE);      // turn it on going forward
-    delay(40); 
+   motor2.run(RELEASE);      // turn it on going forward
+   delay(200); 
     //} 
 //motor1.run(RELEASE); 
 //delay(500);
