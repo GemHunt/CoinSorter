@@ -8,12 +8,6 @@ To understand where this system is heading in the short term see [Hardware Proof
 
 Check out the [starting point issues](https://github.com/GemHunt/CoinSorter/labels/starting%20point) to see what is currently being worked on.
 
-Click below to watch videos of it in action(broken, will work soon):
-
-<a href="http://www.youtube.com/watch?v=_fJcIxWgQbs" target="_blank"><img src="http://img.youtube.com/vi/_fJcIxWgQbs/0.jpg"  width="240" height="180" border="10" /></a>
-|
-<a href="http://www.youtube.com/watch?v=mU1LRAQGpiU" target="_blank"><img src="https://github.com/GemHunt/CoinSorter/blob/master/docs/ReadingCoinDateswithMachineVision.jpg" width="240" height="180" border="10" /></a>
-
 The first proof of concept of this system used a C# project to capture images from a Canon Rebel camera and called MATLAB to preprocess them. A VB project was used to call DIGITS to classify the images and call a HP Power supply to drive a solenoid. These two projects have now been replaced. 
 
 The second proof of concept used C#, OpenCV, a webcam, Arduino solenoid control, and local classification with Caffe on Windows 10. Here is a [poster](https://github.com/GemHunt/CoinSorter/blob/master/docs/GTC%20Poster.pdf) and a [Power Point](https://github.com/GemHunt/CoinSorter/blob/master/docs/Deep%20Learning%20with%20Caffe%20%26%20DIGITS%20for%20Robotic.pptx) that describes the 2nd version.
