@@ -1,8 +1,31 @@
 ﻿# CoinSorter
 
-High Speed Sorting of Pennies by Type and Date
+CoinSorter is an open source coin inspection system. It sorts coins by solenoid on conveyors by classifying images with models created using [Caffe](https://github.com/NVIDIA/caffe) &amp; [DIGITS](https://github.com/NVIDIA/DIGITS) and controlled with Python, OpenCV, and Arduino. 
 
-Sorts coins by solenoid on a conveyor by classifying images with [Caffe](https://github.com/NVIDIA/caffe) &amp;  [DIGITS](https://github.com/NVIDIA/DIGITS)
+**The Goal of CoinSorter is to be a:**
+
+High speed coin sorting system.
+
+Starting point for automated coin grading & counterfeit detection. 
+
+Study tool for the classification of images using Deep Learning.
+
+System costing less than $200 as a kit excluding the cost of the computer and optional GPU card and less than $50 in a quantity of 20 systems provided you have free access to a laser cutter.
+
+Low cost, real world example of an open high speed machine vision system that can be used as a starting point for handling, inspection, and manufacture of other small parts.
+
+**Short term goal:**
+
+To sort 2 pennies a second by type, date and mintmark. 
+
+**Usage:**
+
+Really there is nothing working to use or download at this point. A new Python version has just been started. 
+
+**Past Progress:**
+	2 working proof of concepts have been built proving Caffe & DIGITS is an excellent choice to build small fully connected models using LeNet networks. 
+	Over 20 prototype conveyors have been build each improving on the last design with around 150,000 coins imaged so far. 
+	The full hardware setup as is mostly designed that others can start building it. 
 
 To understand where this system is heading in the short term see [Hardware Proof of Concept Issues](https://github.com/GemHunt/CoinSorter/milestones/Hardware%20Proof%20of%20Concept)
 
