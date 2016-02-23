@@ -23,7 +23,7 @@ CoinSorter is an open source coin inspection system. It sorts coins by solenoid 
 * There is nothing working to use or download at this point.  
 * [View the old parts list and documentation](https://github.com/GemHunt/CoinSorter/tree/master/hardware/conveyors/conveyors.md) for the conveyors and the [CAD files](https://github.com/GemHunt/CoinSorter/tree/master/hardware/conveyors/). 
 
-**How to Contribute**
+**How to Contribute & Participate**
 * Call me @ 630-830-6640
 
 **Past Progress:**
