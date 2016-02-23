@@ -4,38 +4,34 @@ CoinSorter is an open source coin inspection system. It sorts coins by solenoid 
 
 **The Goal of CoinSorter is to be a:**
 
-High speed coin sorting system.
-
-Starting point for automated coin grading & counterfeit detection. 
-
-Study tool for the classification of images using Deep Learning.
-
-System costing less than $200 as a kit excluding the cost of the computer and optional GPU card and less than $50 in a quantity of 20 systems provided you have free access to a laser cutter.
-
-Low cost, real world example of an open high speed machine vision system that can be used as a starting point for handling, inspection, and manufacture of other small parts.
+* High speed coin sorting system.
+* Starting point for automated coin grading & counterfeit detection. 
+* Study tool for the classification of images using Deep Learning.
+* System costing less than $200 as a kit excluding the cost of the computer and optional GPU card and less than $50 in a quantity of 20 systems provided you have free access to a laser cutter.
+* Low cost, real world example of an open high speed machine vision system that can be used as a starting point for handling, inspection, and manufacture of other small parts.
 
 **Short term goal:**
-
-To sort 2 pennies a second by type, date and mintmark. 
+* To sort 2 pennies a second by type, date and mintmark. 
 
 **Usage:**
-
-Really there is nothing working to use or download at this point. A new Python version has just been started. 
+* A new Python version has just been started.
+* There is nothing working to use or download at this point.  
 
 **Past Progress:**
-	2 working proof of concepts have been built proving Caffe & DIGITS is an excellent choice to build small fully connected models using LeNet networks. 
-	Over 20 prototype conveyors have been build each improving on the last design with around 150,000 coins imaged so far. 
-	The full hardware setup as is mostly designed that others can start building it. 
+* 2 working proof of concepts have been built proving Caffe & DIGITS is an excellent choice to build small fully connected models using LeNet networks. 
+* Over 20 prototype conveyors have been build each improving on the last design with around 150,000 coins imaged so far. 
+* The full hardware setup as is mostly designed that others can start building it. 
 
 To understand where this system is heading in the short term see [Hardware Proof of Concept Issues](https://github.com/GemHunt/CoinSorter/milestones/Hardware%20Proof%20of%20Concept)
 
 Check out the [starting point issues](https://github.com/GemHunt/CoinSorter/labels/starting%20point) to see what is currently being worked on.
 
-The first proof of concept of this system used a C# project to capture images from a Canon Rebel camera and called MATLAB to preprocess them. A VB project was used to call DIGITS to classify the images and call a HP Power supply to drive a solenoid. These two projects have now been replaced. 
+**History:**
+* The first proof of concept of this system used a C# project to capture images from a Canon Rebel camera and called MATLAB to preprocess them. A VB project was used to call DIGITS to classify the images and call a HP Power supply to drive a solenoid. These two projects have now been replaced. 
 
-The second proof of concept used C#, OpenCV, a webcam, Arduino solenoid control, and local classification with Caffe on Windows 10. Here is a [poster](https://github.com/GemHunt/CoinSorter/blob/master/docs/GTC%20Poster.pdf) and a [Power Point](https://github.com/GemHunt/CoinSorter/blob/master/docs/Deep%20Learning%20with%20Caffe%20%26%20DIGITS%20for%20Robotic.pptx) that describes the 2nd version.
+* The second proof of concept used C#, OpenCV, a webcam, Arduino solenoid control, and local classification with Caffe on Windows 10. Here is a [poster](https://github.com/GemHunt/CoinSorter/blob/master/docs/GTC%20Poster.pdf) and a [Power Point](https://github.com/GemHunt/CoinSorter/blob/master/docs/Deep%20Learning%20with%20Caffe%20%26%20DIGITS%20for%20Robotic.pptx) that describes the 2nd version.
 
-This first two groups of programs and scripts were just a quick proof of concept to show physical coin sorting. They sorted about 2 pennies a second, continuously. One solenoid and 2 physical bins are currently set up. Using Caffe it’s easy to distinguish between designs, orintation, and dates of coins. For example you can train a convolutional neural network (CNN, what Caffe uses) to determine if a coin image is heads vs tails or say recognize the state on a random US state quarter image. On one of the first models that was built Caffe could tell heads vs tails between US copper pennies 99.9% of the time. This can be done using using [DIGITS](https://github.com/NVIDIA/DIGITS) with default setting of AlexNet with no programming involved! In practice it's more efficient to use smaller image sizes and optimized networks. 
+* This first two groups of programs and scripts were just a quick proof of concept to show physical coin sorting. They sorted about 2 pennies a second, continuously. One solenoid and 2 physical bins are currently set up. Using Caffe it’s easy to distinguish between designs, orintation, and dates of coins. For example you can train a convolutional neural network (CNN, what Caffe uses) to determine if a coin image is heads vs tails or say recognize the state on a random US state quarter image. On one of the first models that was built Caffe could tell heads vs tails between US copper pennies 99.9% of the time. This can be done using using [DIGITS](https://github.com/NVIDIA/DIGITS) with default setting of AlexNet with no programming involved! In practice it's more efficient to use smaller image sizes and optimized networks. 
 
 [View parts list and documentation](https://github.com/GemHunt/CoinSorter/tree/master/hardware/conveyors/conveyors.md) for the conveyors and the [CAD files](https://github.com/GemHunt/CoinSorter/tree/master/hardware/conveyors/). 
 
