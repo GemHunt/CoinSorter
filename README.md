@@ -10,21 +10,26 @@ CoinSorter is an open source coin inspection system. It sorts coins by solenoid 
 * System costing less than $200 as a kit excluding the cost of the computer and optional GPU card and less than $50 in a quantity of 20 systems provided you have free access to a laser cutter.
 * Low cost, real world example of an open high speed machine vision system that can be used as a starting point for handling, inspection, and manufacture of other small parts.
 
-**Short term goal:**
-* To sort 2 pennies a second by type, date and mintmark. 
+**Milestones & Short term goals & tasks:**
+* GitHub milestones and issues are the best place to understand the project's past, present, and future. 
+* These need to be updated... :-)
+* In general the short term goal is to sort 2 pennies a second by type, date and mintmark.  
+* To understand where this system is heading in the short term see [Hardware Proof of Concept Issues](https://github.com/GemHunt/CoinSorter/milestones/Hardware%20Proof%20of%20Concept)
+* For long term project direction [check out the issues for future milestones.](https://github.com/GemHunt/CoinSorter/milestones/Future%20Milestones) 
+* Check out the [starting point issues](https://github.com/GemHunt/CoinSorter/labels/starting%20point) to see what is currently being worked on.
 
 **Usage:**
 * A new Python version has just been started.
 * There is nothing working to use or download at this point.  
+* [View the old parts list and documentation](https://github.com/GemHunt/CoinSorter/tree/master/hardware/conveyors/conveyors.md) for the conveyors and the [CAD files](https://github.com/GemHunt/CoinSorter/tree/master/hardware/conveyors/). 
+
+**How to Contribute**
+* Call me @ 630-830-6640
 
 **Past Progress:**
 * 2 working proof of concepts have been built proving Caffe & DIGITS is an excellent choice to build small fully connected models using LeNet networks. 
 * Over 20 prototype conveyors have been build each improving on the last design with around 150,000 coins imaged so far. 
 * The full hardware setup as is mostly designed that others can start building it. 
-
-To understand where this system is heading in the short term see [Hardware Proof of Concept Issues](https://github.com/GemHunt/CoinSorter/milestones/Hardware%20Proof%20of%20Concept)
-
-Check out the [starting point issues](https://github.com/GemHunt/CoinSorter/labels/starting%20point) to see what is currently being worked on.
 
 **History:**
 * The first proof of concept of this system used a C# project to capture images from a Canon Rebel camera and called MATLAB to preprocess them. A VB project was used to call DIGITS to classify the images and call a HP Power supply to drive a solenoid. These two projects have now been replaced. 
@@ -33,15 +38,12 @@ Check out the [starting point issues](https://github.com/GemHunt/CoinSorter/labe
 
 * This first two groups of programs and scripts were just a quick proof of concept to show physical coin sorting. They sorted about 2 pennies a second, continuously. One solenoid and 2 physical bins are currently set up. Using Caffe it’s easy to distinguish between designs, orintation, and dates of coins. For example you can train a convolutional neural network (CNN, what Caffe uses) to determine if a coin image is heads vs tails or say recognize the state on a random US state quarter image. On one of the first models that was built Caffe could tell heads vs tails between US copper pennies 99.9% of the time. This can be done using using [DIGITS](https://github.com/NVIDIA/DIGITS) with default setting of AlexNet with no programming involved! In practice it's more efficient to use smaller image sizes and optimized networks. 
 
-[View parts list and documentation](https://github.com/GemHunt/CoinSorter/tree/master/hardware/conveyors/conveyors.md) for the conveyors and the [CAD files](https://github.com/GemHunt/CoinSorter/tree/master/hardware/conveyors/). 
+**In Review:**
+* On the surface this system may look toy like and have a very narrow focus, but this is not true at all. You can take the basics of this system and use it for all sorts of very practical industrial uses. It’s not just sorting a handful of coins. It scales very quickly to tons of coins (or any parts for that matter). I have no doubt the system will get to the thousands of users range and be used for uses I could never envision. 
 
-For a long term project direction [check out the issues for future milestones.](https://github.com/GemHunt/CoinSorter/milestones/Future%20Milestones) 
+* Nothing remotely like it exists that is very low cost or open source. There are undocumented one off builds for all kinds of part handling. Probably the closest thing would be the open source pick and place machines. I have yet to see any personal or open source part handling systems that use the current crop of deep learning tools. MakerBot did have a conveyor on one of their machines, but this was a blind setup. Please let me know if you know about other, complete or not, documented open hardware machine vision systems
 
-On the surface this system may look toy like and have a very narrow focus, but this is not true at all. You can take the basics of this system and use it for all sorts of very practical industrial uses. It’s not just sorting a handful of coins. It scales very quickly to tons of coins (or any parts for that matter). I have no doubt the system will get to the thousands of users range and be used for uses I could never envision. 
-
-Nothing remotely like it exists that is very low cost or open source. There are undocumented one off builds for all kinds of part handling. Probably the closest thing would be the open source pick and place machines. I have yet to see any personal or open source part handling systems that use the current crop of deep learning tools. MakerBot did have a conveyor on one of their machines, but this was a blind setup. 
-
-Feel free to contact me if you have questions about this project. 
+**Feel free to contact me if you have questions about this project.**
 
 Thanks!  
 
