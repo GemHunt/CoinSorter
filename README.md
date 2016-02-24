@@ -24,10 +24,10 @@ CoinSorter is an open source coin inspection system. It sorts coins by solenoid 
 * [View the old parts list and documentation](https://github.com/GemHunt/CoinSorter/tree/master/hardware/conveyors/conveyors.md) for the conveyors and the [CAD files](https://github.com/GemHunt/CoinSorter/tree/master/hardware/conveyors/). 
 
 **How to Contribute & Participate**
+* Star and fork the CoinSorter repo! It helps to know people value this system. 
 * Work on, comment, and post new [issues.](https://github.com/GemHunt/CoinSorter/issues)
 * If you have a laser cutter feel free to to build and sell systems yourself.
 * If your into Caffe and don't want to post, just call me @ 630-830-6640.
-* Star and [fork](https://github.com/GemHunt/CoinSorter/network#fork-destination-box) the CoinSorter repo.
 
 **Past Progress:**
 * 2 working proof of concepts have been built proving Caffe & DIGITS is an excellent choice to build small fully connected models using LeNet networks. 
