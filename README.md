@@ -6,7 +6,7 @@ CoinSorter is an open source coin inspection system. It sorts coins by solenoid 
 
 * High speed coin sorting system.
 * Starting point for automated coin grading & counterfeit detection. 
-* Study tool for the classification of images using Deep Learning.
+* Study tool for the classification of images using deep learning.
 * System costing less than $200 as a kit excluding the cost of the computer and optional GPU card and less than $50 in a quantity of 20 systems provided you have free access to a laser cutter.
 * Low cost, real world example of an open high speed machine vision system that can be used as a starting point for handling, inspection, and manufacture of other small parts.
 
@@ -24,7 +24,10 @@ CoinSorter is an open source coin inspection system. It sorts coins by solenoid 
 * [View the old parts list and documentation](https://github.com/GemHunt/CoinSorter/tree/master/hardware/conveyors/conveyors.md) for the conveyors and the [CAD files](https://github.com/GemHunt/CoinSorter/tree/master/hardware/conveyors/). 
 
 **How to Contribute & Participate**
-* Call me @ 630-830-6640
+* Work on, comment, and post new [issues.](https://github.com/GemHunt/CoinSorter/issues)
+* If you have a laser cutter feel free to to build and sell systems yourself.
+* If your into Caffe and don't want to post, just call me @ 630-830-6640.
+* Star and [fork](https://github.com/GemHunt/CoinSorter/network#fork-destination-box) the CoinSorter repo.
 
 **Past Progress:**
 * 2 working proof of concepts have been built proving Caffe & DIGITS is an excellent choice to build small fully connected models using LeNet networks. 
