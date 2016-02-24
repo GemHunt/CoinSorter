@@ -12,11 +12,9 @@ CoinSorter is an open source coin inspection system. It sorts coins by solenoid 
 
 **Milestones & Short term goals & tasks:**
 * GitHub milestones and issues are the best place to understand the project's past, present, and future. 
-* These need to be updated... :-)
-* In general the short term goal is to sort 2 pennies a second by type, date and mintmark.  
-* To understand where this system is heading in the short term see [Hardware Proof of Concept Issues](https://github.com/GemHunt/CoinSorter/milestones/Hardware%20Proof%20of%20Concept)
-* For long term project direction [check out the issues for future milestones.](https://github.com/GemHunt/CoinSorter/milestones/Future%20Milestones) 
+* In general the short term goal is to [sort 2 pennies a second by type, date and mintmark.](https://github.com/GemHunt/CoinSorter/issues/57)  
 * Check out the [starting point issues](https://github.com/GemHunt/CoinSorter/labels/starting%20point) to see what is currently being worked on.
+* For long term project direction [check out the issues for future milestones.](https://github.com/GemHunt/CoinSorter/milestones/Future%20Milestones) 
 
 **Usage:**
 * A new Python version has just been started.
