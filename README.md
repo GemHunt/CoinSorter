@@ -22,6 +22,7 @@ CoinSorter is an open source coin inspection system. It sorts coins by solenoid 
 * [View the old parts list and documentation](https://github.com/GemHunt/CoinSorter/tree/master/hardware/conveyors/conveyors.md) for the conveyors and the [CAD files](https://github.com/GemHunt/CoinSorter/tree/master/hardware/conveyors/). 
 
 **How to Contribute & Participate**
+* Buy and build the kit yourself. (I need to post the kit on eBay...)
 * Star and fork the CoinSorter repo! It helps to know people value this system. 
 * Work on, comment, and post new [issues.](https://github.com/GemHunt/CoinSorter/issues)
 * If you have a laser cutter feel free to to build and sell systems yourself.
@@ -32,7 +33,7 @@ CoinSorter is an open source coin inspection system. It sorts coins by solenoid 
 * Over 20 prototype conveyors have been build each improving on the last design with around 150,000 coins imaged so far. 
 * The full hardware setup as is mostly designed that others can start building it. 
 
-**History:**
+**Detailed History:**
 * The first proof of concept of this system used a C# project to capture images from a Canon Rebel camera and called MATLAB to preprocess them. A VB project was used to call DIGITS to classify the images and call a HP Power supply to drive a solenoid. These two projects have now been replaced. 
 
 * The second proof of concept used C#, OpenCV, a webcam, Arduino solenoid control, and local classification with Caffe on Windows 10. Here is a [poster](https://github.com/GemHunt/CoinSorter/blob/master/docs/GTC%20Poster.pdf) and a [Power Point](https://github.com/GemHunt/CoinSorter/blob/master/docs/Deep%20Learning%20with%20Caffe%20%26%20DIGITS%20for%20Robotic.pptx) that describes the 2nd version. [You can download it here.](https://github.com/GemHunt/CoinSorter/releases/tag/v0.2) 
