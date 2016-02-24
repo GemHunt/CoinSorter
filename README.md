@@ -17,21 +17,21 @@ CoinSorter is an open source coin inspection system. It sorts coins by solenoid 
 * For long term project direction [check out the issues for future milestones.](https://github.com/GemHunt/CoinSorter/milestones/Future%20Milestones) 
 
 **Usage:**
-* A new Python version has just been started.
-* There is nothing working to use or download at this point.  
+* A new Python version is being planned.
+* As the old C# code is being dumped there no code working to use or download at this point.  
+* The new conveyors need to be documented and linked here. 
 * [View the old parts list and documentation](https://github.com/GemHunt/CoinSorter/tree/master/hardware/conveyors/conveyors.md) for the conveyors and the [CAD files](https://github.com/GemHunt/CoinSorter/tree/master/hardware/conveyors/). 
 
 **How to Contribute & Participate**
 * Buy and build the kit yourself. (I need to post the kit on eBay...)
-* Star and fork the CoinSorter repo! It helps to know people value this system. 
 * Work on, comment, and post new [issues.](https://github.com/GemHunt/CoinSorter/issues)
 * If you have a laser cutter feel free to to build and sell systems yourself.
-* If your into Caffe and don't want to post, just call me @ 630-830-6640.
+* If your into Caffe and don't want to post, just call me at 630-830-6640.
 
 **Past Progress:**
-* 2 working proof of concepts have been built proving Caffe & DIGITS is an excellent choice to build small fully connected models using LeNet networks. 
+* 2 working proof of concepts have been built proving Caffe & DIGITS is an excellent choice for coin images using small fully connected LeNet style networks.
 * Over 20 prototype conveyors have been build each improving on the last design with around 150,000 coins imaged so far. 
-* The full hardware setup as is mostly designed that others can start building it. 
+* The full hardware setup is matured enough that others can start building and using it. 
 
 **Detailed History:**
 * The first proof of concept of this system used a C# project to capture images from a Canon Rebel camera and called MATLAB to preprocess them. A VB project was used to call DIGITS to classify the images and call a HP Power supply to drive a solenoid. These two projects have now been replaced. 
