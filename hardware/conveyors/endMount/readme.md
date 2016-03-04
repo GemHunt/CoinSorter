@@ -25,15 +25,17 @@ Only snug screws until everything it together, then finish tightening.
 Make a Belt:
 The glossy side should be the inside on the belt. The mat side is stickier. 
 Cut 30mm wide belt:
+	20cm Feeder/scanner Conveyor
 	22cm short conveyor
 	44.5cm hopper & accumulator conveyors
 	104cm scanning conveyor
 
 Heat seal (bond) smooth side in (Bright lighting helps)
 I use an 8" $25 heat sealer for poly bags with a 2mm element.(3mm would be better)(A custom bonding rig would be nicer).
-Scotch tape a 2-3mm overlap. 
+Scotch tape a 1mm overlap. 
 Turn it inside out so the tape side is opposite the heating element before heat sealing. 
-Heat seal 2 times to get the both side of the 3mm whole seam. 
+Heat seal 2 times to get the both side of the 1mm whole seam for .3mm thick
+Heat seal 1 time for .15mm thick 
 	On the dial I use a 2 setting for 0.15mm and 4.5 setting for 0.3mm
 Remove Tape
 Try not to heat seal a single layer area as this will thin it out. 
