@@ -7,33 +7,25 @@ AF_DCMotor motor4(4, MOTOR12_64KHZ); // create motor #2, 64KHz pwm
 
 void setup() {
   Serial.begin(250000);           
-   motor1.setSpeed(255);     // set the speed to 200/255
+  motor1.setSpeed(255);     // set the speed to 255/255
   motor2.setSpeed(255);     // set the speed to 200/255
-  //motor3.setSpeed(255);     // set the speed to 200/255
-  //motor4.setSpeed(255);     // set the speed to 200/255
-   //motor1.run(FORWARD);      // turn it on going forward
-    //motor2.run(FORWARD);      // turn it on going forward
+  motor3.setSpeed(255);     // set the speed to 200/255
+  motor4.setSpeed(255);     // set the speed to 200/255
 }
  
 void loop() {
- //for (int i=0; i <= 10; i++){
-    motor1.run(FORWARD);      // turn it on going forward
-    motor2.run(FORWARD);      // turn it on going forward
-    //motor3.run(FORWARD);      // turn it on going forward
-    //motor4.run(FORWARD);      // turn it on going forward
-    delay(25); 
-    //motor1.run(BACKWARD);      // turn it on going forward
-    //motor2.run(BACKWARD);      // turn it on going forward
-    //motor1.run(RELEASE);      // turn it on going forward
-    //delay(30); 
-    motor1.run(RELEASE);      // turn it on going forward
-   motor2.run(RELEASE);      // turn it on going forward
-   delay(25); 
-    //} 
-//motor1.run(RELEASE); 
-//delay(500);
-
-   
+    motor4.run(RELEASE);
+    motor1.run(FORWARD);      
+    delay(100); 
+    motor1.run(RELEASE);
+    motor2.run(FORWARD);      
+    delay(100); 
+    motor2.run(RELEASE);
+    motor3.run(FORWARD);      
+    delay(100); 
+    motor3.run(RELEASE);
+    motor4.run(FORWARD);      
+    delay(100); 
 }
 
 
