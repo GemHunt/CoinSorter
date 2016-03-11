@@ -29,9 +29,9 @@ CoinSorter is an open source coin inspection system. It sorts coins by solenoid 
 * If your into Caffe and don't want to post, just call me at 630-830-6640.
 
 **Past Progress:**
-* 2 working proof of concepts have been built proving Caffe & DIGITS is an excellent choice for coin images using small fully connected LeNet style networks.
+* 2 working proof of concepts have been built proving Caffe & DIGITS is an excellent choice for coin image classification using small fully connected LeNet style networks.
 * Over 20 prototype conveyors have been build each improving on the last design with around 150,000 coins imaged so far. 
-* The full hardware setup is matured enough that others can start building and using it. 
+* The full hardware setup is mature enough that others can start building and using it. 
 
 **Detailed History:**
 * The first proof of concept of this system used a C# project to capture images from a Canon Rebel camera and called MATLAB to preprocess them. A VB project was used to call DIGITS to classify the images and call a HP Power supply to drive a solenoid. These two projects have now been replaced. 
