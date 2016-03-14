@@ -12,9 +12,9 @@ void setup() {
 }
  
 void loop() {
-    //inputMotor.run(FORWARD);
+    inputMotor.run(FORWARD);
     //topLights.run(FORWARD);
-    bottomLights.run(FORWARD);
+    //bottomLights.run(FORWARD);
     //motor4.run(RELEASE);
     //motor1.run(FORWARD);      
 }
