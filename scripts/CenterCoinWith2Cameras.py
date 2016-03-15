@@ -19,8 +19,8 @@ bottomXOffset = -70
 bottomYOffset = 42
 
 
-coinSquareRadius = int(math.sqrt(.5) * coinRadius) - 12
-edgeCropRadius = 14
+coinSquareRadius = int(math.sqrt(.5) * coinRadius) 
+edgeCropRadius = 28
 #topWidth = 548 * 2
 #topHeight = 411 * 2
 #bottomWidth = 592 * 2
@@ -58,11 +58,11 @@ def interactive_drawing(event,x,y,flags,param):
         if x > 820:
             mouseX = 820
 
-        if y < 356:
-            mouseY = 356
+        if y < 200:
+            mouseY = 200
 
-        if y > 367:
-            mouseY = 367
+        if y > 500:
+            mouseY = 500
        
 
     if event==cv2.EVENT_LBUTTONDOWN:
