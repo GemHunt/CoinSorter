@@ -3,7 +3,7 @@ import cv2
 import math
 import serial
 
-imageID = 30000
+imageID = 32226
 filePath = 'G:/2Camera/'
 
 
@@ -25,9 +25,15 @@ while(True):
     while True:
         if ser.inWaiting() > 0:
             break
-
     ret, top = topCamera.read()
     ret, bottom = bottomCamera.read()
+    if bottom[100,100,2] == 0: 
+        print 'reset try'
+        bottomCamera = cv2.VideoCapture(1)
+        bottomCamera.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+        bottomCamera.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+        ret, bottom = bottomCamera.read()
+    
     filename = filePath + 'raw/' + str(imageID) + '.png'
     cv2.imwrite(filename,top)
     imageID +=1

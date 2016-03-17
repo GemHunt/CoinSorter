@@ -11,7 +11,7 @@ void loop() {
     digitalWrite(A4,LOW); 
     delay(150);
     digitalWrite(A4,HIGH); 
-    delay(175);
+    delay(190);
     Serial.println(1);
     delay(40);
 }
