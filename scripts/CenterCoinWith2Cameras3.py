@@ -1,3 +1,4 @@
+#This is quick & dirty script to label the center of the pennies. 
 import numpy as np
 import cv2
 import math
