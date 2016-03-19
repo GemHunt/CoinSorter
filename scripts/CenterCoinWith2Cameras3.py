@@ -2,10 +2,7 @@
 import numpy as np
 import cv2
 import math
-import serial
 import sqlite3
-
-
 
 global mouseX, mouseY, imageID, conn
 conn = sqlite3.connect('G:/2Camera/coins.db')
@@ -14,16 +11,13 @@ mouseY = 0
 imageID = 30004
 filePath = 'G:/2Camera/'
 
-#topWidth = int(1920 * .67)
-#topHeight = int(1080 * .67)
 topWidth = 1280
 topHeight = 720
 
 coinRadius = 356
 
-#At X = 602: this will get reset anyway...
-bottomWidth = 1384 #int(1280 * 1.08)
-bottomHeight = 782 # int(720 * 1.08)
+bottomWidth = 1384
+bottomHeight = 782
 bottomXOffset = -78
 bottomYOffset = 45
 
@@ -65,8 +59,6 @@ def interactive_drawing(event,x,y,flags,param):
         imageID += 2
     if event==cv2.EVENT_MBUTTONDOWN:
         imageID -= 2
-      
-        
     return x,y
 
 cv2.setMouseCallback('top',interactive_drawing)
@@ -102,53 +94,4 @@ while(True):
      
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
-
-
-conn.close()
 cv2.destroyAllWindows()
-
-
-
-    
-"""
-    x1 = mouseX+coinSquareRadius-edgeCropRadius
-    y1 = mouseY-coinSquareRadius-edgeCropRadius
-    x2 = mouseX+coinSquareRadius+edgeCropRadius
-    y2 = mouseY-coinSquareRadius+edgeCropRadius
-    edgeCrop1 = top[y1:y2,x1:x2] 
-    #cv2.rectangle(top,(x1,y1),(x2,y2),(0,255,0))
-
-    x1 = mouseX-coinSquareRadius-edgeCropRadius
-    y1 = mouseY-coinSquareRadius-edgeCropRadius
-    x2 = mouseX-coinSquareRadius+edgeCropRadius
-    y2 = mouseY-coinSquareRadius+edgeCropRadius
-    edgeCrop2 = top[y1:y2,x1:x2] 
-    #cv2.rectangle(top,(x1,y1),(x2,y2),(0,255,0))
-
-    x1 = mouseX-coinSquareRadius-edgeCropRadius
-    y1 = mouseY+coinSquareRadius-edgeCropRadius
-    x2 = mouseX-coinSquareRadius+edgeCropRadius
-    y2 = mouseY+coinSquareRadius+edgeCropRadius
-    edgeCrop3 = top[y1:y2,x1:x2] 
-    #cv2.rectangle(top,(x1,y1),(x2,y2),(0,255,0))
-
-    x1 = mouseX+coinSquareRadius-edgeCropRadius
-    y1 = mouseY+coinSquareRadius-edgeCropRadius
-    x2 = mouseX+coinSquareRadius+edgeCropRadius
-    y2 = mouseY+coinSquareRadius+edgeCropRadius
-    edgeCrop4 = top[y1:y2,x1:x2] 
-    #cv2.rectangle(top,(x1,y1),(x2,y2),(0,255,0))
-
-    edgeCropT = np.concatenate((edgeCrop2, edgeCrop1), axis=1)
-    edgeCropB = np.concatenate((edgeCrop3, edgeCrop4), axis=1)
-    edgeCrops = np.concatenate((edgeCropT, edgeCropB), axis=0)
-
-    filename = filePath + 'crops/' + str(imageID) + '.png'
-    cv2.imwrite(filename,top[mouseY -coinRadius:mouseY + coinRadius,mouseX -coinRadius :mouseX +coinRadius] )
-    filename = filePath + 'crops/' + str(imageID) + '.png'
-    cv2.imwrite(filename,bottom[bottomY -coinRadius:bottomY + coinRadius,bottomX -coinRadius :bottomX +coinRadius] )
-    cv2.imwrite(filename,bottom)
-"""
-
-   
-
