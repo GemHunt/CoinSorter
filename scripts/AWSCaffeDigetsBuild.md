@@ -161,6 +161,8 @@ bash
 Installing DIGITS
 cd ~
 git clone https://github.com/NVIDIA/DIGITS.git digits   
+	or with lmbd support
+	git clone -b dev/lmdb-inference --single-branch https://github.com/gheinrich/DIGITS.git digits
 cd digits
 sudo apt-get install graphviz gunicorn
 
