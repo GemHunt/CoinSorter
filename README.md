@@ -4,8 +4,9 @@ CoinSorter is an open source coin inspection system. It sorts coins by solenoid 
 
 **The Goal of CoinSorter is to be a:**
 
-* High speed coin sorting system.
-* Starting point for automated coin grading & counterfeit detection. 
+* Image collection system for a stand-alone automated coin grading & counterfeit detection app
+* High speed coin scanning, inspection, and sorting system
+* Tool for finding rare coins
 * Study tool for the classification of images using deep learning.
 * System costing less than $200 as a kit excluding the cost of the computer and optional GPU card and less than $50 in a quantity of 20 systems provided you have free access to a laser cutter.
 * Low cost, real world example of an open high speed machine vision system that can be used as a starting point for handling, inspection, and manufacture of other small parts.
