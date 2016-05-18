@@ -11,6 +11,10 @@ CoinSorter is an open source coin inspection system. It sorts coins by solenoid 
 * System costing less than $200 as a kit excluding the cost of the computer and optional GPU card and less than $50 in a quantity of 20 systems provided you have free access to a laser cutter.
 * Low cost, real world example of an open high speed machine vision system that can be used as a starting point for handling, inspection, and manufacture of other small parts.
 
+|Clear Belt & Cameras Removed| Scanning with a Center Cutout| Top and Bottom Camera Closeup|
+| --- | --- | --- |
+|![Sorting](https://github.com/GemHunt/CoinSorter/blob/master/hardware/conveyors/scanning/SortingSmall.jpg "Sorting")|![Sorting](https://github.com/GemHunt/CoinSorter/blob/master/hardware/conveyors/scanning/2CameraScanningSmall.jpg "Sorting")|![Sorting](https://github.com/GemHunt/CoinSorter/blob/master/hardware/conveyors/scanning/2CameraCloseUpSmall.jpg "Sorting")|
+
 **Milestones & Short term goals & tasks:**
 * GitHub milestones and issues are the best place to understand the project's past, present, and future. 
 * In general the short term goal is to [sort 2 pennies a second by type, date and mintmark.](https://github.com/GemHunt/CoinSorter/issues/57)  
