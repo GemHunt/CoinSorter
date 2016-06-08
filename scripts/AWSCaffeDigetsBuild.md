@@ -1,4 +1,4 @@
-﻿I have used this 4 times:
+I have used this 5 times:
 
 1.) I(Paul Krush) started with this, by Raffael Vogler:
 GPU Powered DeepLearning with NVIDIA DIGITS on EC2:
@@ -16,11 +16,15 @@ http://www.joyofdata.de/blog/gpu-powered-deeplearning-with-nvidia-digits/
 		cuDnn is now "prod" (not rc) 
 		cuda 7.5 is now installing by default
 		udo was needed before Caffe requirements
+5.) Rebuilt the same hardware: 	
+	ubuntu 14.04, CUDA 8RC, CuDnn 5.0 
+	So this updated to new versions, got the box ready for pascal cards (4 gtx 1080's or 1070's for me) 
+
 
 I think Nivida is saying they have an web-installer that does better. I don't see how?
 
-I use ModaXterm(Free) instead of Putty because there was some sort of issue with 
-	DIGITS needing an X-Server. Login: ubuntu
+I use ModaXterm(Free) on Windows instead of Putty because there was some sort of issue with 
+	DIGITS needing an X-Server. 
 *************************************************************************
 ```
 #This is written as a script, but I don't see how you could run it as one...
@@ -38,7 +42,7 @@ I use ModaXterm(Free) instead of Putty because there was some sort of issue with
 #As soon as you have the okay from them – download cuDNN and upload it to your instance.
 
 #Paul's Comment:  If you going through this much trouble, 
-#I would just register as a developer and download CuDnn 3 first. 
+#I would just register as a developer and download CuDnn first. 
 
 
 #FTP Install Notes
@@ -51,6 +55,7 @@ I use ModaXterm(Free) instead of Putty because there was some sort of issue with
 #Make sure 20-21 and 1024-1048 is open to your IP
 cd ~
 sudo apt-get update
+sudo apt-get dist-upgrade
 sudo apt-get install vsftpd
 
 sudo vi /etc/vsftpd.conf
@@ -64,6 +69,10 @@ port_enable=YES
 pasv_addr_resolve=YES
 write_enable=YES
 
+#For local servers just these lines needed to be enabled:
+write_enable=YES
+local_umask=022
+
 #Change it to ubuntu password to something: 
 sudo passwd ubuntu
 sudo service vsftpd restart
@@ -74,25 +83,20 @@ cd ~
 sudo apt-get update
 sudo apt-get dist-upgrade
 
-#Installing CUDA 7
+#Installing CUDA 8RC
 #Installation of required tools
 #A menu pops up, and I just tell it to keep the local version:
 sudo apt-get install -y gcc g++ gfortran build-essential \
   git wget linux-image-generic libopenblas-dev python-dev \
   python-pip python-nose python-numpy python-scipy
  
-# downloading CUDA 7
-sudo wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_7.0-28_amd64.deb
-
-# installing CUDA
-sudo dpkg -i cuda-repo-ubuntu1404_7.0-28_amd64.deb
- 
-#Does this do anthing here:
-sudo apt-get update
-sudo apt-get dist-upgrade
+# downloading CUDA 8 RC
+Download cuda-repo-ubuntu1404-8-0-rc_8.0.27-1_amd64.deb from the NVidia site (You have to register)
+# installing CUDA 8 RC
+sudo dpkg -i cuda-repo-ubuntu1404-8-0-rc_8.0.27-1_amd64.deb
 
 sudo apt-get install cuda
- 
+
 # setting the environment variables so CUDA will be found
 echo -e "\nexport PATH=/usr/local/cuda/bin:$PATH" >> .bashrc
 echo -e "\nexport LD_LIBRARY_PATH=/usr/local/cuda/lib64" >> .bashrc
@@ -100,24 +104,25 @@ echo -e "\nexport LD_LIBRARY_PATH=/usr/local/cuda/lib64" >> .bashrc
 sudo reboot
  
 # installing the samples and checking the GPU
-cuda-install-samples-7.5.sh ~/
-cd NVIDIA\_CUDA-7.5\_Samples/1\_Utilities/deviceQuery  
-make  
+cuda-install-samples-8.0.sh ~/
+cd NVIDIA\_CUDA-8.0\_Samples/1\_Utilities/deviceQuery  
+make 
 ./deviceQuery
 
+#At this point deviceQuery should have given you a bunch of information about the GPU(s?) and passed tests. 
 
-# Install CuDNN v 3
-#You can't just get the file: sudo wget https://developer.nvidia.com/rdp/assets/cudnn-7.0-linux-x64-v3-rc
+# Install CuDNN v5
+#You can't just wget the file
 #You have to register as a developer and manually download. 
 #This is why FTP was the step before this. 
-#So first FTP the cudnn-7.0-linux-x64-v3.0-rc.tgz file to home
+#So first FTP the cudnn-8.0-linux-x64-v5.0-ga.tgz file to home
 
-gzip -d cudnn-7.0-linux-x64-v3.0-prod.tgz
-tar xf cudnn-7.0-linux-x64-v3.0-prod.tar
+gzip -d cudnn-8.0-linux-x64-v5.0-ga.tgz 
+tar xf cudnn-8.0-linux-x64-v5.0-ga.tar
 
 # copy the library files into CUDA's include and lib folders
-sudo cp cuda/include/cudnn.h /usr/local/cuda-7.5/include
-sudo cp cuda/lib64/libcudnn* /usr/local/cuda-7.5/lib64
+sudo cp cuda/include/cudnn.h /usr/local/cuda-8.0/include
+sudo cp cuda/lib64/libcudnn* /usr/local/cuda-8.0/lib64
 
 
 #Installing caffe
