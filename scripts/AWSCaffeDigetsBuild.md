@@ -1,4 +1,4 @@
-I have used this 5 times:
+I have used this 4 times:
 
 1.) I(Paul Krush) started with this, by Raffael Vogler:
 GPU Powered DeepLearning with NVIDIA DIGITS on EC2:
@@ -16,10 +16,11 @@ http://www.joyofdata.de/blog/gpu-powered-deeplearning-with-nvidia-digits/
 		cuDnn is now "prod" (not rc) 
 		cuda 7.5 is now installing by default
 		udo was needed before Caffe requirements
-5.) Rebuilt the same hardware: 	
-	ubuntu 14.04, CUDA 8RC, CuDnn 5.0 
+5.) Rebuilt the same hardware (6/9/2016)  	
+	ubuntu 14.04(Still recommended by Nvidia), CUDA 8RC, CuDnn 5.0 
+	Digits is claiming to be 4.0.0-rc.1.
 	So this updated to new versions, got the box ready for pascal cards (4 gtx 1080's or 1070's for me) 
-
+	Also I uncomment "WITH_PYTHON_LAYER:= 1 so I can use this option in DIGITS	
 
 I think Nivida is saying they have an web-installer that does better. I don't see how?
 
@@ -149,25 +150,27 @@ for req in $(cat requirements.txt); do sudo pip install $req; done
 cd ~/caffe
 cp Makefile.config.example Makefile.config
  
-# In Makefile.config check that USE_CUDNN is set to 1 in case you would
-# like to use it and to 0 if not
-# It defaults to 1 
+# In Makefile.config uncomment USE_CUDNN :1 
+# Also I uncomment "WITH_PYTHON_LAYER:= 1 so I can use this option in digits
+vi Makefile.config
 
 make all
 make py
-make pycaffe
+make pycaffe   (It says nothing to be done?)
 make test
+#This runs a large number of Caffe tests:
 make runtest
 
-echo -e "\nexport CAFFE_HOME=/home/ubuntu/caffe" >> ~/.bashrc
-# load the new environmental variables
+#echo -e "\nexport CAFFE_HOME= ~/caffe" >> ~/.bashrc
+#Load the new environmental variables
 bash
 
 Installing DIGITS
 cd ~
 git clone https://github.com/NVIDIA/DIGITS.git digits   
-	or with lmbd support
-	git clone -b dev/lmdb-inference --single-branch https://github.com/gheinrich/DIGITS.git digits
+#If you don't want the master this is an example of cloning a branch:
+#git clone -b dev/lmdb-inference --single-branch https://github.com/gheinrich/DIGITS.git digits
+
 cd digits
 sudo apt-get install graphviz gunicorn
 
