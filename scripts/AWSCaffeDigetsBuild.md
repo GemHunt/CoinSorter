@@ -1,4 +1,4 @@
-I have used this 4 times:
+I have used this 5 times:
 
 1.) I(Paul Krush) started with this, by Raffael Vogler:
 GPU Powered DeepLearning with NVIDIA DIGITS on EC2:
