@@ -171,7 +171,10 @@ https://github.com/NVIDIA/DIGITS/blob/master/docs/BuildTorch.md
 Installing DIGITS
 cd ~
 DIGITS_HOME=~/digits
-git clone https://github.com/NVIDIA/DIGITS.git $DIGITS_HOME
+#Not this time as I had issues with the currrent build:
+#git clone https://github.com/NVIDIA/DIGITS.git $DIGITS_HOME
+git clone --branch digits-4.0  https://github.com/NVIDIA/DIGITS.git $DIGITS_HOME
+
 #If you don't want the master this is an example of cloning a branch:
 #git clone -b dev/lmdb-inference --single-branch https://github.com/gheinrich/DIGITS.git digits
 
