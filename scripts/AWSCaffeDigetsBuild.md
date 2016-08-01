@@ -165,9 +165,13 @@ make runtest
 #Load the new environmental variables
 bash
 
+Install Torch:
+https://github.com/NVIDIA/DIGITS/blob/master/docs/BuildTorch.md
+
 Installing DIGITS
 cd ~
-git clone https://github.com/NVIDIA/DIGITS.git digits   
+DIGITS_HOME=~/digits
+git clone https://github.com/NVIDIA/DIGITS.git $DIGITS_HOME
 #If you don't want the master this is an example of cloning a branch:
 #git clone -b dev/lmdb-inference --single-branch https://github.com/gheinrich/DIGITS.git digits
 
