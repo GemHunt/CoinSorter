@@ -199,6 +199,9 @@ cd ~
 # start the server
 ./digits/digits-devserver
 
+#To use opencv in python scripts:
+sudo apt-get install python-opencv
+
 #AWS Security group changes: 
 #Make sure port 5000 is open to your IP
 
