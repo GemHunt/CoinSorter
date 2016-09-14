@@ -1,23 +1,35 @@
-#include <AFMotor.h>
-#temp
+// Adafruit Motor shield library
+// copyright Adafruit Industries LLC, 2009
+// this code is public domain, enjoy!
 
-AF_DCMotor motor1(1, MOTOR12_64KHZ); // create motor #1, 64KHz pwm
-AF_DCMotor motor2(2, MOTOR12_64KHZ); // create motor #2, 64KHz pwm
+#include <AFMotor.h>
+
+// Connect a stepper motor with 48 steps per revolution (7.5 degree)
+// to motor port #2 (M3 and M4)
+AF_Stepper motor(48, 1);
 
 void setup() {
-  Serial.begin(250000);           
-  motor1.setSpeed(255);     // set the speed to 200/255
-  motor2.setSpeed(255);     // set the speed to 200/255
+  Serial.begin(9600);           // set up Serial library at 9600 bps
+  Serial.println("Stepper test!");
+
+  motor.setSpeed(250);  // rpm
 }
- 
+
 void loop() {
-  motor1.run(FORWARD);      // turn it on going forward
-  motor2.run(FORWARD);      // turn it on going forward
+/*
+  Serial.println("Single coil steps");
+  motor.step(100, FORWARD, SINGLE); 
+  motor.step(100, BACKWARD, SINGLE); 
 
+  Serial.println("Double coil steps");
+  motor.step(100, FORWARD, DOUBLE); 
+  motor.step(100, BACKWARD, DOUBLE);
+
+  Serial.println("Interleave coil steps");
+  motor.step(100, FORWARD, INTERLEAVE); 
+  motor.step(100, BACKWARD, INTERLEAVE); 
+*/
+  Serial.println("Micrsostep steps");
+  motor.step(250, FORWARD, MICROSTEP); 
+  motor.step(250, BACKWARD, MICROSTEP); 
 }
-
-
-
-
-
-
