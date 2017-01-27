@@ -13,8 +13,8 @@ int motor_command =7;
 void setup() {
   Serial.begin(9600);
   Serial.println("I am starting up!");
-  motor0.setSpeed(1000);  // rpm
-  motor1.setSpeed(1000);  // rpm
+  motor0.setSpeed(100);  // rpm
+  motor1.setSpeed(100);  // rpm
 }
 
 void loop() {
@@ -38,7 +38,7 @@ void loop() {
  
   if (Serial.available() > 0) {
     int input = Serial.parseInt();
-    if (input > 0) {
+    if (input >= 0) {
     motor_command = input; 
     Serial.println(motor_command + 100);
         Serial.println("-");
