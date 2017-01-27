@@ -12,7 +12,7 @@ void setup() {
   Serial.begin(9600);           // set up Serial library at 9600 bps
   Serial.println("Stepper test!");
 
-  motor.setSpeed(150);  // rpm
+  motor.setSpeed(100);  // rpm
 }
 
 void loop() {
@@ -30,7 +30,8 @@ void loop() {
   motor.step(100, BACKWARD, INTERLEAVE); 
 */
   //Serial.println("Micrsostep steps");
-  motor.step(165, FORWARD, MICROSTEP); 
+  motor.step(1, FORWARD, DOUBLE); 
   //motor.step(110, BACKWARD, MICROSTEP); 
+//  delay(100);
 }
 
