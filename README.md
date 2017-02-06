@@ -3,7 +3,7 @@
 CoinSorter is an open source coin inspection system. It sorts coins by solenoid on conveyors by classifying images with models created using [Caffe](https://github.com/NVIDIA/caffe) &amp; [DIGITS](https://github.com/NVIDIA/DIGITS) and controlled with Python, OpenCV, and Arduino. 
 
 
-**This CoinSorter repo is getting out of date, but the project itself is still very active. The biggest news is manual labeling has been eliminated! Designs and coin features sometimes can be found with only 1 example (One Shot Learning). The project has been rebuilt in a number of separate repos:**
+**2/6/17: This CoinSorter repo is getting out of date, but the project itself is still very active. The biggest news is manual labeling has been eliminated! Designs and coin features sometimes can be found with only 1 example (One Shot Learning). The project has been rebuilt in a number of separate repos:**
 * Inital Scanning & Operation: [real-time-coin-id](https://github.com/GemHunt/real-time-coin-id)
 * SAIL: Unsupervised Labeling: [sail](https://github.com/GemHunt/sail)
 * Caffe fork needed for SAIL: [caffe](https://github.com/GemHunt/caffe)
