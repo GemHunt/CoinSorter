@@ -4,12 +4,12 @@ CoinSorter is an open source coin inspection system. It sorts coins by solenoid 
 
 
 **2/6/17: This CoinSorter repo is getting out of date, but the project itself is still very active. The biggest news is manual labeling has been eliminated! Designs and coin features sometimes can be found with only 1 example (One Shot Learning). The project has been rebuilt in a number of separate repos:**
-* Inital Scanning & Operation: [real-time-coin-id](https://github.com/GemHunt/real-time-coin-id)
-* SAIL: Unsupervised Labeling: [sail](https://github.com/GemHunt/sail)
-* Caffe fork needed for SAIL: [caffe](https://github.com/GemHunt/caffe)
-* Lighting: [lighting-augmentation](https://github.com/GemHunt/lighting-augmentation)
-* Conveyors: [conveyors](https://github.com/GemHunt/conveyors)
-* Hopper Metering: [hopper-metering-tool](https://github.com/GemHunt/hopper-metering-tool)
+* Conveyors: [conveyors repo](https://github.com/GemHunt/conveyors)
+* Lighting: [lighting-augmentation repo](https://github.com/GemHunt/lighting-augmentation)
+* Hopper Metering: [hopper-metering-tool repo](https://github.com/GemHunt/hopper-metering-tool)
+* Inital Scanning & Operation: [real-time-coin-id repo](https://github.com/GemHunt/real-time-coin-id)
+* SAIL: Unsupervised Labeling: [sail repo](https://github.com/GemHunt/sail)
+* Caffe fork needed for SAIL: [caffe repo](https://github.com/GemHunt/caffe)
 
 **The Goal of CoinSorter is to be a:**
 
