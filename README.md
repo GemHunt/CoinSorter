@@ -22,7 +22,7 @@ CoinSorter is an open source coin inspection system. It sorts coins by solenoid 
 
 |Clear Belt & Cameras Removed| Scanning with a Center Cutout| Top and Bottom Camera Closeup|
 | --- | --- | --- |
-|![Sorting](https://github.com/GemHunt/CoinSorter/blob/master/hardware/conveyors/old/scanning/SortingSmall.jpg "Sorting")|![Sorting](https://github.com/GemHunt/CoinSorter/blob/master/hardware/conveyors/old/scanning/2CameraScanningSmall.jpg "Sorting")|![Sorting](https://github.com/GemHunt/CoinSorter/blob/master/hardware/conveyors/old/scanning/2CameraCloseUpSmall.jpg "Sorting")|
+|![Sorting](https://github.com/GemHunt/CoinSorter/blob/master/hardware/old/conveyors/scanning/SortingSmall.jpg "Sorting")|![Sorting](https://github.com/GemHunt/CoinSorter/blob/master/hardware/old/conveyors/scanning/2CameraScanningSmall.jpg "Sorting")|![Sorting](https://github.com/GemHunt/CoinSorter/blob/master/hardware/old/conveyors/scanning/2CameraCloseUpSmall.jpg "Sorting")|
 
 **Milestones & Short term goals & tasks:**
 * GitHub milestones and issues are the best place to understand the project's past, present, and future. 
