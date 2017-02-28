@@ -2,4 +2,7 @@ This conveyor design is mostly for scanning. It's also to test out sorting. I ha
 
 The basic hardware of the conveyor is in the conveyors repo:https://github.com/GemHunt/conveyors
 
+![Scanner Conveyor](https://github.com/GemHunt/CoinSorter/blob/master/hardware/scanner-sorter/scanner-conveyor.jpg)
+![Controls](controls.jpg)
+
 
