@@ -17,27 +17,28 @@ void setup() {
 
 void loop() {
   int run1 = 0;
-  run1 = digitalRead(A5)
-  
+  run1 = digitalRead(A5);
+
 
   /*
   Serial.println("Single coil steps");
-  motor.step(100, FORWARD, SINGLE); 
-  motor.step(100, BACKWARD, SINGLE); 
-
-  Serial.println("Double coil steps");
-  motor.step(100, FORWARD, DOUBLE); 
-  motor.step(100, BACKWARD, DOUBLE);
-
-  Serial.println("Interleave coil steps");
-  motor.step(100, FORWARD, INTERLEAVE); 
-  motor.step(100, BACKWARD, INTERLEAVE); 
-*/
+   motor.step(100, FORWARD, SINGLE); 
+   motor.step(100, BACKWARD, SINGLE); 
+   
+   Serial.println("Double coil steps");
+   motor.step(100, FORWARD, DOUBLE); 
+   motor.step(100, BACKWARD, DOUBLE);
+   
+   Serial.println("Interleave coil steps");
+   motor.step(100, FORWARD, INTERLEAVE); 
+   motor.step(100, BACKWARD, INTERLEAVE); 
+   */
   //Serial.println("Micrsostep steps");
-  if (run1 == 1) {
+  if (run1 == LOW) {
     motor.step(1, FORWARD, MICROSTEP); 
   }
   //motor.step(110, BACKWARD, MICROSTEP); 
-//  delay(100);
+  //  delay(100);
 }
+
 
