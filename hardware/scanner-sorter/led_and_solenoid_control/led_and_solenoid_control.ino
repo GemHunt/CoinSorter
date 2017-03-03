@@ -35,7 +35,7 @@ void setup() {
 void loop() {
   if (Serial.available() > 0) {
     int input = Serial.parseInt();
-    if (input > 30) {
+    if (input < NUMPIXELS) {
       //for(int i=0;i < NUMPIXELS;i++){
       pixels.setPixelColor(old_pixel, pixels.Color(0,0,0));
       pixels.show();
