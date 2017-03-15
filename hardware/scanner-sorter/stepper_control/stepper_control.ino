@@ -5,20 +5,22 @@
 #include <AFMotor.h>
 
 // Connect a stepper motor with 48 steps per revolution (7.5 degree)
-// to motor port #2 (M3 and M4)
-AF_Stepper motor(48, 1);
+AF_Stepper motor1(48, 1);
+AF_Stepper motor2(48, 2);
 
 void setup() {
-  Serial.begin(9600);           // set up Serial library at 9600 bps
-  Serial.println("Stepper test!");
   pinMode(A5, INPUT);
-  motor.setSpeed(300);  // rpm
+  pinMode(A4, INPUT);
+  motor1.setSpeed(500);  // rpm
+  motor2.setSpeed(500);  // rpm
 }
 
 void loop() {
   int run1 = 0;
   run1 = digitalRead(A5);
 
+  int run2 = 0;
+  run2 = digitalRead(A4);
 
   /*
   Serial.println("Single coil steps");
@@ -35,8 +37,13 @@ void loop() {
    */
   //Serial.println("Micrsostep steps");
   if (run1 == LOW) {
-    motor.step(1, FORWARD, MICROSTEP); 
+    motor1.step(1, FORWARD, INTERLEAVE); 
   }
+    
+  if (run2 == LOW) {
+    motor2.step(1, FORWARD, INTERLEAVE); 
+  }
+  
   //motor.step(110, BACKWARD, MICROSTEP); 
   //  delay(100);
 }
