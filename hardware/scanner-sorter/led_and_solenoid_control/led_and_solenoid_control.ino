@@ -100,10 +100,10 @@ void loop() {
     if (input==103) {
       digitalWrite(TOP_CONVEYOR_PIN, HIGH);
     } 
-    if (input==102) {
+    if (input==104) {
       digitalWrite(BOTTOM_CONVEYOR_PIN, LOW);
     } 
-    if (input==103) {
+    if (input==105) {
       digitalWrite(BOTTOM_CONVEYOR_PIN, HIGH);
     } 
     if (Serial.read() == '\n') {};
