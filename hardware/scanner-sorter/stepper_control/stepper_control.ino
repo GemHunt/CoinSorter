@@ -36,14 +36,16 @@ void loop() {
    motor.step(100, BACKWARD, INTERLEAVE); 
    */
   //Serial.println("Micrsostep steps");
-  if (run1 == LOW) {
-    motor1.step(1, FORWARD, INTERLEAVE); 
-  }
-    
-  if (run2 == LOW) {
-    motor2.step(1, FORWARD, INTERLEAVE); 
-  }
   
+  for (int x=0;x<20;x++){
+    if (run1 == LOW) {
+      motor1.step(1, FORWARD, INTERLEAVE); 
+    }
+      
+    if (run2 == LOW) {
+      motor2.step(1, FORWARD, INTERLEAVE); 
+    }
+  }
   //motor.step(110, BACKWARD, MICROSTEP); 
   //  delay(100);
 }
