@@ -11,8 +11,8 @@ AF_Stepper motor2(48, 2);
 void setup() {
   pinMode(A5, INPUT);
   pinMode(A4, INPUT);
-  motor1.setSpeed(500);  // rpm
-  motor2.setSpeed(500);  // rpm
+  motor1.setSpeed(750);  // rpm
+  motor2.setSpeed(750);  // rpm
 }
 
 void loop() {
@@ -37,15 +37,24 @@ void loop() {
    */
   //Serial.println("Micrsostep steps");
   
-  for (int x=0;x<20;x++){
-    if (run1 == LOW) {
-      motor1.step(1, FORWARD, INTERLEAVE); 
+  //for (int x=0;x<2;x++){
+    if (run1 == LOW)  {
+      motor1.step(1, FORWARD, INTERLEAVE);
+    }
+    else
+    {
+      motor1.release();
     }
       
     if (run2 == LOW) {
       motor2.step(1, FORWARD, INTERLEAVE); 
     }
-  }
+  else
+    {
+      motor2.release();
+    }
+
+  //}
   //motor.step(110, BACKWARD, MICROSTEP); 
   //  delay(100);
 }
