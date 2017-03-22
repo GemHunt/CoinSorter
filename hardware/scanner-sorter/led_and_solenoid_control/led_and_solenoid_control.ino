@@ -31,7 +31,7 @@ void setup() {
   pinMode(SOLENOID_PIN, OUTPUT);
   pinMode(TOP_CONVEYOR_PIN, OUTPUT);
   pinMode(BOTTOM_CONVEYOR_PIN, OUTPUT);
-  digitalWrite(SOLENOID_PIN, HIGH);
+  digitalWrite(SOLENOID_PIN, LOW);
   digitalWrite(TOP_CONVEYOR_PIN, LOW);
   digitalWrite(BOTTOM_CONVEYOR_PIN, LOW);
   pixels.begin(); // This initializes the NeoPixel library.
