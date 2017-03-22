@@ -10,7 +10,7 @@
 #include <AccelStepper.h>
 #include <AFMotor.h>
 
-int motor_speed = 750;
+int motor_speed = 200;
 // two stepper motors one on each port
 AF_Stepper motor1(48, 1);
 AF_Stepper motor2(48, 2);
@@ -18,17 +18,17 @@ AF_Stepper motor2(48, 2);
 // you can change these to DOUBLE or INTERLEAVE or MICROSTEP!
 // wrappers for the first motor!
 void forwardstep1() {  
-  motor1.onestep(FORWARD, INTERLEAVE);
+  motor1.onestep(FORWARD, DOUBLE);
 }
 void backwardstep1() {  
-  motor1.onestep(BACKWARD, INTERLEAVE);
+  motor1.onestep(BACKWARD, DOUBLE);
 }
 // wrappers for the second motor!
 void forwardstep2() {  
-  motor2.onestep(FORWARD, INTERLEAVE);
+  motor2.onestep(FORWARD, DOUBLE);
 }
 void backwardstep2() {  
-  motor2.onestep(BACKWARD, INTERLEAVE);
+  motor2.onestep(BACKWARD, DOUBLE);
 }
 
 // Motor shield has two motor ports, now we'll wrap them in an AccelStepper object
