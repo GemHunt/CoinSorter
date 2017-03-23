@@ -10,7 +10,7 @@
 #include <AccelStepper.h>
 #include <AFMotor.h>
 
-int motor_speed = 200;
+int motor_speed = 350;
 // two stepper motors one on each port
 AF_Stepper motor1(48, 1);
 AF_Stepper motor2(48, 2);
@@ -21,14 +21,20 @@ void forwardstep1() {
   motor1.onestep(FORWARD, DOUBLE);
 }
 void backwardstep1() {  
-  motor1.onestep(BACKWARD, DOUBLE);
+  // This is called with a speed of zero
+  // There is no stop function in AccelStepper 
+  //So this works great for stop if you only need on direction
+  //  motor1.onestep(BACKWARD, DOUBLE);
 }
 // wrappers for the second motor!
 void forwardstep2() {  
   motor2.onestep(FORWARD, DOUBLE);
 }
 void backwardstep2() {  
-  motor2.onestep(BACKWARD, DOUBLE);
+  // This is called with a speed of zero as there is no stop function
+  // There is no stop function in AccelStepper 
+  //So this works great for stop if you only need on direction
+  //motor2.onestep(BACKWARD, DOUBLE);
 }
 
 // Motor shield has two motor ports, now we'll wrap them in an AccelStepper object
@@ -60,7 +66,7 @@ void loop()
     }
     else
     {
-      stepper1.setSpeed(1);
+      stepper1.setSpeed(0);
       stepper1.runSpeed();
     }
       
@@ -70,7 +76,7 @@ void loop()
     }
     else
     {
-      stepper2.setSpeed(1);
+      stepper2.setSpeed(0);
       stepper2.runSpeed();
 
     }
