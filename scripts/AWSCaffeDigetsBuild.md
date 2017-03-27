@@ -110,14 +110,14 @@ make
 
 #At this point deviceQuery should have given you a bunch of information about the GPU(s?) and passed tests. 
 
-# Install CuDNN v5
+# Install CuDNN v6
 #You can't just wget the file
 #You have to register as a developer and manually download. 
 #This is why FTP was the step before this. 
-#So first FTP the cudnn-8.0-linux-x64-v5.0-ga.tgz file to home
+#So first FTP the cudnn-8.0-linux-x64-v6.0.tgz file to home
 
-gzip -d cudnn-8.0-linux-x64-v5.0-ga.tgz 
-tar xf cudnn-8.0-linux-x64-v5.0-ga.tar
+gzip -d cudnn-8.0-linux-x64-v6.0.tgz
+tar xf cudnn-8.0-linux-x64-v6.0.tgz
 
 # copy the library files into CUDA's include and lib folders
 sudo cp cuda/include/cudnn.h /usr/local/cuda-8.0/include
@@ -159,7 +159,7 @@ make test
 #This runs a large number of Caffe tests:
 make runtest
 
-#echo -e "\nexport CAFFE_HOME= ~/caffe" >> ~/.bashrc
+echo -e "\nexport CAFFE_HOME=~/caffe" >> ~/.bashrc
 #Load the new environmental variables
 bash
 
@@ -170,9 +170,9 @@ Installing DIGITS
 cd ~
 DIGITS_HOME=~/digits
 #Using currrent build:
-#git clone https://github.com/NVIDIA/DIGITS.git $DIGITS_HOME
+git clone https://github.com/NVIDIA/DIGITS.git $DIGITS_HOME
 #I backed up to 4.0 release because an issue with the current build:
-git clone --branch digits-4.0  https://github.com/NVIDIA/DIGITS.git $DIGITS_HOME
+#git clone --branch digits-4.0  https://github.com/NVIDIA/DIGITS.git $DIGITS_HOME
 
 #If you don't want the master this is an example of cloning a branch:
 #git clone -b dev/lmdb-inference --single-branch https://github.com/gheinrich/DIGITS.git digits
