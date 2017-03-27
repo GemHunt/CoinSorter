@@ -166,13 +166,18 @@ bash
 Install Torch:
 https://github.com/NVIDIA/DIGITS/blob/master/docs/BuildTorch.md
 
+
 Installing DIGITS
+#3/26/17 had to run: 'python get-pip.py'because of "No module named packaging.version"
+
 cd ~
 DIGITS_HOME=~/digits
 #Using currrent build:
 git clone https://github.com/NVIDIA/DIGITS.git $DIGITS_HOME
 #I backed up to 4.0 release because an issue with the current build:
 #git clone --branch digits-4.0  https://github.com/NVIDIA/DIGITS.git $DIGITS_HOME
+git clone --branch digits-5.0  https://github.com/NVIDIA/DIGITS.git $DIGITS_HOME
+
 
 #If you don't want the master this is an example of cloning a branch:
 #git clone -b dev/lmdb-inference --single-branch https://github.com/gheinrich/DIGITS.git digits
