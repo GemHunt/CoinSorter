@@ -89,11 +89,11 @@ sudo apt-get install -y gcc g++ gfortran build-essential \
   git wget linux-image-generic libopenblas-dev python-dev \
   python-pip python-nose python-numpy python-scipy
  
-# downloading CUDA 8 RC
-Download cuda-repo-ubuntu1404-8-0-rc_8.0.27-1_amd64.deb from the NVidia site (You have to register)
-# installing CUDA 8 RC
-sudo dpkg -i cuda-repo-ubuntu1404-8-0-rc_8.0.27-1_amd64.deb
-
+#download CUDA 8:
+Download cuda-repo-ubuntu1404-8-0-local-ga2_8.0.61-1_amd64.deb from the NVidia site (You have to register)
+# install CUDA 8:
+sudo dpkg -i cuda-repo-ubuntu1404-8-0-local-ga2_8.0.61-1_amd64.deb
+sudo apt-get update
 sudo apt-get install cuda
 
 # setting the environment variables so CUDA will be found
