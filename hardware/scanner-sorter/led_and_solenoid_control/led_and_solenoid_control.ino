@@ -4,6 +4,7 @@
 #endif
 
 #define SOLENOID_PIN       2
+#define HOPPER_PIN       3
 #define TOP_CONVEYOR_PIN       A4
 #define BOTTOM_CONVEYOR_PIN       A5
 #define LED_PIN            6
@@ -29,9 +30,11 @@ void setup() {
   // End of trinket special code
   Serial.begin(115200);
   pinMode(SOLENOID_PIN, OUTPUT);
+  pinMode(HOPPER_PIN, OUTPUT);
   pinMode(TOP_CONVEYOR_PIN, OUTPUT);
   pinMode(BOTTOM_CONVEYOR_PIN, OUTPUT);
   digitalWrite(SOLENOID_PIN, LOW);
+  digitalWrite(HOPPER_PIN, HIGH);
   digitalWrite(TOP_CONVEYOR_PIN, LOW);
   digitalWrite(BOTTOM_CONVEYOR_PIN, LOW);
   pixels.begin(); // This initializes the NeoPixel library.
@@ -105,6 +108,13 @@ void loop() {
     } 
     if (input==105) {
       digitalWrite(BOTTOM_CONVEYOR_PIN, HIGH);
+    } 
+    if (input==106) {
+      //Sending the Hopper Pin low resets the hopper
+      digitalWrite(HOPPER_PIN, LOW);
+    } 
+    if (input==107) {
+      digitalWrite(HOPPER_PIN, HIGH);
     } 
     if (Serial.read() == '\n') {};
   }
