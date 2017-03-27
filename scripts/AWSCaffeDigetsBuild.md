@@ -74,15 +74,13 @@ write_enable=YES
 write_enable=YES
 local_umask=022
 
-#Change it to ubuntu password to something: 
-sudo passwd ubuntu
 sudo service vsftpd restart
 cd ~
 
-
-# don't forget to get your system up to date
-sudo apt-get update
-sudo apt-get dist-upgrade
+#I put chrome on local machines:
+sudo apt-get install libxss1 libappindicator1 libindicator7
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo dpkg -i google-chrome*.deb
 
 #Installing CUDA 8RC
 #Installation of required tools
