@@ -1,5 +1,0 @@
-canadaOther
-heads
-maple
-tails
-wheat
