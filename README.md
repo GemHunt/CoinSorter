@@ -1,10 +1,8 @@
 ﻿# CoinSorter
 
-CoinSorter is an open source coin inspection system. It sorts coins by solenoid on conveyors by classifying images with deep learning based models using [Caffe](https://github.com/NVIDIA/caffe), OpenCV, Python, LMDB, and Arduino. 
+CoinSorter is a low cost, open source, coin inspection system. It sorts coins by solenoid, on conveyors, by classifying images with deep learning based models using [Caffe](https://github.com/NVIDIA/caffe), OpenCV, Python, LMDB, and Arduino. The system uses an algorithm in which coin designs and features can be found with 1-5 labeled examples. This is done by augmenting the training image set with many different camera and lighting angles. 
 
-The system uses a state of the art algorithum in which coin designs and features can be found sometimes with only one labeled example! This is done by augmenting the training image set with different camera and lighting angles. 
-
-Add main image with video link here.
+[![Check out the video](https://github.com/GemHunt/lighting-augmentation/blob/master/youtube.jpg)](https://www.youtube.com/watch?v=cwcn3tuXrv4)
 
 **CoinSorter is the main repo. The project has many sub-repos:**
 * Conveyors: [conveyors repo](https://github.com/GemHunt/conveyors)
