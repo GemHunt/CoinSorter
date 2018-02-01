@@ -1,5 +1,9 @@
 nvidia-gpu-cloud-with-titan
 
+This is my notes the second time I tried this. There is still a permissions issue with Docker.
+
+Once the server is set up the promise of a 5 minute install holds true, but you still need to know the basics of using Docker. 
+
 **Installation notes beyond what is documented:**
 * Starting with:
 * http://docs.nvidia.com/ngc/ngc-titan-setup-guide/index.html
@@ -38,11 +42,11 @@ nvidia-gpu-cloud-with-titan
 * cd/usr/local/bin
 
 ***********************************************************************************
-**Docker Tasks for Myself**
-* Write a script to start that container on system startup
+**Docker tasks for myself**
+* Write a script to start a container on system startup
 * Fix the permissions issue 
 
-**Docker Notes for Myself:**
+**Docker notes for myself:**
 * https://ngc.nvidia.com
 * http://docs.nvidia.com/ngc/ngc-user-guide/index.html
 * https://github.com/NVIDIA/nvidia-docker/wiki/
@@ -52,7 +56,7 @@ nvidia-gpu-cloud-with-titan
 * nvidia-docker only modifies the behavior of the run and create Docker commands
 * http://phase2.github.io/devtools/common-tasks/ssh-into-a-container/
 
-**Docker Commands**
+**Docker commands**
 * start the docker Daemon: sudo dockerd
 * List containers:
 * sudo docker ps
