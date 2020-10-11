@@ -35,7 +35,7 @@ CoinSorter is a low cost, open source, coin inspection system. It sorts coins by
 * A new Python version is being planned.
 * All C# code is being dropped from the project and will no long be maintained.   
 * The new conveyors need to be documented and linked here, but in general everything is in [one Rhino 3D file.](https://github.com/GemHunt/CoinSorter/blob/master/hardware/conveyors/endMount/endMount.3dm)
-* [View the old parts list and documentation](https://github.com/GemHunt/CoinSorter/tree/master/hardware/conveyors/conveyors.md) for the conveyors and the [old CAD files](https://github.com/GemHunt/CoinSorter/tree/master/hardware/conveyors/). 
+* [View the old parts list and documentation](https://github.com/GemHunt/conveyors)
 
 **How to Contribute & Participate**
 * Buy and build the kit yourself. (I need to post the kit on eBay...)
